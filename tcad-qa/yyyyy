@@ -1,0 +1,31 @@
+					if (/WM_TRANSIENT_FOR.*id # ([\dxa-f]+)$/) {
+						my $transient_for = $1;
+						$w1->{WM_TRANSIENT_FOR} = hex($transient_for);
+					}
+#_NET_WM_STATE(ATOM) = _NET_WM_STATE_MODAL, _NET_WM_STATE_SKIP_TASKBAR
+					if (/^_NET_WM_STAT/ and 
+						/_NET_WM_STATE_MODAL/) {
+						$w1->{_NET_WM_STATE_MODAL} = 1;
+					}
+					if (/^_NET_WM_WINDOW_TYPE.+= (.+)$/) {
+						my $type = "NORMAL";
+						my $win_type = $1;
+						my @win_types = split /,/ , $win_type;
+						my @known_type = (
+							"_NET_WM_WINDOW_DIALOG",
+							"_NET_WM_WINDOW_POPUP_MENU",
+							"_NET_WM_WINDOW_NORMAL"
+							);
+						for my $type1 (@win_types) {
+							for my $k1 (@known_type) {
+							  if ($type1 eq "_NET_WM_WINDOW_DIALOG") {
+								if ($type eq "NORMAL") {
+									$type = substr($k1 , 15);
+								} else {
+									$type .= substr($k1 , 15);
+								}
+							  }
+							}
+						}
+						$w1->{_NET_WM_WINDOW_TYPE} = $type;
+					}

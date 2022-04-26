@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="../jquery-2.2.1.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>Business Develop Comm</title>
+<meta name="author" content="Arnold Ho">
+<link rel="stylesheet" href="header.css" />
+<script src="banner.js"></script>
+<script>
+$(document).ready(function(){
+	$.ajax({                                      
+      url: 'busdev.php',              
+      type: "get",          
+      data: "",
+      dataType: 'json',                
+      beforeSend: function() {
+          $('#current_page').append("loading..");
+          },
+      success: function(busdev) {
+		console.log(busdev);
+		var html = "<table>";
+		var field = 0;
+		var link_no = 0;
+		var count = 0;
+		for (var i = 0; i < busdev.length; i++) {
+			var row = busdev[i];
+			if (field == 0) {
+				html += "<tr>";
+				count = 0;
+				for (var j in row) {
+					html += "<th>" + j + "</th>";
+					if (j == "TTProList") {
+						link_no = count;
+					}
+					count++;
+				}
+				html += "</tr>";
+				field = 1;
+			}
+			html += "<tr>";
+			count = 0;
+			for (var j in row) {
+				if (link_no == count) {
+					html += "<td><a href='http://svcwiki/lib/testlab/public_html/defects.php?defects=" + row[j] + "'>" + row[j] + "</a></td>";
+				} else {
+					html += "<td>" + row[j] + "</td>";
+				}
+				count++;
+			}	
+			html += "</tr>";
+
+        }
+		html += "</table>";
+			$("#top_bd").html(html);
+      }
+   });
+});
+
+</script>
+</head>
+<body onload="show_header('<?php echo $_COOKIE[db_mediawikiUserName] ?>')">
+
+<div id="top_bd"></div>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="author" content="Arnold Ho">
+	<link rel="icon" href="silvaco.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="jquery.layout/layout-default-latest.css" />
+	<title>TCAD Report</title>
+	<script src="jquery-2.2.1.js"></script>
+    <script src="jquery-ui.js"></script>
+	<script src="jquery.layout/jquery.layout-latest.js"></script>
+	<script src="sweetalert2.js"></script>
+    <script src="json-serialization.js"></script>
+	<script type="text/javascript" src="/home/arnold/reg/tests/last/output-0414-0/data.js"></script>
+<link rel="stylesheet" href="tablesorter-master/dist/css/theme.default.min.css">
+<script type="text/javascript" src="tablesorter-master/dist/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="tablesorter-master/dist/js/jquery.tablesorter.widgets.js"></script>
+<STYLE>
+	pre {
+		white-space: pre-wrap;
+	}
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+	.rpttag
+	{
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: bold;
+      text-align: left;
+      background-color: #ecebeb;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+	 .ui-layout-center
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+	.minitable
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse;
+      background-color: #ffffc0;
+	}
+	.datatd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #cff;
+	}
+	.minitd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #ffffc0;
+	}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+   </STYLE>
+</head>
+<body>
+
+<script>
+	var attr_display = [
+		[
+			["Product:","product"],
+			["Date Entered:","dateentered"],
+			["Entered by:","enteredby"]],
+		[
+			["Status:","state"],
+			["Severity:","severity"],
+			["Priority:","priority",["Urgent","High"]]],
+		[
+			["Type:","type"],
+			["Reference:","reference"],
+			["Platform:","component"]],
+		[
+			["Disposition:","disposition"],
+			["Date Modified:","datetimemodified"],
+			["Modified By:","modifiedbyuser"]],
+		[
+			["Expectation Date:","expectationdate"],
+			["Customer Raised:","customerraised"],
+			["",""]],
+		[
+			["Planned Version:","plannedversion"],
+			["Showstopper:","showstopper",[true]],
+			["",""]],
+		];
+	var atta_array = [];
+	var	fetch_timestamp;
+	var myLayout;
+	
+	var toggleButtons	= '<div class="btnCenter"></div>'
+						+ '<div class="btnBoth"></div>'
+						+ '<div class="btnWest"></div>';
+
+	var defectexpire = 24;
+	
+	$(document).ready(function() {
+		console.log (result);
+
+		init_layout();
+
+		$("#forceajax").bind("click", function() {request2ttpro(defectNumber);});
+		$("#clk").bind("click", function() {set_expire();});
+
+		print_summary(result);
+		print_result(result["result"]);
+		$("#result").tablesorter();
+
+		print_png(result["running"]["rpt"]);
+	});
+
+	function init_layout()
+	{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			stateManagement__enabled:	true 
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+	
+	
+	
+
+	
+	function print_summary(res)
+	{
+		var sumstr = "<table id=summary_table width=100% class=basic>";
+		sumstr += "<tr><td>Run data from : </td><td>" + 
+			res["output_path"] + "</td></tr>";
+		sumstr += "<tr><td>casetorun : </td><td>" +
+			res["casetorun"].length + "</td></tr>";
+		var result = res["result"];
+		var done_deck = result.filter(function(e) {
+			return e[0] == "DONE";
+		});
+		var kill_deck = result.filter(function(e) {
+			return e[0] == "KILL";
+		});
+		sumstr += "<tr><td>Done number : </td><td>" +
+			done_deck.length + "</td></tr>";
+		sumstr += "<tr><td>Killed number : </td><td>" +
+			kill_deck.length + "</td></tr>";
+		sumstr += "</table>";
+		$("#summary").html(sumstr);
+	}
+	function tag2png(tag)
+	{
+		$("#png").html( print_1png(tag)	);
+	}
+	function print_1png(tag)
+	{
+		var running_rpt = result["running"]["rpt"];
+		var png_str = "";
+		for (var j in running_rpt) {
+		  var running1 = running_rpt[j];
+		  for (const [key, value] of Object.entries(running1)) {
+			if (key == tag) {
+			png_str += "<div id='" + key + "'>" + key + "<br>";
+			for ( var i in value) {
+				var fn = value[i];
+				png_str += fn + "<br>";
+				if ((typeof fn === 'string') && (fn.substr(fn.length - 4) == ".png")) {	
+					png_str += "<img src='" + fn + "'><br>";
+				}
+			}
+			png_str += "</div>";
+			return png_str;
+			}
+		  }
+		}
+		return png_str;
+	}
+	function print_result(pd)
+	{
+		var table_str = "<table id='result' class='tablesorter' >";
+		table_str += "<thead><tr>";
+		for (var j = 0; j < pd[0].length ; j++) {
+			table_str += "<th>" + pd[0][j] + "</th>";
+		}
+		table_str += "</tr></thead><tbody>";
+		for (var j = 1; j< pd.length ; j++) {
+			var tr_str = "<tr>";
+			var line = pd[j];
+			for (var i=0; i < line.length; i++) {
+				var sl_idx;
+				if (i == 2 || i == 3) {
+					var simple_dt = line[i].substr(4,15);
+					tr_str += "<td>" + simple_dt + "</td>";
+				} else if ((typeof line[i] == "string") &&
+					((sl_idx = line[i].indexOf("/")) > -1)) {
+					var tag = line[i].substr(0,sl_idx);
+					tr_str += "<td>" +  "<a href='#' onclick=tag2png('" + tag + "')>" + line[i] +"</a></td>";
+					//tr_str += "<td><p onclick=tag2png('" + tag + "')>" + line[i] + "</p></td>";
+				} else {
+					tr_str += "<td>" + line[i] + "</td>";
+				}
+			}
+				tr_str += "</tr>";
+			table_str += tr_str;
+		}
+		table_str += "</tbody></table>";
+		
+		$("#result_table").html(table_str);
+	}
+	function print_png(running_rpt)
+	{
+
+		var png_str = "";
+		for (var j in running_rpt) {
+		  console.log( "running " + j);
+		  var running1 = running_rpt[j];
+		  for (const [key, value] of Object.entries(running1)) {
+			png_str += "<div id='" + key + "'>" + key + "<br>";
+			for ( var i in value) {
+				var fn = value[i];
+				png_str += fn + "<br>";
+				if ((typeof fn === 'string') && (fn.substr(fn.length - 4) == ".png")) {	
+					png_str += "<img src='" + fn + "'><br>";
+				}
+			}
+			png_str += "</div>";
+		  }
+		  if (j > 10) {
+			break;		  
+		  }
+		}
+		
+		$("#png").html(png_str);
+	}
+	
+	
+	function isASCII(str) {
+    	return /^[\x00-\x7F]*$/.test(str);
+	}
+	
+	
+
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table width="100%" border="0" cellpadding="3" cellspacing="0" > 
+<tr class="HeaderBar">
+<td style="width:1%">&nbsp;</td>
+<td id=dsummary style="font-weight: normal;">TCAD Regression Report</td>
+<td style="width:1%;font-weight: normal;"> <a href="https://drive.google.com/open?id=1LHtcTXxJ3OIpvWNV3sHQNzDPRv26rnXN"><b>HELP</b></a></td>
+</tr>
+</table>
+<div id="summary"></div>
+
+
+</div>
+
+<div id="eventlist" class="ui-layout-west">
+<div id="result_table"></div>
+</div>
+<div id="attachment" class="ui-layout-center">
+<div id="png"></div>
+</div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function nl2br (str, is_xhtml)
+{
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+function GetURLParameter(sParam)
+{
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) 
+	{
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return sParameterName[1];
+		}
+	}
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+</script>
+</body>
+</html> 

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+<title>xorg/app/xwd - Dump current contents of X window or screen to file</title>
+<meta name='generator' content='cgit v0.10.2'/>
+<meta name='robots' content='index, nofollow'/>
+<link rel='stylesheet' type='text/css' href='https://cgit.freedesktop.org/cgit.css'/>
+<link rel='shortcut icon' href='/favicon.ico'/>
+<link rel='alternate' title='Atom feed' href='https://cgit.freedesktop.org/xorg/app/xwd/atom/README?h=master' type='application/atom+xml'/>
+</head>
+<body>
+<div id='cgit'><table id='header'>
+<tr>
+<td class='logo' rowspan='2'><a href='/'><img src='https://cgit.freedesktop.org/logo.png' alt='cgit logo'/></a></td>
+<td class='main'><a href='/'>index</a> : <a title='xorg/app/xwd' href='/xorg/app/xwd/'>xorg/app/xwd</a></td><td class='form'><form method='get' action=''>
+<input type='hidden' name='id' value='b71cda30549b7259e337bd05d499c5921ed34f19'/><select name='h' onchange='this.form.submit();'>
+<option value='CYGWIN'>CYGWIN</option>
+<option value='DAMAGE-XFIXES'>DAMAGE-XFIXES</option>
+<option value='IPv6-REVIEW'>IPv6-REVIEW</option>
+<option value='XACE-SELINUX'>XACE-SELINUX</option>
+<option value='XEVIE'>XEVIE</option>
+<option value='XINERAMA_2'>XINERAMA_2</option>
+<option value='XORG-6_8-branch'>XORG-6_8-branch</option>
+<option value='XORG-CURRENT'>XORG-CURRENT</option>
+<option value='XORG-RELEASE-1'>XORG-RELEASE-1</option>
+<option value='XORG-RELEASE-1-STSF'>XORG-RELEASE-1-STSF</option>
+<option value='XORG-RELEASE-1-TM'>XORG-RELEASE-1-TM</option>
+<option value='XORG-STABLE'>XORG-STABLE</option>
+<option value='XPRINT'>XPRINT</option>
+<option value='lg3d-dev-0-6-1-1'>lg3d-dev-0-6-1-1</option>
+<option value='lg3d-dev-0-6-2'>lg3d-dev-0-6-2</option>
+<option value='lg3d-dev-0-7-0'>lg3d-dev-0-7-0</option>
+<option value='lg3d-dev-0-7-1'>lg3d-dev-0-7-1</option>
+<option value='lg3d-master'>lg3d-master</option>
+<option value='master' selected='selected'>master</option>
+</select> <input type='submit' name='' value='switch'/></form></td></tr>
+<tr><td class='sub'>Dump current contents of X window or screen to file</td><td class='sub right'>krh</td></tr></table>
+<table class='tabs'><tr><td>
+<a href='/xorg/app/xwd/'>summary</a><a href='/xorg/app/xwd/refs/?id=b71cda30549b7259e337bd05d499c5921ed34f19'>refs</a><a href='/xorg/app/xwd/log/README'>log</a><a class='active' href='/xorg/app/xwd/tree/README?id=b71cda30549b7259e337bd05d499c5921ed34f19'>tree</a><a href='/xorg/app/xwd/commit/README?id=b71cda30549b7259e337bd05d499c5921ed34f19'>commit</a><a href='/xorg/app/xwd/diff/README?id=b71cda30549b7259e337bd05d499c5921ed34f19'>diff</a></td><td class='form'><form class='right' method='get' action='/xorg/app/xwd/log/README'>
+<input type='hidden' name='id' value='b71cda30549b7259e337bd05d499c5921ed34f19'/><select name='qt'>
+<option value='grep'>log msg</option>
+<option value='author'>author</option>
+<option value='committer'>committer</option>
+<option value='range'>range</option>
+</select>
+<input class='txt' type='text' size='10' name='q' value=''/>
+<input type='submit' value='search'/>
+</form>
+</td></tr></table>
+<div class='path'>path: <a href='/xorg/app/xwd/tree/?id=b71cda30549b7259e337bd05d499c5921ed34f19'>root</a>/<a href='/xorg/app/xwd/tree/README?id=b71cda30549b7259e337bd05d499c5921ed34f19'>README</a></div><div class='content'>blob: fd85d649f82e4e3047f8b10464cca0d2a3ba7123 (<a href='/xorg/app/xwd/plain/README?id=b71cda30549b7259e337bd05d499c5921ed34f19'>plain</a>)
+<table summary='blob content' class='blob'>
+<tr><td class='linenumbers'><pre><a id='n1' href='#n1'>1</a>
+<a id='n2' href='#n2'>2</a>
+<a id='n3' href='#n3'>3</a>
+<a id='n4' href='#n4'>4</a>
+<a id='n5' href='#n5'>5</a>
+<a id='n6' href='#n6'>6</a>
+<a id='n7' href='#n7'>7</a>
+<a id='n8' href='#n8'>8</a>
+<a id='n9' href='#n9'>9</a>
+<a id='n10' href='#n10'>10</a>
+<a id='n11' href='#n11'>11</a>
+<a id='n12' href='#n12'>12</a>
+<a id='n13' href='#n13'>13</a>
+<a id='n14' href='#n14'>14</a>
+<a id='n15' href='#n15'>15</a>
+<a id='n16' href='#n16'>16</a>
+<a id='n17' href='#n17'>17</a>
+<a id='n18' href='#n18'>18</a>
+<a id='n19' href='#n19'>19</a>
+<a id='n20' href='#n20'>20</a>
+<a id='n21' href='#n21'>21</a>
+<a id='n22' href='#n22'>22</a>
+<a id='n23' href='#n23'>23</a>
+<a id='n24' href='#n24'>24</a>
+<a id='n25' href='#n25'>25</a>
+</pre></td>
+<td class='lines'><pre><code>xwd - dump an image of an X window
+
+All questions regarding this software should be directed at the
+Xorg mailing list:
+
+        http://lists.freedesktop.org/mailman/listinfo/xorg
+
+Please submit bug reports to the Xorg bugzilla:
+
+        https://bugs.freedesktop.org/enter_bug.cgi?product=xorg
+
+The master development code repository can be found at:
+
+        git://anongit.freedesktop.org/git/xorg/app/xwd
+
+        http://cgit.freedesktop.org/xorg/app/xwd
+
+For patch submission instructions, see:
+
+	http://www.x.org/wiki/Development/Documentation/SubmittingPatches
+
+For more information on the git code manager, see:
+
+        http://wiki.x.org/wiki/GitPage
+
+</code></pre></td></tr></table>
+</div> <!-- class=content -->
+<div class='footer'>generated  by cgit v0.10.2 at 2016-11-09 01:18:11 (GMT)</div>
+</div> <!-- id=cgit -->
+</body>
+</html>

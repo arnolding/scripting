@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script src="../sweetalert.min.js"></script>
+    <script src="../json-serialization.js"></script>
+<STYLE>
+	pre {
+		white-space: pre-wrap;
+	}
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+	.rpttag
+	{
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: bold;
+      text-align: left;
+      background-color: #ecebeb;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+	.minitable
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse;
+      background-color: #ffffc0;
+	}
+	.datatd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #cff;
+	}
+	.minitd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #ffffc0;
+	}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+   </STYLE>
+</head>
+<body>
+
+<script>
+	var attr_display = [
+		[
+			["Product:","product"],
+			["Date Entered:","dateentered"],
+			["Entered by:","enteredby"]],
+		[
+			["Status:","state"],
+			["Severity:","severity"],
+			["Priority:","priority",["Urgent","High"]]],
+		[
+			["Type:","type"],
+			["Reference:","reference"],
+			["Platform:","component"]],
+		[
+			["Disposition:","disposition"],
+			["Date Modified:","datetimemodified"],
+			["Modified By:","modifiedbyuser"]],
+		[
+			["Expectation Date:","expectationdate"],
+			["Customer Raised:","customerraised"],
+			["",""]],
+		[
+			["Planned Version:","plannedversion"],
+			["Showstopper:","showstopper",[true]],
+			["",""]],
+		];
+	var atta_array = [];
+	var	fetch_timestamp;
+	var myLayout;
+	var toggleButtons	= '<div class="btnCenter"></div>'
+						+ '<div class="btnBoth"></div>'
+						+ '<div class="btnWest"></div>';
+
+	var defectexpire = 24;
+	var recordid;
+	var async = 0;
+	var attachment_queue = [];
+	var attachment_int;
+	var attachment_count;
+	$(document).ready(function() {
+		var defectNumber = GetURLParameter("defectNumber");
+		var krumo_enabled = GetURLParameter("krumo");
+console.log("1");
+		var xdefectexpire = localStorage.getItem("onedefectexpire");
+//		var xdefectexpire;
+//		ldb.get('onedefectexpire', function (value) {
+//				xdefectexpire = value;
+//			});
+		if (xdefectexpire) {
+			defectexpire = xdefectexpire;
+		}
+console.log("2");
+		$("#tip").text(defectexpire + " hours");
+		document.title = "Defect ID - " + defectNumber;
+console.log("4 before getItem");
+		$("#forceajax").bind("click", function() {request2ttpro(defectNumber);});
+		$("#clk").bind("click", function() {set_expire();});
+		var local_arr = localStorage.getItem(defectNumber);
+//		var local_arr;
+//		ldb.get(defectNumber, function (value) {
+//			local_arr = value;
+//		});
+//console.log('local_arr' + local_arr);
+		if (local_arr ) {
+//			console.log(local_arr);
+			var arr = JSON.parse(local_arr);
+			doit(arr);
+		} else {
+			request2ttpro( defectNumber);
+		}
+	});
+
+	function init_layout()
+	{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			stateManagement__enabled:	true 
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+
+	function request2ttpro (defectNumber)
+	{
+		console.log(defectNumber);
+		$.ajax({
+			method: "POST",
+			url: "gg.php",
+			data: { defectNumber: defectNumber },
+			dataType: 'json',
+			beforeSend: function(){
+				swal({
+					title: 'Info ' ,
+					text: 'Downloading #' + defectNumber + ", please waiting ...", 
+				} );
+			},
+			error: function(xhr, status, error) {
+				swal.close();
+				console.log("Enter error ajax [" + xhr.responseText + "]");
+				console.log("Enter error ajax [" + error + "]");
+				console.log("Enter error ajax [" + status + "]");
+				swal(status , error);
+			}
+        })
+		.done(function(arr) {
+			swal.close();
+				console.log("Enter done ajax");
+			arr['fetch_ts'] = Date.now();
+			local_save(defectNumber,JSON.stringify(arr) );
+			doit(arr);
+		});
+	}
+	function local_save(k , v)
+	{
+		var defectNumber = k;
+		var needed = (v.length/512);
+		console.log("save for " + k + " size= " + needed.toFixed(2) + "KB");
+		try {
+			localStorage.setItem(defectNumber, v);
+//			ldb.set(defectNumber, v);
+		} catch (e) {
+			console.log("localStorage error [" + e.name + "][" + e.message + "]");
+			var ls_array = count_ls();
+			console.log("Browser localStorage exceeded!" +
+				"Used " + ls_array["total_for_onedefect"] +
+				"KB, Needs " + needed.toFixed(2) + "KB");
+			if (needed*1.2 < ls_array["total_for_onedefect"]) {
+				if (clean_old(needed * 1.2)) {
+					try {
+					localStorage.setItem(defectNumber, v);
+					} catch (e2) {
+						console.log("localStorage error [" + e2.name + "][" + e2.message + "]");
+					}
+				}
+			}
+		}
+	}
+	function clean_old(clean_size)
+	{
+		var ls_size = new Object();
+		var ls_ts = new Object();
+		for (x in localStorage) {
+			if (!isNaN(x)) {
+console.log("before getItem " + x);
+				var local_arr = localStorage.getItem(x);
+console.log("before parse " + x);
+				var arr = JSON.parse(local_arr);
+				if (arr.hasOwnProperty("fetch_ts")) {
+console.log("check length");
+					xLen = localStorage[x].length /512;
+					if (xLen) {
+						ls_ts[x] = arr["fetch_ts"];
+						ls_size[x] = xLen;
+					} 
+				}
+			}
+		}
+
+		var tuples = [];
+		for (var key in ls_ts) tuples.push([key, ls_ts[key]]);
+		tuples.sort(function(a, b) {
+			a = a[1];
+			b = b[1];
+			return a < b ? -1 : (a > b ? 1 : 0);
+		});
+
+		var cut_total = 0;
+		for (var i = 0; i < tuples.length; i++) {
+			var key = tuples[i][0];
+			var value = tuples[i][1];
+		console.log(key , " " , value);
+			
+			if (cut_total < clean_size) {
+				localStorage.removeItem(key);
+				cut_total += ls_size[key];
+				console.log(" remove " + key + " restore size " + ls_size[key]);
+			}
+		}
+		if (cut_total < clean_size) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	function count_ls()
+	{
+		var x, xLen, log="",total=0;
+		var ls_str = new Object();
+		for (x in localStorage) {
+			xLen =  ((localStorage[x].length * 2 + x.length * 2)/1024);
+			log += x.substr(0,30) + " = " +  xLen.toFixed(2) + " KB\n";
+			if (xLen){
+				total+= xLen;
+				ls_str[x] = xLen;
+			}
+		};
+		log = "Total = " + total.toFixed(2)+ " KB" + log;
+		console.log("count localStorage: " + log);
+		ls_str["total_for_onedefect"] = total.toFixed(2);
+		return ls_str;
+	}
+	function doit(arr)
+	{
+			var pDefect = data_adjust(arr['pDefect']);
+			pDefect = arr['pDefect'];
+			atta_array = [];
+			recordid = pDefect['recordid'];
+			fetch_timestamp = arr['fetch_ts'];
+			print_header(pDefect);
+			print_basic(pDefect);
+			init_layout();
+			var myVar = setInterval(update_elapse, 60000);
+			var ev_html = print_eventlist(pDefect);
+			var rpt_html = print_reportedbylist(pDefect);
+			$("#eventlist").html(rpt_html + ev_html);
+//			$("#reportedbylist").html(rpt_html);
+			var atta_html = print_attachment;
+			$("#attachment").html(atta_html);
+	}
+
+	function data_adjust(pd)
+	{
+		if ('customFieldList' in pd) {
+			var cfl = pd['customFieldList']['item'];
+			cfl.forEach(function(citem){
+				switch (citem['name']) {
+					case 'Planned Version':
+						pd['plannedversion'] = citem['value'];
+						break;
+					case 'Expectation Date':
+						pd['expectationdate'] = citem['value'];
+						break;
+					case 'Customer Raised':
+						pd['customerraised'] = citem['value'];
+						break;
+					case 'Showstopper':
+						pd['showstopper'] = citem['value'];
+				}
+			});
+		}
+		return pd;
+	}
+	function fetch_elapse()
+	{
+		var ts = fetch_timestamp;
+		var dt = new Date(ts);
+		var cur = Date.now();
+		var tdiff = cur - dt;
+		var dt_str = "";
+		var dt_unit = "";
+		var highlight = 0;
+		if ((Math.round((tdiff/(60*60*1000)) * 10)/10) > defectexpire) {
+			highlight = 1;
+		}
+		if (tdiff > (24*60*60*1000)) {
+			dt_str = Math.round((tdiff/(24*60*60*1000)) * 10) / 10;
+			dt_unit = " days";
+		} else if (tdiff > (60*60*1000)) {
+            dt_str = Math.round((tdiff/(60*60*1000)) * 10) / 10;
+            dt_unit = " hours";
+        } else if (tdiff > (60*1000)) {
+            dt_str = Math.round((tdiff/(60*1000)) * 10) / 10;
+            dt_unit = " mins";
+        } else {
+            dt_str = Math.round((tdiff/(1000)) * 10) / 10;
+            dt_unit = " secs";
+		}
+		if (highlight) {
+            return "!!" + dt_str + dt_unit;
+		}
+            return dt_str + dt_unit;
+	}
+	function set_expire()
+	{
+			swal({
+				title: 'Asking ' ,
+				text: 'How many hours to highlight Refresh?', 
+				content: "input",
+			})
+			.then(name => {
+				if (name) {
+				localStorage.setItem("onedefectexpire" , name);
+//				ldb.set("onedefectexpire" , name);
+				defectexpire = name;
+				$("#tip").text(defectexpire);
+				update_elapse();
+				}
+			});
+	}
+	function update_elapse()
+	{
+		var elapse = fetch_elapse();
+		if (elapse.substr(0,1) == "!") {
+			$("#dtimestamp").css({'font-weight':'bold','background-color':'#ff0000'});
+		} else {
+			$("#dtimestamp").css({'font-weight':'','background-color':''});
+		}
+		$("#dtimestamp").html(elapse);
+	}
+	function print_header(pd)
+	{
+		var d_num = parseInt(pd['defectnumber']);
+		$("#dnumber").text(d_num);
+		$("#dsummary").text(pd['summary']);
+		update_elapse();
+		var goto_str = "Goto:&nbsp;<a href='onedefect.html?defectNumber=";
+		goto_str += (d_num-1) + "'>" + (d_num-1);
+		goto_str += "</a>&nbsp;<a href='onedefect.html?defectNumber=";
+		goto_str += (d_num+1) + "'>" + (d_num+1);
+		goto_str += "</a>";
+
+		$("#goto").html(goto_str);
+	}
+	
+	function print_basic(pd)
+	{
+		var table_str = "<table width='100%' class='basic' >";
+		for (var j = 0; j<attr_display.length ; j++) {
+			var tr_str = "<tr>";
+			var line = attr_display[j];
+			for (var i=0; i < line.length; i++) {
+				var fname = line[i][1];
+				var aval = pd[fname];
+				var hlight = line[i][2];
+				if (aval === undefined) { aval = ''; } else {
+					if (fname.indexOf("datetime") >= 0) {
+						aval = datestr2local(aval);
+					}
+				}
+				if (hlight) {
+					hlight.forEach(function(h1){
+						if (h1==aval) {
+							aval = "<span style='background-color:lightgrey;color:red'>" + aval + "</span>";
+						}
+					});
+				}
+				var td_str = "<span style='font-weight: bold;'>" + line[i][0] + "</span> " + aval;
+				tr_str += "<td>" + td_str + "</td>";
+			}
+			tr_str += "</tr>";
+			table_str += tr_str;
+		}
+		table_str += "</table>";
+		$("#basic_attr").html(table_str);
+	}
+	function one_event(e1,idx)
+	{
+		var rn = idx || 0;
+		var rn = rn % 2;
+		var dt_str = datestr2local(e1['date']);
+
+		var tr_class = 'oddrow';
+		if (rn == 0) { tr_class = 'evenrow';}
+		var e_str = "<tr class='" + tr_class + "'><td>[" +
+				e1['name'] + "]: </td>";
+		e_str += "<td>by " + e1['user'] + "</td>";
+		e_str += "<td> on " + dt_str + "</td>";
+		if (e1['name'] == 'Assign') {
+			e_str += "<td> to: " + e1['assigntolist']['item'] + "</td>";
+		} else if (e1['name'] == 'Verify') {
+			e_str += "<td> " + e1['resultingstate'] + "</td>";
+		} else {
+			e_str += "<td> </td>";
+		}
+		e_str += "</tr>";
+
+		if (e1['name'] == 'Estimate') {
+			e_str += "<tr><td></td><td class='basic'> TotalTimeSpent: <font color='red'>" +
+				e1['totaltimespent'] + "</font></td></tr>";
+		}
+
+		if ('notes' in e1) {
+			e_str += "<tr><td></td><td colspan='3' class='basic'>" +
+				nl2br(e1['notes']) + "</td></tr>";
+		}
+		return e_str;
+	}
+	function print_reportedbylist(pd)
+	{
+		var rb_str = "";
+		if ('reportedbylist' in pd) {
+			rb_str = "<table>";
+			rb_str += "<tr><td colspan='4' class='HeaderBar'> Reports </td></tr>";
+			var rpt = pd['reportedbylist']['item'];
+			if ('recordid' in rpt) {
+				rb_str += one_report(rpt);
+			} else {
+				rpt.reverse().forEach(function(rpt1) {
+					rb_str += one_report(rpt1);
+				});
+			}
+//			rb_str += "</table>";
+		}
+		return rb_str;
+	}
+	function print_eventlist(pd)
+	{
+		var el_str = "";
+//		el_str = "<table>";
+		el_str += "<tr><td colspan='4' class='HeaderBar'> Workflow </td></tr>";
+		if ('eventlist' in pd) {
+			var eve = pd['eventlist']['item'];
+			if ('name' in eve) {
+				el_str += one_event(eve);
+			} else {
+				eve.reverse().forEach(function(eve1,idx){
+					el_str += one_event(eve1,idx);
+				});
+			}
+			el_str += "</table>";
+		} else {
+			el_str += "<tr style='background-color:lightgrey;color:red' ><td>not assigned</td></tr></table>";
+		}
+		return el_str;
+	}
+	function one_report(rpt)
+	{
+		var rb_str = "<tr class='evenrow'><td class='rpttag'>Report</td><td>" + rpt['foundby'] + "</td><td>";
+		rb_str += " <u>on</u> " + rpt['datefound'] + "</td><td>";
+		if (rpt['foundinversion']) {
+		rb_str += " <u>ver:</u> " + rpt['foundinversion'];
+		}
+		rb_str += "</td></tr>";
+		if ('comments' in rpt) {
+			var rpt_text = rpt['comments'];
+			if ( /<[a-z][\s\S]*>/i.test(rpt_text)) {
+				rpt_text = escapeHtml(rpt_text);
+			}
+
+			rb_str += "<tr><td valign='top' class='rpttag'>Description</td><td colspan='3' class='basic'>" + nl2br(rpt_text) + "<br><br></td></tr>";
+		}
+		if ('reproducedsteps' in rpt) {
+			rb_str += "<tr><td valign='top' class='rpttag'>Steps to Reproduce</td><td colspan='3' class='basic'>" + nl2br(rpt['reproducedsteps']) + "<br></td></tr>";
+		}
+		if ('attachmentlist' in rpt) {
+			collect_attachment(rpt['attachmentlist']['item']);
+		}
+		return rb_str;
+	}
+	function collect_attachment(atta)
+	{
+		if ('m-strFileName' in atta) {
+			atta_array.push(process_attachment(atta));
+		} else {
+			atta.reverse().forEach(function(atta1) {
+				atta_array.push(process_attachment(atta1));
+			});
+		}
+	}
+	function print_attachment(atta)
+	{
+		if (atta_array.length == 0) {
+			return "No Attachment";
+		}
+		var aa_str = "<table><tr class='HeaderBar'>" +
+			"<td><a name='attachment_top'> Attachment List</a></td></tr>";
+
+		aa_str += "<tr><td>" +
+			"<table class='minitable'><tr>" +
+			"<th class='minitd'>File Name</th>" +
+			"<th class='minitd'>Size</th>" +
+			"<th class='minitd'>To ...</th>" +
+			"<th class='minitd'>Last Modified</th></tr>";
+		for (var i = 0 ; i < atta_array.length ; i++) {
+			aa_str += one_attachment(atta_array[i], i);
+		}
+		aa_str += "</table></td></tr><tr><td>&nbsp;</td></tr>";
+		aa_str += "<tr class='HeaderBar'>" +
+			"<td> Attachment Details Preview</td></tr>";
+
+		attachment_count = atta_array.length;
+		attachment_int = setInterval(get_attachment_for_one , 3000);
+		for (var i = 0 ; i < atta_array.length ; i++) {
+			aa_str += one_attachment_data(atta_array[i],i);
+		}
+		aa_str += "</table>";
+		return aa_str;
+	}
+	function get_attachment(atta)
+	{
+		attachment_queue.push(atta);
+	}
+	function get_attachment_for_one()
+	{
+		if (async > 0) {
+			console.log("still waiting for un-finished ajax");
+			return;
+		}
+		async = 1;
+		if (attachment_queue.length <=0) {
+			async = 0;
+			return;
+		}
+		var atta = attachment_queue.shift();
+	console.log("recordid=[" + recordid + "] archname=[" + atta['archname'] + "]");
+		$.ajax({
+			method: "POST",
+			url: "gg.php",
+			data: { 'recordid': recordid, 'archname': atta['archname']},
+			dataType: 'json',
+			beforeSend: function(){
+				swal({
+					title: 'Info ' ,
+					text: 'Downloading attachment ' + atta['filename'] + ' please waiting ...', 
+				} );
+			},
+			error: function(xhr, status, error) {
+				console.log("Enter error atta ajax [" + xhr.responseText + "]");
+				console.log("Enter error atta ajax [" + error + "]");
+				console.log("Enter error atta ajax [" + status + "]");
+				$("#a" + recordid + "_" + atta['idx']).text('Failed');
+				attachment_count--;
+				if (attachment_count ==0) {
+					swal("Info","All attachment(s) processed done");
+					clearInterval(attachment_int);
+				}
+				async = 0;
+			//	swal(status , error);
+			}
+        })
+		.done(function(arr) {
+				console.log("Enter done ajax");
+			arr['fetch_ts'] = Date.now();
+//			local_save(defectNumber,JSON.stringify(arr) );
+			post_atta(arr , atta);
+			attachment_count--;
+				if (attachment_count ==0) {
+					swal("Info","All attachment(s) processed done");
+					clearInterval(attachment_int);
+				}
+			async = 0;
+		});
+	}
+	function post_atta(arr, atta)
+	{
+		process_attachment_x(arr['pAttachment'] , atta);
+		console.log("a" + recordid + "_" + atta['archname']);
+		$("#a" + recordid + "_" + atta['idx']).text(atta['size']);
+
+		var blobUrl = atta["blobUrl"];
+		var show = atta["show"];
+		var show_w = "<embed src='" + blobUrl + "' type='" + show + "' width='100%'>";
+		if (show == "plain/text") {
+			var pre_code = atta["atob"];
+//			if ( /<[a-z][\s\S]*>/i.test(pre_code))  
+// change above to the line below because of #29491 attachment "sean"
+			if ( /<[a-z][\s\S]*/i.test(pre_code)) {
+				pre_code = escapeHtml(pre_code);
+			}
+			if (pre_code.length < 12000) {
+			show_w = "<pre><code>" + pre_code + "</code></pre>";
+			} else {
+			show_w = "<pre><code>" + pre_code.substr(0,10000) + "</code></pre>";
+			show_w += "<pre style='color: crimson; background-color: #f1f1f1;font-style: italic;'> ...... there are still more but not shown ...... </pre>";
+			}
+ 		} else if (show =="") {
+ 			show_w = "<pre style='" +
+ 				"color: crimson; background-color: #f1f1f1;" +
+ 				"font-style: italic;'> " +
+ 				"...... Seems a binary file and no preview available ......" +
+ 				"</pre>";
+
+		}
+		$("#b" + recordid + "_" + atta['idx']).html(show_w);
+	}
+	function one_attachment_data(atta,idx)
+	{
+		var fn = atta['filename'];
+		var blobUrl = atta["blobUrl"];
+		if (!blobUrl) {
+			get_attachment(atta);
+		}
+		var show = atta["show"];
+		if (show == "") {
+			return "<tr><td class='datatd'><a name='" + fn + "'>" + fn +
+				"</a>" + "<a href='#attachment_top'> Back to top </a>" +
+				"</td></tr><tr><td>" +
+				"<div id='b" + recordid + "_" + idx + "'><pre style='" +
+				"color: crimson; background-color: #f1f1f1;" +
+				"font-style: italic;'> " +
+				"...... Seems a binary file and no preview available ......" +
+				"</pre></div></td></tr>";
+
+		}
+		var open_w = "<button onclick='window.open(\"" + blobUrl + "\");'> New Window </button>";
+		var download_w = "<a href='" + blobUrl + "' download='" + fn + "'>Download</a>";
+		var show_w = "<embed src='" + blobUrl + "' type='" + show + "' width='100%'>";
+		if (show == "plain/text") {
+			var pre_code = atta["atob"];
+//			if ( /<[a-z][\s\S]*>/i.test(pre_code))  
+// change above to the line below because of #29491 attachment "sean"
+			if ( /<[a-z][\s\S]*/i.test(pre_code)) {
+				pre_code = escapeHtml(pre_code);
+			}
+			if (pre_code.length < 12000) {
+			show_w = "<pre><code>" + pre_code + "</code></pre>";
+			} else {
+			show_w = "<pre><code>" + pre_code.substr(0,10000) + "</code></pre>";
+			show_w += "<pre style='color: crimson; background-color: #f1f1f1;font-style: italic;'> ...... there are still more but not shown ...... </pre>";
+			}
+		}
+
+		return "<tr><td class='datatd'><a name='" + fn + "'>" + fn + "</a>" +
+				"<a href='#attachment_top'> Back to top </a>" +
+				open_w + "&nbsp" + download_w + "</td></tr>" +
+				"<tr><td><div id='b" + recordid + "_" + idx + "'>" +
+				show_w + "</div></td></tr>";
+	}
+	function one_attachment(atta,idx)
+	{
+		var fn = atta["filename"];
+		atta["idx"] = idx;
+		var blobUrl = atta["blobUrl"];
+		var open_w = "<button onclick='window.open(\"" + blobUrl + "\");'> New Window </button>";
+		var download_w = "<a href='" + blobUrl + "' download='" + fn + "'>Download</a>";
+
+		var str = "<tr><td class='minitd'><a href='#" + fn + "'>" + fn + "</a></td>" +
+			"<td class='minitd'>" +
+			"<span id='a" + recordid + "_" + idx + "'>" + atta['size'] + "...</span></td>" +
+			"<td class='minitd'>" + open_w + "&nbsp;" + download_w + "</td>" +
+			"<td class='minitd'>" + atta['modified'] + "</td></tr>";
+
+		return str;
+	}
+	function isASCII(str) {
+    	return /^[\x00-\x7F]*$/.test(str);
+	}
+	function process_attachment(atta)
+	{
+		var atta_obj = new Object();
+		var fn = atta['m-strFileName'];
+		var archname = atta['m-strArchiveName'];
+		var last_m = "";
+		if (atta.hasOwnProperty("m-dateTimeCreated")) {
+			last_m = datestr2local(atta['m-dateTimeCreated']);
+		}
+
+		var b64data;
+		var byteCharacters;
+		if (atta.hasOwnProperty("m-pFileData")) {
+			b64data = atta['m-pFileData'];
+			byteCharacters = atob(b64data);
+		}
+		var atta_type = '';
+		var show_type = '';
+		if (fn.substr(-4,4).toLowerCase() == ".png") {
+			atta_type = 'image/png';
+			show_type = 'image/png';
+		} else if (fn.substr(-4,4).toLowerCase() == ".bmp") {
+			atta_type = 'image/bmp';
+			show_type = 'image/bmp';
+		} else if (fn.substr(-4,4).toLowerCase() == ".tif") {
+			atta_type = 'image/tiff';
+			show_type = 'image/tiff';
+		} else if (fn.substr(-4,4).toLowerCase() == ".gif") {
+			atta_type = 'image/gif';
+			show_type = 'image/gif';
+		} else if (fn.substr(-4,4).toLowerCase() == ".jpg") {
+			atta_type = 'image/jpg';
+			show_type = 'image/jpg';
+		} else if (fn.substr(-4,4).toLowerCase() == ".pdf") {
+			show_type = 'application/pdf';
+		} else if (fn.substr(-2,2).toLowerCase() == "gz") {
+		} else if (fn.substr(-3,3).toLowerCase() == ".gz") {
+		} else if (fn.substr(-3,3).toLowerCase() == ".7z") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".zip") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".gds") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".tgz") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".rar") {
+		} else if (fn.substr(-5,5).toLowerCase() == ".pptx") {
+		} else {
+		  if (atta.hasOwnProperty("m-pFileData")) {
+			if (byteCharacters.substr(0,5) == "GIF87") {
+				atta_type = 'image/gif';
+				show_type = 'image/gif';
+			} else {
+				if (isASCII(byteCharacters)) {
+					show_type = 'plain/text';
+				}
+			}
+		  }
+		}
+
+		var blob;
+		var blobUrl;
+		var atta_size = "";
+		if (atta.hasOwnProperty("m-pFileData")) {
+			blob = b64toBlob(byteCharacters, atta_type);
+			blobUrl = URL.createObjectURL(blob);
+			atta_size = blob.size;
+		}
+		atta_obj = {
+			"filename" : fn,
+			"modified" : last_m,
+			"size" : atta_size,
+			"blobUrl" : blobUrl,
+			"atob" : byteCharacters,
+			"type" : atta_type,
+			"show" : show_type,
+			"archname" : archname
+		}
+		return atta_obj;
+	}
+
+	function process_attachment_x(atta, atta_obj)
+	{
+		var fn = atta['m-strFileName'];
+		var archname = atta['m-strArchiveName'];
+
+		var b64data;
+		var byteCharacters;
+		var blob;
+		var blobUrl;
+		var atta_size = "";
+		var atta_type = atta_obj['type'];
+		var show_type = atta_obj['show'];
+		if (atta.hasOwnProperty("m-pFileData")) {
+			b64data = atta['m-pFileData'];
+			byteCharacters = atob(b64data);
+			blob = b64toBlob(byteCharacters, atta_type);
+			blobUrl = URL.createObjectURL(blob);
+			atta_size = blob.size;
+		  if (atta_obj['show'] == "") {
+			if (byteCharacters.substr(0,5) == "GIF87") {
+				atta_type = 'image/gif';
+				show_type = 'image/gif';
+			} else {
+				if (isASCII(byteCharacters)) {
+					show_type = 'plain/text';
+				}
+			}
+		  }
+		}
+//		atta_obj = {
+//			"filename" : fn,
+//			"size" : atta_size,
+//			"blobUrl" : blobUrl,
+//			"atob" : byteCharacters,
+//			"type" : atta_type,
+//			"show" : show_type,
+//			"archname" : archname
+//		};
+		atta_obj["size"] = atta_size;
+		atta_obj["blobUrl"] = blobUrl;
+		atta_obj["atob"] = byteCharacters;
+		atta_obj["type"] = atta_type;
+		atta_obj["show"] = show_type;
+		return atta_obj;
+	}
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table width="100%" border="0" cellpadding="3" cellspacing="0" > 
+<tr class="HeaderBar">
+<td id=dnumber style="width:1%">&nbsp;</td>
+<td id=dsummary style="font-weight: normal;"></td>
+<td style="width:1%;"><div class='tooltip'><img id='clk' class='tooltip' style="vertical-align:middle" height='16' width='16' src='../clock.png' alt='Timestamp' ><span id='tip' class="tooltiptext"></span></div></td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td> 
+<td style="width:1%;font-weight: normal;"> <a href="https://drive.google.com/open?id=1LHtcTXxJ3OIpvWNV3sHQNzDPRv26rnXN"><b>HELP</b></a></td>
+<td id=goto style="width:1%;text-align: right;"> </td></tr>
+</table>
+<div id="basic_attr"></div>
+</div>
+
+<div id="eventlist" class="ui-layout-west"></div>
+<div id="attachment" class="ui-layout-center"></div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function nl2br (str, is_xhtml)
+{
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+function GetURLParameter(sParam)
+{
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) 
+	{
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return sParameterName[1];
+		}
+	}
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+function b64toBlob(byteCharacters, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
+
+		var byteArrays = [];
+
+		for (var offset = 0; offset < byteCharacters.length ;
+			offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			var byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		var blob = new Blob(byteArrays, {type: contentType});
+		return blob;
+	}
+</script>
+</body>
+</html> 

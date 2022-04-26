@@ -1,0 +1,21 @@
+$VAR1 = [
+          {
+           'pid' => 4061,
+           'wid' => 33554460,
+           '_NET_WM_PID' => 4061,
+           '_NET_WM_NAME' => 'Select a deck to open',
+           '_NET_WM_STATE' => '_NET_WM_STATE_MODAL, _NET_WM_STATE_SKIP_TASKBAR',
+           '_NET_WM_WINDOW_TYPE' => '_NET_WM_WINDOW_TYPE_DIALOG, _NET_WM_WINDOW_TYPE_NORMAL',
+           'WM_TRANSIENT_FOR' => 33554445,
+          },
+          {
+           'pid' => 4061,
+           'wid' => 33554445,
+           '_NET_WM_PID' => 4061,
+           '_NET_WM_NAME' => 'DeckBuild - 5.2.14.R - /home/arnold/scripting/tcad-qa - ',
+           '_NET_WM_STATE' => '_NET_WM_STATE_FOCUSED',
+           '_NET_WM_WINDOW_TYPE' => '_NET_WM_WINDOW_TYPE_NORMAL',
+           'WM_TRANSIENT_FOR' => '',
+          }
+        ];
+

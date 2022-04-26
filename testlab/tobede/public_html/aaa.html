@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="../jquery-2.2.1.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<title>Business Develop Comm</title>
+<meta name="author" content="Arnold Ho">
+<link rel="stylesheet" href="header.css" />
+<script src="banner.js"></script>
+<script>
+$(document).ready(function(){
+	$.ajax({                                      
+      url: 'busdev.php',              
+      type: "get",          
+      data: "",
+      dataType: 'json',                
+      beforeSend: function() {
+          $('#current_page').append("loading..");
+          },
+      success: function(busdev) {
+            for (var i = 0; i < busdev.length; i++) {
+		var row = busdev[i];
+		for (var j = 0 ; j < row.length; j++) {
+                $('#city').append( row[j]+ '<br>');
+		}
+
+            }
+        }
+   });
+});
+
+function finished(result) {
+    $('#current_page').append(result);
+};
+function showUser(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+        };
+        xmlhttp.open("GET","busdev.php",true);
+        xmlhttp.send();
+    }
+}
+</script>
+</head>
+<body onload="show_header('<?php echo $_COOKIE[db_mediawikiUserName] ?>')">
+
+<form>
+<select name="users" onchange="showUser(this.value)">
+  <option value="">Select a person:</option>
+  <option value="1">Peter Griffin</option>
+  <option value="2">Lois Griffin</option>
+  <option value="3">Joseph Swanson</option>
+  <option value="4">Glenn Quagmire</option>
+  </select>
+</form>
+<br>
+<div id="city"><b>Person info will be listed here...</b></div>
+
+</body>
+</html>

@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>Released Package List</title>
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<link rel="stylesheet" href="../jquery-ui.css">
+	<link rel="stylesheet" href="../js_sorter/style.css" />
+	<script src="../js_sorter/script.js"></script>
+	<script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script src="../sweetalert2.js"></script>
+<STYLE>
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+} 
+
+#sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	}
+
+#sortable li {
+	margin: 3px 3px 3px 3px;
+	padding: 0.3em;
+	padding-left: .3em;
+	font-size: 1.0em; 
+	height: 24px; 
+	}
+
+#sortable li span {
+	position: relative;
+/*	margin: 4px 4px 4px 4px;*/
+	}
+   </STYLE>
+</head>
+<body>
+
+<script>
+var myLayout;
+var sorter = new TINY.table.sorter("sorter");
+var year_tbl = new TINY.table.sorter("year_tbl");
+var prod_tbl = new TINY.table.sorter("prod_tbl");
+var build_rec;
+$(document).ready(function() {
+	init_sortable();
+	init_layout();
+
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+	$("#forceajax").bind("click", function() {request2php();});
+//	var local_txt = localStorage.getItem("released");
+//	if (local_txt) {
+//		doit(local_txt);
+//	} else {
+		request2php();
+//	}
+});
+
+function handleYear(e) {
+		delete build_rec.table;
+		build_rec.listtable();
+		delete build_rec.prodtbl;
+		build_rec.prodtable();
+}
+function init_sortable()
+{
+    sorter.head = "head";
+    sorter.asc = "asc";
+    sorter.desc = "desc";
+    sorter.even = "evenrow";
+    sorter.odd = "oddrow";
+    sorter.evensel = "evenselected";
+    sorter.oddsel = "oddselected";
+    sorter.paginate = false;
+    sorter.currentid = "currentpage";
+    sorter.limitid = "pagelimit";
+
+    year_tbl.head = "head";
+    year_tbl.asc = "asc";
+    year_tbl.desc = "desc";
+    year_tbl.even = "evenrow";
+    year_tbl.odd = "oddrow";
+    year_tbl.evensel = "evenselected";
+    year_tbl.oddsel = "oddselected";
+    year_tbl.paginate = false;
+    year_tbl.currentid = "currentpage";
+    year_tbl.limitid = "pagelimit";
+
+    prod_tbl.head = "head";
+    prod_tbl.asc = "asc";
+    prod_tbl.desc = "desc";
+    prod_tbl.even = "evenrow";
+    prod_tbl.odd = "oddrow";
+    prod_tbl.evensel = "evenselected";
+    prod_tbl.oddsel = "oddselected";
+    prod_tbl.paginate = false;
+    prod_tbl.currentid = "currentpage";
+    prod_tbl.limitid = "pagelimit";
+}
+function init_layout()
+{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			name:	"released_layout",
+//			stateManagement__enabled:	true 
+			center__size:	.3,
+			west__size: .1,
+			east__size: .6
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+
+	function request2php ()
+	{
+		$.ajax({
+			method: "POST",
+			timeout: 0,
+			url: "mpr.php",
+			dataType: 'text',
+			beforeSend: function(){
+				swal({
+					type: 'info' ,
+					text: 'Downloading master_build.log, please waiting ...', 
+				} );
+			},
+			error: function(xhr, status, error) {
+				swal.close();
+				console.log("Enter error ajax [" + xhr.responseText + "]");
+				console.log("Enter error ajax [" + error + "]");
+				console.log("Enter error ajax [" + status + "]");
+				swal({
+					type : 'error',
+					title:	status ,
+					html:	xhr.responseText });
+			}
+        })
+		.done(function(txt) {
+			swal.close();
+			local_save("released" , txt);
+			doit(txt);
+		});
+	}
+	function local_save(k , v)
+	{
+		var needed = (v.length/512);
+		console.log("save for " + k + " size= " + needed.toFixed(2) + "KB");
+		try {
+			localStorage.setItem("released", v);
+		} catch (e) {
+			console.log("localStorage error [" + e.name + "][" + e.message + "]");
+			var ls_array = count_ls();
+			console.log("Browser localStorage exceeded!" +
+				"Used " + ls_array["total_for_onedefect"] +
+				"KB, Needs " + needed.toFixed(2) + "KB");
+			if (needed*1.2 < ls_array[ls_array.length-1][1]) {
+				if (clean_old(ls_array, needed * 1.2)) {
+					try {
+					localStorage.setItem("released", v);
+					} catch (e2) {
+						console.log("localStorage error [" + e2.name + "][" + e2.message + "]");
+					}
+				}
+			}
+		}
+	}
+	function clean_old(ls_size, clean_size)
+	{
+		ls_size.sort(function(a, b) {
+			return b[1] - a[1];
+		});
+
+		var cut_total = 0;
+		for (var i = 0; i < ls_size.length; i++) {
+			var key = ls_size[i][0];
+			var value = ls_size[i][1];
+		console.log(key , " " , value);
+			
+			if (cut_total < clean_size) {
+				localStorage.removeItem(key);
+				cut_total += ls_size[key];
+				console.log(" remove " + key + " restore size " + ls_size[key]);
+			}
+		}
+		if (cut_total < clean_size) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	function count_ls()
+	{
+		var x, xLen, log="",total=0;
+		var ls_str = []; //new Object();
+		for (x in localStorage) {
+			xLen =  ((localStorage[x].length * 2 + x.length * 2)/1024);
+			log += x.substr(0,30) + " = " +  xLen.toFixed(2) + " KB\n";
+			if (xLen){
+				total+= xLen;
+				ls_str.push([x , xLen]);
+			}
+		};
+		log = "Total = " + total.toFixed(2)+ " KB" + log;
+		console.log("count localStorage: " + log);
+		ls_str.push(["total_for_count" ,  total.toFixed(2)]);
+		return ls_str;
+	}
+function doit(bld_text)
+{
+	build_rec = new Parse(bld_text);
+	build_rec.gen_years();
+	build_rec.listtable();
+
+	build_rec.yeartable();
+//	var prod = build_rec.get_unique("prod");
+//	$("#prod").html(table_it(prod));
+//	prod_tbl.init("prodsst");
+
+	build_rec.prodtable();
+
+	var all_years = build_rec.years();
+}
+function Parse(bld_text)
+{
+	var bld_lines = bld_text.split("\n");
+	var lines_by_id = {};
+	var segs_len = {};
+	var year_rec = {};
+	var rec = [];
+	var unformat = [];
+	for (var i = 0 ; i < bld_lines.length ; i++) {
+		var segs = bld_lines[i].split(" ");
+		var len = segs.length;
+		if (len == 1) {
+			continue;
+		}
+		for (var k = len - 1; k>=0 ; k--) {
+			if (segs[k] == "") {
+				segs.splice(k,1);
+			}
+		}
+		len = segs.length;
+		if (segs_len[len]) {
+			segs_len[len]++;
+		} else {
+			segs_len[len] = 1;
+		}
+		var r1 = rel_explode(segs[0]);
+		
+		if (r1) {
+			lines_by_id[r1.id] = r1;
+		}
+		if (((len == 7) && (segs[1] != '->' )) ||
+			((len == 8) && (segs[2] != '->' ))) {
+			unformat.push("ALL for pointer " + segs[0]);
+		}
+		var dd = segs[len-5];
+		for (var j=4 ; j > 0 ; j--) {
+			dd += " " + segs[len-j];
+		}
+		var r2 = new Date(Date.parse(dd));
+		if (r1 && !isNaN(r2.getFullYear())) {
+			var mstr = (r2.getMonth()+1) + "/";
+			if (r2.getMonth() <9) {
+				mstr = "0" + mstr;
+			}
+			var dstr = r2.getDate() + "/";
+			if (r2.getDate() < 10) {
+				dstr = "0" + dstr;
+			}
+			r1.date = mstr + dstr + r2.getFullYear();
+			rec.push(r1);
+			
+	// below to populate year records
+			var ystr = r2.getFullYear();
+			if (year_rec[ystr]) {
+				year_rec[ystr].push(r1);
+			} else {
+				year_rec[ystr] = [ r1 ];
+			}
+		} else {
+			unformat.push("ALL " + segs[0]);
+		}
+	}
+	this.lines_by_id = lines_by_id;
+	this.rec = rec;
+	this.year_rec = year_rec;
+	this.unrec = unformat;
+/*
+	for (k in segs_len) {
+		console.log(k + " " + segs_len[k]);
+	}
+	console.log(rec[100]);
+	console.log(rec[rec.length-1]);
+*/
+
+	function rel_explode(fn) {
+		var dot_pos = fn.lastIndexOf(".");
+		var rel1 = {};
+		if ( dot_pos >= 0) {
+			rel1.ext = fn.substr(dot_pos + 1);
+			var ft = fn.substr(0, dot_pos).split("-");
+			rel1.id = ft[0];
+			rel1.prod = ft[1];
+			rel1.full = fn;
+			var version_4 = "ABCR";
+			var ft_len = ft.length;
+			if (ft_len < 5) {
+				var special_ver = fn.substr(0, dot_pos).match(/20\d\d\.\d\d/);
+				if ( special_ver && (ft_len == 4) ) {
+					rel1.ver = special_ver;
+					rel1.platform = ft[ft_len -1];
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+				return rel1;
+			}
+			if (version_4.indexOf(ft[ft_len-1]) >= 0) {
+				rel1.platform = "";
+			} else {
+				rel1.platform = ft[ft_len-1];
+				ft_len--;
+			}
+			if ((ft[ft_len-2].match(/20\d\d/)) && (ft[ft_len-1].match(/\d\d/))) {
+				if (ft_len == 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -=2;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			} else if ((ft[ft_len-4].match(/\d+/)) &&
+						(ft[ft_len-3].match(/\d+/)) &&
+						(ft[ft_len-2].match(/\d+/)) &&
+						(version_4.indexOf(ft[ft_len-1]))) {
+				if (ft_len == 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -= 4;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			}
+		} else {
+			unformat.push(fn);
+			rel1 = null;
+		}
+		return rel1;
+	}
+
+			
+}
+	
+Parse.prototype.prodtable = function() {
+	if (this.prodtbl) {
+		return;
+	}
+
+	if ($("#prodsst")) {
+		$("#prodsst").remove();
+	}
+	var prodsst_top = document.createElement("Table");
+	prodsst_top.id = 'prodsst';
+	prodsst_top.className = 'sortable';
+
+	var header = prodsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Product','Count','Version'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "prodsst_body";
+	prodsst_top.appendChild(tbd);
+
+	var prods = {};
+	var year_array = this.checked_years();
+	for (var y = 0; y < year_array.length ; y++) {
+		var yrec = this.year_rec[year_array[y]];
+	  for (var i = 0 ; i < yrec.length ; i++) {
+		var r1 = yrec[i];
+		var pstr = r1['prod'];
+		var vstr = r1['ver'];
+		if (prods[pstr]) {
+			prods[pstr]['Count']++;
+			prods[pstr]['ID'] += "|" + r1['id'];
+			if (prods[pstr][vstr]) {
+				prods[pstr][vstr]++;
+			} else {
+				prods[pstr][vstr] = 1;
+				prods[pstr]['Version']++;
+			}
+		} else {
+			prods[pstr] = { 'Count': 1, 'Version' :1 , 'ID' : r1['id']};
+			prods[pstr][vstr] = 1;
+		}
+	  }
+	}
+
+	var row_len = 0;
+	for (var pstr in prods) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = pstr;
+		var td1 = tr1.insertCell();
+		td1.innerHTML = prods[pstr]['Count'];
+		var td2 = tr1.insertCell();
+		td2.innerHTML = prods[pstr]['Version'] + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		td2.setAttribute("id_lst" , prods[pstr]['ID'])
+	}
+	this.prodtbl = prodsst_top;
+	var td_event = function() {
+        var tbd = document.getElementById('prodsst').tBodies[0];
+        for (var i = 0 ; i < tbd.rows.length ; i++) {
+			tbd.rows[i].cells[2].onclick = function() {
+				delete build_rec.table;
+				build_rec.listtable(this.getAttribute("id_lst"));
+            }
+
+		}
+	}
+
+
+	$('#prod').append(prodsst_top);
+
+	prod_tbl.init("prodsst",2);
+	prod_tbl.callback = td_event;
+	prod_tbl.wk(2);
+}
+Parse.prototype.listtable = function(lst = null) {
+	if (this.table) {
+		return;
+	}
+
+	if ($("#sst")) {
+		$("#sst").remove();
+	}
+	var sst_top = document.createElement("Table");
+	sst_top.id = 'sst';
+	sst_top.className = 'sortable';
+
+	var header = sst_top.createTHead();
+	var sort_f = [];
+
+	var tr0 = header.insertRow();
+	var hdr = ['id','prod','ver','platform','date','ext','sub_prod','full','ReleaseNote'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+		if (hdr[i] == 'date') {
+			sort_f[i] = function (f,c){
+                var g,h; g=f.v.split("/"); h=c.v.split("/");
+                return (g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:((g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:0)))));
+        	}
+		}
+		if (hdr[i] == 'ver') {
+			sort_f[i] = function (f,c){
+                var g,h; g=f.v.split("-"); h=c.v.split("-");
+                return (g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:((g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:(g[3]>h[3]?1:(g[3]<h[3]?-1:0)))))));
+        	}
+		}
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "sst_body";
+	sst_top.appendChild(tbd);
+
+	var row_len = 0;
+	var year_array, lrec;
+	if (lst ) {
+		lrec = lst.split("|");
+		for (var i = 0 ; i < lrec.length ; i++) {
+			var r1 = this.lines_by_id[lrec[i]];
+			gen_row();
+		}
+	} else {
+		year_array = this.checked_years();
+		for (var i = 0 ; i < year_array.length ; i++) {
+			for (var k = 0 ; k < this.year_rec[year_array[i]].length ; k++) {
+				var r1 = this.year_rec[year_array[i]][k];
+				gen_row();
+			}
+		}
+	}
+	this.table = sst_top;
+
+	$('#alllist').append(sst_top);
+
+	sorter.init("sst",0);
+	if (sort_f.length > 0) {
+		sorter.sort_f = sort_f;
+	}
+	if (lst ) {
+		$('#alllist_title').html("Released List from Product Table");
+		sorter.wk(2);
+		sorter.wk(2);
+	} else {
+		var t_str = "Released List";
+		if (year_array.length > 1) {
+			t_str += " from " + year_array[0] + " ... " + year_array[year_array.length-1];
+		} else if (year_array.length == 1) {
+			t_str += " of " + year_array[0];
+		}
+		$('#alllist_title').html(t_str);
+		sorter.wk(4);
+		sorter.wk(4);
+	}
+	function gen_row() {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		for (var j = 0 ; j < hdr.length - 1 ; j++) {
+			var td0 = tr1.insertCell();
+			if (r1[hdr[j]]) {
+				td0.innerHTML = r1[hdr[j]];
+			} else {
+				td0.innerHTML = "";
+			}
+		}
+		var td0 = tr1.insertCell();
+		if ((r1['prod'] == 'cpdk') || 
+			(r1['prod'] == 'tcad') ||
+			(r1['prod'] == 'gzip') ||
+			(r1['prod'] == 'interconnect') ||
+			(r1['prod'] == 'TCAD_examples') ||
+			(r1['prod'] == 'str_files_for_std_examples') ||
+			(r1['prod'] == 'str_files_for_victory_examples') ||
+			(r1['prod'] == 'iccad') ||
+			(r1['prod'] == 'digitalcad') ||
+			(r1['prod'] == 'testspice') ||
+			(r1['prod'] == 'ams') ||
+			(r1['prod'] == 'firebird') ||
+			(r1['prod'] == 'Alps2') ||
+			(r1['prod'] == 'iworkbench') ||
+			(r1['prod'] == 'flexlm') )
+			{
+
+		td0.innerHTML = " " ;
+		} else {
+		var v = r1['ver'];
+		v = v.replace(/-/g, ".");
+		var fn = "../site_silvaco_lib/" + r1['prod']+ "/" + v + "/docs/" + r1['prod'] + "_notes.pdf";
+		var download_fn = r1['prod'] + "_notes.pdf"
+		var open_w = "<button onclick='window.open(\"" + fn + "\");'>Open</button>";
+		var download_w = "<a href='" + fn + "' download>Download</a>";
+		td0.innerHTML = open_w + " " + download_w;
+		}
+
+	}
+}
+
+Parse.prototype.yeartable = function() {
+	if (this.yeartbl) {
+		return;
+	}
+
+	if ($("#yearsst")) {
+		$("#yearsst").remove();
+	}
+	var yearsst_top = document.createElement("Table");
+	yearsst_top.id = 'yearsst';
+	yearsst_top.className = 'sortable';
+
+	var header = yearsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Year','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "yearsst_body";
+	yearsst_top.appendChild(tbd);
+
+	var row_len = 0;
+	var years = Object.keys(this.year_rec);
+	years.sort(function(a, b){return b-a});
+	for (var i = 0 ; i < years.length ; i++) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = years[i];
+		var td1 = tr1.insertCell();
+		td1.innerHTML = this.year_rec[years[i]].length;
+	}
+	this.yeartbl = yearsst_top;
+
+//	$('#alllist_title').html("Released List total number <b>" + row_len + "</b>");
+	$('#yearlist').append(yearsst_top);
+
+	year_tbl.init("yearsst");
+}
+Parse.prototype.gen_years = function() {
+	if (this.year_btn_done) {
+		return;
+	}
+	var btn_str = "";
+	var all_years = Object.keys(this.year_rec);
+	all_years.sort(function(a, b){return a-b});
+
+	for (var j=0; j < all_years.length ; j++) {
+		var ystr = all_years[j];
+		btn_str += "<label for='cbox-" + ystr + "'>" + ystr + "</label>";
+		btn_str += "<input class='year_sel' type='checkbox' name='cbox-" + ystr +
+					"' id='cbox-" + ystr + "'>";
+	}
+	$("#year_btn").html(btn_str);
+	$( "[id^=cbox-").checkboxradio();
+//	$( "label[for='cbox-2010']").html("2010<br>999");
+	$( ".year_sel" ).on("change",handleYear);
+	this.year_btn_done = 1;
+	this.checked_years = function() {
+		var years = [];
+		var value = $( ".year_sel" )
+            .filter( ":checked" )
+			.each(function() {
+			years.push(this.name.substr("cbox-".length));
+		});
+		return years;
+	}
+	$("#cbox-" + all_years[all_years.length-1]).click();
+}
+Parse.prototype.years = function() {
+	var y0 = 9999;
+	var y1 = 1000;
+	var yy = [];
+	
+	for (var i =0; i< this.rec.length; i++) {
+		var dstr = this.rec[i]['date'];
+		var year = dstr.substr(1 + dstr.lastIndexOf('/'));
+		if (y0 > year) {
+			y0 = year;
+		}
+		if (y1 < year) {
+			y1 = year;
+		}
+	}
+
+	for (var i=y0; i <= y1; i++) {
+		yy.push(i);
+	}
+	return yy;
+}
+Parse.prototype.get_unique = function(which) {
+	var ext_set = [];
+	for (var i =0; i< this.rec.length; i++) {
+		if ( ext_set[this.rec[i][which]]) {
+			ext_set[this.rec[i][which]]++;
+		} else {
+			ext_set[this.rec[i][which]] = 1;
+		}
+	}
+	return ext_set;
+}
+
+function table_it(set)
+{
+	var html_str = "<table id='prodsst' class='sortable'>";
+	html_str += "<thead><tr><th><h4>Product</h4></th><th><h4>Count</h4></th></tr></thead>";
+	html_str += "<tbody>";
+	for (var k in set) {
+		html_str += "<tr><td>" + k + "</td><td>" + set[k] + "</td></tr>";
+	}
+	html_str += "</tbody>";
+	html_str += "</table>";
+	return html_str;
+}
+
+	function data_adjust(pd)
+	{
+		if ('customFieldList' in pd) {
+			var cfl = pd['customFieldList']['item'];
+			cfl.forEach(function(citem){
+				switch (citem['name']) {
+					case 'Planned Version':
+						pd['plannedversion'] = citem['value'];
+						break;
+					case 'Expectation Date':
+						pd['expectationdate'] = citem['value'];
+						break;
+					case 'Customer Raised':
+						pd['customerraised'] = citem['value'];
+						break;
+					case 'Showstopper':
+						pd['showstopper'] = citem['value'];
+				}
+			});
+		}
+		return pd;
+	}
+	function fetch_elapse()
+	{
+		var ts = fetch_timestamp;
+		var dt = new Date(ts);
+		var cur = Date.now();
+		var tdiff = cur - dt;
+		var dt_str = "";
+		var dt_unit = "";
+		var highlight = 0;
+		if ((Math.round((tdiff/(60*60*1000)) * 10)/10) > defectexpire) {
+			highlight = 1;
+		}
+		if (tdiff > (24*60*60*1000)) {
+			dt_str = Math.round((tdiff/(24*60*60*1000)) * 10) / 10;
+			dt_unit = " days";
+		} else if (tdiff > (60*60*1000)) {
+            dt_str = Math.round((tdiff/(60*60*1000)) * 10) / 10;
+            dt_unit = " hours";
+        } else if (tdiff > (60*1000)) {
+            dt_str = Math.round((tdiff/(60*1000)) * 10) / 10;
+            dt_unit = " mins";
+        } else {
+            dt_str = Math.round((tdiff/(1000)) * 10) / 10;
+            dt_unit = " secs";
+		}
+		if (highlight) {
+            return "!!" + dt_str + dt_unit;
+		}
+            return dt_str + dt_unit;
+	}
+	function set_expire()
+	{
+			swal({
+				type: 'question' ,
+				text: 'How many hours to highlight Refresh?', 
+				input: 'text',
+			})
+			.then((result) => {
+				if (result.value) {
+				localStorage.setItem("onedefectexpire" , result.value);
+				defectexpire = result.value;
+				$("#tip").text(defectexpire);
+				update_elapse();
+				}
+			});
+	}
+	function update_elapse()
+	{
+		var elapse = fetch_elapse();
+		if (elapse.substr(0,1) == "!") {
+			$("#dtimestamp").css({'font-weight':'bold','background-color':'#ff0000'});
+		} else {
+			$("#dtimestamp").css({'font-weight':'','background-color':''});
+		}
+		$("#dtimestamp").html(elapse);
+	}
+	
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table style="width:100%" class="HeaderBar">
+<tr>
+<td style="width:1%; white-space:nowrap;">
+<a href="http://svcwiki/index.php/Main_Page">Silvaco WiKi</a></td>
+<td style="white-space:nowrap;text-align: center;">
+&nbsp;Released Package List by Years and Products&nbsp;</td>
+<td style="width:1%; white-space:nowrap;"><div class='tooltip'><img id='clk' class='tooltip' style="vertical-align:middle" height='16' width='16' src='../clock.png' alt='Timestamp' ><span id='tip' class="tooltiptext"></span></div></td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td>
+<td style="width:1%;"><img id='person' style="vertical-align:middle" height='16' width='16' src='../person.png' alt='username' ></td>
+<td id=wikiusername style="font-weight: normal;width:1%">&nbsp;</td>
+<td style="width:1%;font-weight: normal;"> <b>HELP</b></td>
+</tr></table>
+
+<div id="basic_attr"></div>
+<ul id="sortable">
+  <li class="ui-state-default">
+	<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+	<span id='year_btn' ></span>
+	</li>
+</ul>
+</div>
+
+<div id="eventlist" class="ui-layout-west">
+	<div>Numbers by Year</div>
+	<p id="yearlist"></p>
+</div>
+
+<div class="ui-layout-center">
+	<div>Released numbers by Product</div>
+	<div id="prod"></div>
+</div>
+
+<div id="ui_for_table" class="ui-layout-east">
+	<div id='alllist_title'></div>
+	<p id="alllist"></p>
+</div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+</script>
+</body>
+</html> 

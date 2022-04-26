@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>TCAD regression report</title>
+<style>
+table { border-collapse: collapse; border: solid 1px black; }
+th { border: solid 1px black; background: #A6DBF7; text-align: center; color: black; }
+td { border: solid 1px black; background: #DAF7A6; text-align: center; color: black; }
+</style>
+</head>
+<body>
+<table>
+<tr><th>Heading</th><th>Another</th><th>More</th><th>Heading!</th><th>Blah</th></tr>
+[% FOREACH row IN rows %]
+<tr>
+<td>[% row.0 %]</td>
+<td>[% row.1 %]</td>
+<td style="background: [% IF row.2=='c'%]green[% ELSE %]red[%END %];">[% row.2 %]</td>
+<td>[% row.3 %]</td>
+<td>[% row.4 %]</td>
+</tr>
+[% END %]
+</table>
+</body>
+</html>
+

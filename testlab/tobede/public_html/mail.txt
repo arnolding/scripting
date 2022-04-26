@@ -1,0 +1,10 @@
+From: "QA Notification" <qa_notification@silvaco.com>
+To: "Arnold" <arnold.ho@silvaco.com>
+Subject: QA notification uses curl to send email on www
+
+Hi Arnold,
+I'm sending this mail with curl thru my gmail account.
+Bye!
+
+
+This is a test on Feb 1st.

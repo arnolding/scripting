@@ -1,0 +1,43 @@
+.headertable td {padding:4px 6px 6px; font-family: "times"; font-size:14px;font-weight: bold; background: #d3f3d3; border-bottom:1px solid #c6d5e1; text-align:right; border-right:1px solid #c6d5e1}
+.topnav {
+  position:relative;
+  z-index:1;
+  font-size: 15px;
+  background-color:#5f5f7f;
+  color:#ffffff;
+  width:100%;
+  padding:0;
+  letter-spacing:1px;
+}
+.topnav a{
+  text-decoration:none;
+  padding:5px 5px 5px 5px !important;
+  border-bottom:none;
+  display:inline-block;
+  color:#ffffff;
+}
+.topnav a:hover{
+  border-bottom:none;
+  background-color:#e0e0e0;
+  color:#0f0f0f;
+}
+.topnav a.active {
+  background-color:#73AD21;
+  color:#ffffff;
+}
+a.topnav-icons {
+  width:22px;
+  font-size:14px !important;
+  padding-top:5px !important;
+  padding-bottom:5px !important;
+}
+a.topnav-icons.fa-home {
+  font-size:22px !important;
+}
+a.topnav-localicons {
+  font-size:20px !important;
+  padding-top:6px !important;
+  padding-bottom:12px !important;
+}
+.w3-hide-small{display:none !important}
+.w3-left{float:left !important}

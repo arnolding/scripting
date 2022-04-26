@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Layout Example</title>
+
+	<link type="text/css" rel="stylesheet" href="layout-default-latest.css">
+
+	<style type="text/css">
+	.container	{ padding: 0; overflow: hidden; }
+	.blue		{ background: #EEF; }
+	.green		{ background: #EFE; }
+	</style>
+
+	<script type="text/javascript" src="../jquery-2.2.1.min.js"></script>
+	<script type="text/javascript" src="../jquery-ui.js"></script>
+	<script type="text/javascript" src="jquery.layout-latest.js"></script>
+	<script type="text/javascript">
+
+	$(document).ready(function () {
+		$('body').layout({
+			west__size:			.50
+		,	west__childOptions:	{
+				center__childOptions:	{
+					size:		.33
+				}
+			}
+		});
+	});
+
+	</script>
+
+</head>
+<body>
+
+<div class="ui-layout-north">Outer North</div>
+
+<div class="ui-layout-center">Outer Center</div>
+
+<div class="ui-layout-west blue"><b><u>Outer West</u></b>
+
+	<div class="ui-layout-north">Middle North</div>
+	<div class="ui-layout-center green"><b><u>Middle Center</u></b>
+
+		<div class="ui-layout-center">Inner Center</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

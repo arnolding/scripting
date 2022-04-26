@@ -1,0 +1,7 @@
+$VAR1 = {
+          'HOME' => '/home/arnold/reg',
+          'NrCPUs' => 8,
+		  'QUIET_AT_SILVACO' => 1,
+		  'REG_MAX_SEC_PER_DECK' => 3600,
+		  'DISABLE_AT_SILVACO' => 1
+        };

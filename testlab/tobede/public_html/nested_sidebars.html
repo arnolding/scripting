@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+
+	<title>Nested Sidebars Layout</title> 
+
+	<link type="text/css" rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+
+	<style type="text/css">
+	/* give outer-panes their own colors */
+	body > .ui-layout-center	{ background: #f00; }
+	body > .ui-layout-west	 	{ background: #0f0; }
+	body > .ui-layout-east		{ background: #00f; }
+	
+	</style>
+
+	<script type="text/javascript" src="../jquery-2.2.1.min.js"></script>
+	<script type="text/javascript" src="../jquery-ui.js"></script>
+	<script type="text/javascript" src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		$('body').layout({
+			minSize:					100	// ALL panes
+		,	west__size:					200
+		,	east__size:					200
+		,	stateManagement__enabled:	true
+
+		//	West Sidebar options
+		,	center__childOptions:	{
+				minSize:				50	// ALL panes
+			,	south__size:			300
+			}
+
+		//	West Sidebar options
+		,	west__childOptions:	{
+				minSize:				50	// ALL panes
+			,	south__size:			300
+			}
+
+		//	East Sidebar options
+		,	east__childOptions:	{
+				minSize:				50	// ALL panes
+			,	south__size:			100
+			}
+
+		});
+
+	});
+
+	</script>
+
+</head>
+<body>
+
+<div id="mynorth" class="ui-layout-north" style="background-color: apricot">
+</div>
+<div class="ui-layout-center">
+	Outer - Center pane
+	<p>&nbsp;</p>
+	<p><a href="http://layout.jquery-dev.com/demos.html">Go&nbsp;to Demos&nbsp;page</a></p>
+	<div class="ui-layout-center"> East - Center </div>
+	<div class="ui-layout-south">  East - South </div>
+</div>
+
+<div class="ui-layout-west">
+	<div class="ui-layout-center"> West - Center </div>
+	<div class="ui-layout-south">  West - South </div>
+</div>
+
+
+</body>
+</html>

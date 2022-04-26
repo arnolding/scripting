@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script src="../sweetalert2.js"></script>
+    <script src="../json-serialization.js"></script>
+<STYLE>
+	pre {
+		white-space: pre-wrap;
+	}
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+	.rpttag
+	{
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: bold;
+      text-align: left;
+      background-color: #ecebeb;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+	.minitable
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse;
+      background-color: #ffffc0;
+	}
+	.datatd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #cff;
+	}
+	.minitd
+	{
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+      background-color: #ffffc0;
+	}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+   </STYLE>
+</head>
+<body>
+
+<script>
+	var attr_display = [
+		[
+			['Host:','text'],
+			['10.1.1.164 (issues)','10.1.1.164'],
+			['10.1.1.165 (caalm01)','10.1.1.165'] ],
+		[
+			['Port:','text'],
+			['443','443']],
+		[
+			['username:','password'],
+			['using default','ttpro'] ],
+		[
+			['password:','password'],
+			['using default','ap4ttpro!'] ]
+		];
+	var atta_array = [];
+	var	fetch_timestamp;
+	var myLayout;
+	var toggleButtons	= '<div class="btnCenter"></div>'
+						+ '<div class="btnBoth"></div>'
+						+ '<div class="btnWest"></div>';
+
+	var defectexpire = 24;
+	$(document).ready(function() {
+		var krumo_enabled = GetURLParameter("krumo");
+console.log("1");
+		$("#tip").text(defectexpire + " hours");
+		document.title = " TTPro SOAP" ;
+console.log("4 before getItem");
+		$("#forceajax").bind("click", function() {request2ttpro();});
+		print_basic();
+		init_layout();
+	});
+
+	function init_layout()
+	{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			stateManagement__enabled:	true 
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+
+	function request2ttpro ()
+	{
+		var attr_host = $("#cfg0").val();
+		var attr_port = $("#cfg1").val();
+		var attr_user = $("#cfg2").val();
+		var attr_pass = $("#cfg3").val();
+		console.log(attr_host + " " + attr_port + " " + attr_user + " " + attr_pass);
+		$.ajax({
+			method: "POST",
+			timeout: 0,
+			url: "ttprocheck.php",
+			data: { host: attr_host, port: attr_port, user: attr_user, pass: attr_pass },
+			dataType: 'json',
+			beforeSend: function(){
+				console.log("start php");
+//				swal({
+//					type: 'info' ,
+//					text: 'TTPro SOAP checking, please waiting ...', 
+//				} );
+			},
+			error: function(xhr, status, error) {
+				console.log("end php error");
+				swal.close();
+				console.log("Enter error ajax [" + xhr.responseText + "]");
+				console.log("Enter error ajax [" + error + "]");
+				console.log("Enter error ajax [" + status + "]");
+				swal({
+					type : 'error',
+					title:	status ,
+					html:	xhr.responseText });
+			}
+        })
+		.done(function(arr) {
+				console.log("end php success");
+			swal.close();
+			console.log(arr);
+			doit(arr);
+		});
+	}
+	function doit(arr)
+	{
+//			init_layout();
+//			var ev_html = print_eventlist(pDefect);
+//			var rpt_html = print_reportedbylist(pDefect);
+//			$("#eventlist").html(rpt_html + ev_html);
+			var atta_html = print_SOAP(arr);
+			$("#attachment").html(atta_html);
+	}
+
+	function data_adjust(pd)
+	{
+		if ('customFieldList' in pd) {
+			var cfl = pd['customFieldList']['item'];
+			cfl.forEach(function(citem){
+				switch (citem['name']) {
+					case 'Planned Version':
+						pd['plannedversion'] = citem['value'];
+						break;
+					case 'Expectation Date':
+						pd['expectationdate'] = citem['value'];
+						break;
+					case 'Customer Raised':
+						pd['customerraised'] = citem['value'];
+						break;
+					case 'Showstopper':
+						pd['showstopper'] = citem['value'];
+				}
+			});
+		}
+		return pd;
+	}
+	function fetch_elapse()
+	{
+		var ts = fetch_timestamp;
+		var dt = new Date(ts);
+		var cur = Date.now();
+		var tdiff = cur - dt;
+		var dt_str = "";
+		var dt_unit = "";
+		var highlight = 0;
+		if ((Math.round((tdiff/(60*60*1000)) * 10)/10) > defectexpire) {
+			highlight = 1;
+		}
+		if (tdiff > (24*60*60*1000)) {
+			dt_str = Math.round((tdiff/(24*60*60*1000)) * 10) / 10;
+			dt_unit = " days";
+		} else if (tdiff > (60*60*1000)) {
+            dt_str = Math.round((tdiff/(60*60*1000)) * 10) / 10;
+            dt_unit = " hours";
+        } else if (tdiff > (60*1000)) {
+            dt_str = Math.round((tdiff/(60*1000)) * 10) / 10;
+            dt_unit = " mins";
+        } else {
+            dt_str = Math.round((tdiff/(1000)) * 10) / 10;
+            dt_unit = " secs";
+		}
+		if (highlight) {
+            return "!!" + dt_str + dt_unit;
+		}
+            return dt_str + dt_unit;
+	}
+	function update_elapse()
+	{
+		var elapse = fetch_elapse();
+		if (elapse.substr(0,1) == "!") {
+			$("#dtimestamp").css({'font-weight':'bold','background-color':'#ff0000'});
+		} else {
+			$("#dtimestamp").css({'font-weight':'','background-color':''});
+		}
+		$("#dtimestamp").html(elapse);
+	}
+	function attr_click( cfg , val)
+	{
+		cfg = "#" + cfg;
+		$(cfg).val(val);
+	}
+	function print_basic()
+	{
+		var table_str = "<table width='100%' class='basic' >";
+		for (var j = 0; j<attr_display.length ; j++) {
+			var tr_str = "<tr>";
+			var line = attr_display[j];
+			var td_str = "<span style='font-weight: bold;'>" + line[0][0] + "</span> ";
+			tr_str += "<td>" + td_str + "</td>";
+			td_str = "<input type='" + line[0][1] + "' id='cfg" + j + "'";
+			tr_str += "<td>" + td_str + "</td>";
+			for (var i=1; i < line.length; i++) {
+				var aval = "";
+				var td_str = "<span style='font-weight: bold;'>" + line[i][0] + "</span>";
+				tr_str += "<td onclick='attr_click(\"cfg" + j + "\",\"" + line[i][1] + "\")'>" + td_str + "</td>";
+				
+			}
+			tr_str += "</tr>";
+			table_str += tr_str;
+		}
+		table_str += "</table>";
+		$("#basic_attr").html(table_str);
+	}
+	function one_event(e1,idx)
+	{
+		var rn = idx || 0;
+		var rn = rn % 2;
+		var dt_str = datestr2local(e1['date']);
+
+		var tr_class = 'oddrow';
+		if (rn == 0) { tr_class = 'evenrow';}
+		var e_str = "<tr class='" + tr_class + "'><td>[" +
+				e1['name'] + "]: </td>";
+		e_str += "<td>by " + e1['user'] + "</td>";
+		e_str += "<td> on " + dt_str + "</td>";
+		if (e1['name'] == 'Assign') {
+			e_str += "<td> to: " + e1['assigntolist']['item'] + "</td>";
+		} else if (e1['name'] == 'Verify') {
+			e_str += "<td> " + e1['resultingstate'] + "</td>";
+		} else {
+			e_str += "<td> </td>";
+		}
+		e_str += "</tr>";
+
+		if (e1['name'] == 'Estimate') {
+			e_str += "<tr><td></td><td class='basic'> TotalTimeSpent: <font color='red'>" +
+				e1['totaltimespent'] + "</font></td></tr>";
+		}
+
+		if ('notes' in e1) {
+			e_str += "<tr><td></td><td colspan='3' class='basic'>" +
+				nl2br(e1['notes']) + "</td></tr>";
+		}
+		return e_str;
+	}
+	function collect_attachment(atta)
+	{
+		if ('m-strFileName' in atta) {
+			atta_array.push(process_attachment(atta));
+		} else {
+			atta.reverse().forEach(function(atta1) {
+				atta_array.push(process_attachment(atta1));
+			});
+		}
+	}
+	function print_SOAP(arr) {
+		var aa_str = "<table><tr class='HeaderBar'>" +
+			"<td><a name='attachment_top'> getProjectList</a></td></tr>";
+		aa_str += "<tr><td>" + arr["prjlist"] + "</td></tr>";
+		aa_str += "</table>";
+		return aa_str;
+	}
+	function one_attachment(atta)
+	{
+		var fn = atta["filename"];
+		var blobUrl = atta["blobUrl"];
+		var open_w = "<button onclick='window.open(\"" + blobUrl + "\");'> New Window </button>";
+		var download_w = "<a href='" + blobUrl + "' download='" + fn + "'>Download</a>";
+
+		var str = "<tr><td class='minitd'><a href='#" + fn + "'>" + fn + "</a></td>" +
+			"<td class='minitd'>" + atta['size'] + "</td>" +
+			"<td class='minitd'>" + open_w + "&nbsp;" + download_w + "</td>" +
+			"<td class='minitd'>" + atta['modified'] + "</td></tr>";
+
+		return str;
+	}
+	function isASCII(str) {
+    	return /^[\x00-\x7F]*$/.test(str);
+	}
+	function process_attachment(atta)
+	{
+		var atta_obj = new Object();
+		var fn = atta['m-strFileName'];
+		var last_m = "";
+		if (atta.hasOwnProperty("m-dateTimeCreated")) {
+			last_m = datestr2local(atta['m-dateTimeCreated']);
+		}
+		var b64data;
+		var byteCharacters;
+		if (atta.hasOwnProperty("m-pFileData")) {
+			b64data = atta['m-pFileData'];
+			byteCharacters = atob(b64data);
+		}
+		var atta_type = '';
+		var show_type = '';
+		if (fn.substr(-4,4).toLowerCase() == ".png") {
+			atta_type = 'image/png';
+			show_type = 'image/png';
+		} else if (fn.substr(-4,4).toLowerCase() == ".bmp") {
+			atta_type = 'image/bmp';
+			show_type = 'image/bmp';
+		} else if (fn.substr(-4,4).toLowerCase() == ".tif") {
+			atta_type = 'image/tiff';
+			show_type = 'image/tiff';
+		} else if (fn.substr(-4,4).toLowerCase() == ".gif") {
+			atta_type = 'image/gif';
+			show_type = 'image/gif';
+		} else if (fn.substr(-4,4).toLowerCase() == ".mp4") {
+			atta_type = 'video/mp4';
+			show_type = 'video/mp4';
+		} else if (fn.substr(-4,4).toLowerCase() == ".jpg") {
+			atta_type = 'image/jpg';
+			show_type = 'image/jpg';
+		} else if (fn.substr(-4,4).toLowerCase() == ".pdf") {
+			show_type = 'application/pdf';
+		} else if (fn.substr(-2,2).toLowerCase() == "gz") {
+		} else if (fn.substr(-3,3).toLowerCase() == ".gz") {
+		} else if (fn.substr(-3,3).toLowerCase() == ".7z") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".zip") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".gds") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".tgz") {
+		} else if (fn.substr(-4,4).toLowerCase() == ".rar") {
+		} else if (fn.substr(-5,5).toLowerCase() == ".pptx") {
+		} else {
+		  if (atta.hasOwnProperty("m-pFileData")) {
+			if (byteCharacters.substr(0,5) == "GIF87") {
+				atta_type = 'image/gif';
+				show_type = 'image/gif';
+			} else {
+				if (isASCII(byteCharacters)) {
+					show_type = 'plain/text';
+				}
+			}
+		  }
+		}
+
+		var blob;
+		var blobUrl;
+		var atta_size = "";
+		if (atta.hasOwnProperty("m-pFileData")) {
+			blob = b64toBlob(byteCharacters, atta_type);
+			blobUrl = URL.createObjectURL(blob);
+			atta_size = blob.size;
+		}
+		atta_obj = {
+			"filename" : fn,
+			"modified" : last_m,
+			"size" : atta_size,
+			"blobUrl" : blobUrl,
+			"atob" : byteCharacters,
+			"type" : atta_type,
+			"show" : show_type
+		}
+		return atta_obj;
+	}
+
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table width="100%" border="0" cellpadding="3" cellspacing="0" > 
+<tr class="HeaderBar">
+<td id=dsummary style="font-weight: normal;text-align: center;"><B>ttpro check</B></td>
+<td style="width:1%;"><div class='tooltip'><img id='clk' class='tooltip' style="vertical-align:middle" height='16' width='16' src='../clock.png' alt='Timestamp' ><span id='tip' class="tooltiptext"></span></div></td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td> 
+</tr>
+</table>
+<div id="basic_attr"></div>
+</div>
+
+<div id="eventlist" class="ui-layout-west"></div>
+<div id="attachment" class="ui-layout-center"></div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function nl2br (str, is_xhtml)
+{
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+function GetURLParameter(sParam)
+{
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) 
+	{
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return sParameterName[1];
+		}
+	}
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+function b64toBlob(byteCharacters, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
+
+		var byteArrays = [];
+
+		for (var offset = 0; offset < byteCharacters.length ;
+			offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			var byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		var blob = new Blob(byteArrays, {type: contentType});
+		return blob;
+	}
+</script>
+</body>
+</html> 

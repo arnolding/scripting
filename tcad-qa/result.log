@@ -1,0 +1,1623 @@
+KILL, solidex03/solidex03.in, 08:01:44, 08:04:54
+KILL, solidex01/solidex01.in, 08:04:57, 08:08:06
+KILL, solidex04/solidex04.in, 08:08:09, 08:11:16
+KILL, solidex09/solidex09.in, 08:11:19, 08:14:24
+DONE, solidex05/solidex05.in, 08:14:27, 08:16:17
+KILL, solidex03/solidex03.in, 08:19:07, 08:22:15
+KILL, solidex01/solidex01.in, 08:22:18, 08:25:24
+KILL, solidex04/solidex04.in, 08:25:27, 08:28:34
+KILL, solidex09/solidex09.in, 08:28:37, 08:31:44
+KILL, solidex05/solidex05.in, 08:31:47, 08:34:53
+KILL, solidex07/solidex07.in, 08:34:56, 08:38:00
+DONE, solidex02/solidex02.in, 08:38:03, 08:40:08
+DONE, solidex06/solidex06.in, 08:40:11, 08:42:38
+DONE, solidex10/solidex10.in, 08:42:41, 08:45:09
+KILL, solidex08/solidex08.in, 08:45:12, 08:48:16
+DONE, soiex04/soiex04.in, 08:48:19, 08:48:46
+DONE, soiex10/soiex10.in, 08:48:49, 08:49:32
+KILL, soiex13/soiex13.in, 08:49:35, 08:52:42
+DONE, soiex03/soiex03.in, 08:52:45, 08:53:05
+KILL, soiex15/soiex15.in, 08:53:08, 08:56:14
+KILL, soiex12/soiex12.in, 08:56:17, 08:59:23
+DONE, soiex08/soiex08.in, 08:59:26, 09:00:16
+DONE, soiex05/soiex05.in, 09:00:19, 09:01:02
+DONE, soiex02/soiex02.in, 09:01:05, 09:01:16
+DONE, soiex06/soiex06.in, 09:01:19, 09:01:51
+DONE, soiex01/soiex01.in, 09:01:54, 09:02:06
+KILL, soiex14/soiex14.in, 09:02:09, 09:05:15
+KILL, soiex11/soiex11.in, 09:05:18, 09:08:23
+DONE, soiex07/soiex07.in, 09:08:26, 09:08:45
+KILL, soiex09/soiex09.in, 09:08:48, 09:11:54
+KILL, ledex08/ledex08.in, 09:11:57, 09:15:02
+DONE, ledex03/ledex03.in, 09:15:05, 09:16:03
+DONE, ledex01/ledex01.in, 09:16:06, 09:16:28
+DONE, ledex02/ledex02.in, 09:16:31, 09:16:49
+KILL, ledex06/ledex06.in, 09:16:52, 09:19:58
+DONE, ledex09/ledex09.in, 09:20:01, 09:22:12
+DONE, ledex05/ledex05.in, 09:22:15, 09:22:42
+KILL, ledex07/ledex07.in, 09:22:45, 09:25:51
+DONE, ledex10/ledex10.in, 09:25:54, 09:26:57
+DONE, ledex04/ledex04.in, 09:27:00, 09:27:52
+DONE, bjtex01/bjtex01.in, 09:27:55, 09:28:07
+DONE, bjtex02/bjtex02.in, 09:28:10, 09:28:28
+DONE, bjtex04/bjtex04.in, 09:28:31, 09:28:57
+DONE, bjtex07/bjtex07.in, 09:29:00, 09:29:27
+DONE, bjtex05/bjtex05.in, 09:29:30, 09:29:39
+DONE, bjtex10/bjtex10.in, 09:29:42, 09:30:06
+DONE, bjtex11/bjtex11.in, 09:30:09, 09:30:29
+DONE, bjtex06/bjtex06.in, 09:30:32, 09:30:44
+DONE, bjtex08/bjtex08.in, 09:30:47, 09:31:22
+DONE, bjtex03/bjtex03.in, 09:31:25, 09:31:44
+DONE, bjtex09/bjtex09.in, 09:31:47, 09:32:36
+DONE, ferroex01/ferroex01.in, 09:32:39, 09:33:38
+DONE, ferroex03/ferroex03.in, 09:33:41, 09:33:59
+KILL, ferroex04/ferroex04.in, 09:34:02, 09:37:08
+DONE, ferroex02/ferroex02.in, 09:37:11, 09:37:30
+DONE, esdex04/esdex04.in, 09:37:33, 09:39:07
+DONE, esdex03/esdex03.in, 09:39:10, 09:40:20
+DONE, esdex01/esdex01.in, 09:40:23, 09:41:41
+DONE, esdex05/esdex05.in, 09:41:44, 09:42:06
+DONE, esdex02/esdex02.in, 09:42:09, 09:43:32
+DONE, hbtex04/hbtex04.in, 09:43:35, 09:44:10
+DONE, hbtex03/hbtex03.in, 09:44:13, 09:44:32
+DONE, hbtex08/hbtex08.in, 09:44:35, 09:45:11
+DONE, hbtex07/hbtex07.in, 09:45:14, 09:46:25
+DONE, hbtex06/hbtex06.in, 09:46:28, 09:46:47
+DONE, hbtex02/hbtex02.in, 09:46:50, 09:47:04
+DONE, hbtex01/hbtex01.in, 09:47:07, 09:47:22
+DONE, hbtex05/hbtex05.in, 09:47:25, 09:47:39
+KILL, sicex10/sicex10.in, 09:47:42, 09:50:48
+DONE, sicex14/sicex14.in, 09:50:51, 09:51:58
+KILL, sicex08/sicex08.in, 09:52:01, 09:55:07
+KILL, sicex04/sicex04.in, 09:55:10, 09:58:16
+KILL, sicex07/sicex07.in, 09:58:19, 10:01:26
+KILL, sicex09/sicex09.in, 10:01:29, 10:04:36
+DONE, sicex01/sicex01.in, 10:04:39, 10:06:38
+DONE, sicex06/sicex06.in, 10:06:41, 10:08:50
+DONE, sicex05/sicex05.in, 10:08:53, 10:09:49
+DONE, sicex02/sicex02.in, 10:09:52, 10:10:33
+KILL, sicex11/sicex11.in, 10:10:36, 10:13:43
+DONE, sicex03/sicex03.in, 10:13:46, 10:14:18
+DONE, sicex13/sicex13.in, 10:14:21, 10:15:10
+KILL, sicex12/sicex12.in, 10:15:13, 10:18:19
+DONE, mercuryex01/mercuryex01.in, 10:18:22, 10:18:34
+KILL, mercuryex06/mercuryex06.in, 10:18:37, 10:21:42
+DONE, mercuryex04/mercuryex04.in, 10:21:45, 10:21:57
+DONE, mercuryex07/mercuryex07.in, 10:22:00, 10:24:09
+DONE, mercuryex03/mercuryex03.in, 10:24:12, 10:24:24
+DONE, mercuryex05/mercuryex05.in, 10:24:27, 10:24:46
+KILL, mercuryex08/mercuryex08.in, 10:24:49, 10:27:55
+DONE, mercuryex02/mercuryex02.in, 10:27:58, 10:28:13
+KILL, vcselex02/vcselex02.in, 10:28:16, 10:31:22
+KILL, vcselex03/vcselex03.in, 10:31:25, 10:34:32
+KILL, vcselex01/vcselex01.in, 10:34:35, 10:37:39
+KILL, vcselex04/vcselex04.in, 10:37:42, 10:40:46
+DONE, imagesensorex02/imagesensorex02.in, 10:40:49, 10:41:20
+KILL, imagesensorex05/imagesensorex05.in, 10:41:23, 10:44:29
+KILL, imagesensorex01/imagesensorex01.in, 10:44:32, 10:47:41
+KILL, imagesensorex03/imagesensorex03.in, 10:47:44, 10:50:52
+KILL, imagesensorex06/imagesensorex06.in, 10:50:55, 10:54:00
+KILL, imagesensorex04/imagesensorex04.in, 10:54:03, 10:57:11
+KILL, cryoex03/cryoex03.in, 10:57:14, 11:00:18
+KILL, cryoex02/cryoex02.in, 11:00:21, 11:03:29
+KILL, cryoex01/cryoex01.in, 11:03:32, 11:06:39
+DONE, organicex05/organicex05.in, 11:06:42, 11:07:06
+KILL, organicex10/organicex10.in, 11:07:09, 11:10:17
+DONE, organicex04/organicex04.in, 11:10:20, 11:10:55
+KILL, organicex03/organicex03.in, 11:10:59, 11:14:06
+DONE, organicex02/organicex02.in, 11:14:09, 11:14:23
+DONE, organicex09/organicex09.in, 11:14:26, 11:16:43
+KILL, organicex06/organicex06.in, 11:16:46, 11:19:54
+DONE, organicex08/organicex08.in, 11:19:57, 11:20:45
+DONE, organicex11/organicex11.in, 11:20:49, 11:21:13
+DONE, organicex01/organicex01.in, 11:21:16, 11:21:30
+KILL, organicex07/organicex07.in, 11:21:33, 11:24:38
+DONE, diodeex12/diodeex12.in, 11:24:41, 11:26:03
+DONE, diodeex10/diodeex10.in, 11:26:06, 11:27:19
+DONE, diodeex05/diodeex05.in, 11:27:22, 11:27:43
+DONE, diodeex03/diodeex03.in, 11:27:46, 11:28:02
+DONE, diodeex09/diodeex09.in, 11:28:05, 11:29:43
+DONE, diodeex08/diodeex08.in, 11:29:46, 11:30:02
+DONE, diodeex06/diodeex06.in, 11:30:05, 11:30:22
+DONE, diodeex11/diodeex11.in, 11:30:25, 11:31:18
+DONE, diodeex02/diodeex02.in, 11:31:21, 11:32:33
+DONE, diodeex01/diodeex01.in, 11:32:36, 11:32:48
+DONE, diodeex07/diodeex07.in, 11:32:51, 11:33:55
+DONE, diodeex04/diodeex04.in, 11:33:58, 11:34:22
+KILL, diodeex13/diodeex13.in, 11:34:25, 11:37:30
+DONE, mesfetex04/mesfetex04.in, 11:37:33, 11:37:53
+DONE, mesfetex03/mesfetex03.in, 11:37:56, 11:38:18
+DONE, mesfetex06/mesfetex06.in, 11:38:21, 11:38:41
+DONE, mesfetex02/mesfetex02.in, 11:38:44, 11:39:00
+DONE, mesfetex01/mesfetex01.in, 11:39:03, 11:39:26
+DONE, mesfetex05/mesfetex05.in, 11:39:29, 11:39:54
+DONE, quantumex02/quantumex02.in, 11:39:57, 11:40:34
+DONE, quantumex22/quantumex22.in, 11:40:37, 11:42:25
+DONE, quantumex07/quantumex07.in, 11:42:28, 11:44:10
+KILL, quantumex08/quantumex08.in, 11:44:13, 11:47:19
+DONE, quantumex14/quantumex14.in, 11:47:22, 11:48:54
+DONE, quantumex13/quantumex13.in, 11:48:57, 11:51:09
+DONE, quantumex01/quantumex01.in, 11:51:12, 11:51:47
+DONE, quantumex03/quantumex03.in, 11:51:50, 11:52:28
+DONE, quantumex23/quantumex23.in, 11:52:31, 11:53:20
+DONE, quantumex17/quantumex17.in, 11:53:23, 11:54:53
+DONE, quantumex20/quantumex20.in, 11:54:56, 11:55:33
+DONE, quantumex18/quantumex18.in, 11:55:36, 11:57:28
+DONE, quantumex09/quantumex09.in, 11:57:31, 11:57:49
+DONE, quantumex05/quantumex05.in, 11:57:52, 11:58:53
+DONE, quantumex04/quantumex04.in, 11:58:56, 11:59:15
+KILL, quantumex19/quantumex19.in, 11:59:18, 12:02:25
+DONE, quantumex10/quantumex10.in, 12:02:28, 12:02:59
+DONE, quantumex11/quantumex11.in, 12:03:02, 12:04:04
+DONE, quantumex15/quantumex15.in, 12:04:07, 12:04:19
+DONE, quantumex06/quantumex06.in, 12:04:22, 12:05:38
+KILL, quantumex21/quantumex21.in, 12:05:41, 12:08:48
+DONE, quantumex24/quantumex24.in, 12:08:51, 12:09:52
+KILL, quantumex16/quantumex16.in, 12:09:55, 12:13:00
+KILL, quantumex12/quantumex12.in, 12:13:03, 12:16:11
+KILL, laserex08/laserex08.in, 12:16:14, 12:19:20
+KILL, laserex13/laserex13.in, 12:19:23, 12:22:31
+KILL, laserex07/laserex07.in, 12:22:34, 12:25:43
+DONE, laserex01/laserex01.in, 12:25:46, 12:26:06
+DONE, laserex04/laserex04.in, 12:26:09, 12:26:47
+DONE, laserex03/laserex03.in, 12:26:50, 12:27:40
+KILL, laserex12/laserex12.in, 12:27:43, 12:30:51
+DONE, laserex11/laserex11.in, 12:30:54, 12:32:00
+KILL, laserex09/laserex09.in, 12:32:03, 12:35:11
+DONE, laserex02/laserex02.in, 12:35:14, 12:35:44
+KILL, laserex05/laserex05.in, 12:35:47, 12:38:53
+DONE, laserex06/laserex06.in, 12:38:56, 12:41:50
+KILL, laserex10/laserex10.in, 12:41:53, 12:44:59
+DONE, radex01/radex01.in, 12:45:02, 12:47:18
+DONE, radex05/radex05.in, 12:47:21, 12:47:34
+DONE, radex16/radex16.in, 12:47:37, 12:47:53
+DONE, radex02/radex02.in, 12:47:56, 12:50:50
+KILL, radex10/radex10.in, 12:50:53, 12:53:57
+KILL, radex06/radex06.in, 12:54:00, 12:57:08
+KILL, radex03/radex03.in, 12:57:11, 13:00:18
+KILL, radex18/radex18.in, 13:00:21, 13:03:27
+KILL, radex11/radex11.in, 13:03:30, 13:06:34
+DONE, radex04/radex04.in, 13:06:37, 13:06:47
+DONE, radex14/radex14.in, 13:06:50, 13:09:42
+KILL, radex09/radex09.in, 13:09:45, 13:12:49
+KILL, radex17/radex17.in, 13:12:52, 13:15:59
+KILL, radex13/radex13.in, 13:16:02, 13:19:08
+KILL, radex08/radex08.in, 13:19:11, 13:22:18
+KILL, radex12/radex12.in, 13:22:21, 13:25:29
+KILL, radex07/radex07.in, 13:25:32, 13:28:39
+DONE, radex15/radex15.in, 13:28:42, 13:31:33
+DONE, vpex04/vpex04.in, 13:31:36, 13:31:49
+DONE, vpex06/vpex06.in, 13:31:52, 13:32:06
+DONE, vpex10/vpex10.in, 13:32:09, 13:33:09
+DONE, vpex09/vpex09.in, 13:33:12, 13:33:36
+DONE, vpex13/vpex13.in, 13:33:39, 13:33:55
+KILL, vpex07/vpex07.in, 13:33:58, 13:37:03
+DONE, vpex02/vpex02.in, 13:37:06, 13:38:00
+DONE, vpex12/vpex12.in, 13:38:03, 13:40:10
+KILL, vpex05/vpex05.in, 13:40:13, 13:43:18
+DONE, vpex11/vpex11.in, 13:43:21, 13:45:01
+DONE, vpex08/vpex08.in, 13:45:04, 13:47:50
+KILL, vpex03/vpex03.in, 13:47:53, 13:51:02
+DONE, tftex12/tftex12.in, 13:51:05, 13:51:49
+DONE, tftex03/tftex03.in, 13:51:52, 13:52:07
+KILL, tftex10/tftex10.in, 13:52:10, 13:55:16
+DONE, tftex22/tftex22.in, 13:55:19, 13:56:52
+DONE, tftex07/tftex07.in, 13:56:55, 13:57:19
+KILL, tftex18/tftex18.in, 13:57:22, 14:00:30
+KILL, tftex13/tftex13.in, 14:00:33, 14:03:38
+KILL, tftex14/tftex14.in, 14:03:41, 14:06:48
+DONE, tftex06/tftex06.in, 14:06:51, 14:07:22
+DONE, tftex05/tftex05.in, 14:07:25, 14:07:44
+KILL, tftex21/tftex21.in, 14:07:47, 14:10:51
+KILL, tftex16/tftex16.in, 14:10:54, 14:14:00
+DONE, tftex02/tftex02.in, 14:14:03, 14:14:22
+KILL, tftex11/tftex11.in, 14:14:25, 14:17:29
+KILL, tftex19/tftex19.in, 14:17:32, 14:20:40
+DONE, tftex01/tftex01.in, 14:20:43, 14:20:57
+KILL, tftex17/tftex17.in, 14:21:00, 14:24:08
+KILL, tftex20/tftex20.in, 14:24:11, 14:27:18
+DONE, tftex08/tftex08.in, 14:27:21, 14:27:33
+DONE, tftex04/tftex04.in, 14:27:36, 14:27:49
+DONE, tftex09/tftex09.in, 14:27:52, 14:28:13
+DONE, tftex15/tftex15.in, 14:28:16, 14:29:00
+KILL, latchex04/latchex04.in, 14:29:03, 14:32:09
+DONE, latchex03/latchex03.in, 14:32:12, 14:32:45
+DONE, latchex02/latchex02.in, 14:32:48, 14:33:30
+DONE, latchex01/latchex01.in, 14:33:33, 14:34:06
+DONE, vsex06/vsex06.in, 14:34:09, 14:36:14
+DONE, vsex02/vsex02.in, 14:36:17, 14:37:01
+DONE, vsex08/vsex08.in, 14:37:04, 14:38:06
+DONE, vsex04/vsex04.in, 14:38:09, 14:38:25
+DONE, vsex09/vsex09.in, 14:38:28, 14:40:12
+DONE, vsex01/vsex01.in, 14:40:15, 14:41:05
+KILL, vsex05/vsex05.in, 14:41:08, 14:44:13
+DONE, vsex03/vsex03.in, 14:44:16, 14:44:28
+KILL, vsex07/vsex07.in, 14:44:31, 14:47:36
+DONE, ccdex01/ccdex01.in, 14:47:39, 14:48:08
+DONE, ccdex02/ccdex02.in, 14:48:11, 14:48:31
+DONE, ccdex03/ccdex03.in, 14:48:34, 14:48:51
+DONE, vp2dex11/vp2dex11.in, 14:48:54, 14:49:12
+DONE, vp2dex05/vp2dex05.in, 14:49:15, 14:51:20
+KILL, vp2dex08/vp2dex08.in, 14:51:23, 14:54:27
+KILL, vp2dex06/vp2dex06.in, 14:54:30, 14:57:35
+KILL, vp2dex03/vp2dex03.in, 14:57:38, 15:00:43
+DONE, vp2dex01/vp2dex01.in, 15:00:46, 15:00:59
+DONE, vp2dex12/vp2dex12.in, 15:01:02, 15:01:18
+KILL, vp2dex10/vp2dex10.in, 15:01:21, 15:04:27
+DONE, vp2dex09/vp2dex09.in, 15:04:30, 15:04:47
+DONE, vp2dex02/vp2dex02.in, 15:04:50, 15:05:02
+DONE, vp2dex13/vp2dex13.in, 15:05:05, 15:06:13
+KILL, vp2dex07/vp2dex07.in, 15:06:16, 15:09:24
+DONE, vp2dex04/vp2dex04.in, 15:09:27, 15:10:13
+KILL, sonosex06/sonosex06.in, 15:10:16, 15:13:21
+KILL, sonosex07/sonosex07.in, 15:13:24, 15:16:28
+KILL, sonosex02/sonosex02.in, 15:16:31, 15:19:35
+DONE, sonosex04/sonosex04.in, 15:19:38, 15:22:08
+DONE, sonosex03/sonosex03.in, 15:22:11, 15:24:41
+KILL, sonosex01/sonosex01.in, 15:24:44, 15:27:49
+DONE, sonosex05/sonosex05.in, 15:27:52, 15:29:08
+DONE, mcdeviceex01/mcdeviceex01.in, 15:29:11, 15:29:30
+DONE, mcdeviceex03/mcdeviceex03.in, 15:29:33, 15:30:36
+DONE, mcdeviceex05/mcdeviceex05.in, 15:30:39, 15:30:57
+DONE, mcdeviceex02/mcdeviceex02.in, 15:31:00, 15:31:25
+DONE, mcdeviceex04/mcdeviceex04.in, 15:31:28, 15:31:54
+KILL, doeex02/doeex02.in, 15:31:57, 15:35:05
+KILL, doeex01/doeex01.in, 15:35:08, 15:38:15
+DONE, isolationex02/isolationex02.in, 15:38:18, 15:38:36
+DONE, isolationex01/isolationex01.in, 15:38:39, 15:39:06
+KILL, ganfetex17/ganfetex17.in, 15:39:09, 15:42:16
+KILL, ganfetex12/ganfetex12.in, 15:42:19, 15:45:24
+KILL, ganfetex18/ganfetex18.in, 15:45:27, 15:48:32
+KILL, ganfetex08/ganfetex08.in, 15:48:35, 15:51:39
+DONE, ganfetex13/ganfetex13.in, 15:51:42, 15:51:58
+DONE, ganfetex09/ganfetex09.in, 15:52:01, 15:54:13
+DONE, ganfetex01/ganfetex01.in, 15:54:16, 15:55:10
+KILL, ganfetex19/ganfetex19.in, 15:55:13, 15:58:21
+KILL, ganfetex14/ganfetex14.in, 15:58:24, 16:01:29
+KILL, ganfetex21/ganfetex21.in, 16:01:32, 16:04:36
+KILL, ganfetex06/ganfetex06.in, 16:04:39, 16:07:48
+KILL, ganfetex20/ganfetex20.in, 16:07:51, 16:10:55
+KILL, ganfetex11/ganfetex11.in, 16:10:58, 16:14:04
+KILL, ganfetex16/ganfetex16.in, 16:14:07, 16:17:15
+DONE, ganfetex03/ganfetex03.in, 16:17:18, 16:18:52
+KILL, ganfetex05/ganfetex05.in, 16:18:55, 16:22:01
+KILL, ganfetex10/ganfetex10.in, 16:22:04, 16:25:08
+KILL, ganfetex07/ganfetex07.in, 16:25:11, 16:28:17
+KILL, ganfetex02/ganfetex02.in, 16:28:20, 16:31:26
+KILL, ganfetex15/ganfetex15.in, 16:31:29, 16:34:35
+DONE, ganfetex04/ganfetex04.in, 16:34:38, 16:35:28
+DONE, mos2ex14/mos2ex14.in, 16:35:31, 16:36:01
+DONE, mos2ex16/mos2ex16.in, 16:36:04, 16:36:33
+DONE, mos2ex01/mos2ex01.in, 16:36:36, 16:38:05
+DONE, mos2ex07/mos2ex07.in, 16:38:08, 16:38:38
+DONE, mos2ex02/mos2ex02.in, 16:38:41, 16:40:11
+DONE, mos2ex13/mos2ex13.in, 16:40:14, 16:40:59
+KILL, mos2ex18/mos2ex18.in, 16:41:02, 16:44:08
+DONE, mos2ex15/mos2ex15.in, 16:44:11, 16:44:42
+KILL, mos2ex20/mos2ex20.in, 16:44:45, 16:47:52
+KILL, mos2ex21/mos2ex21.in, 16:47:55, 16:51:00
+KILL, mos2ex17/mos2ex17.in, 16:51:03, 16:54:12
+DONE, mos2ex19/mos2ex19.in, 16:54:15, 16:56:06
+DONE, mos2ex11/mos2ex11.in, 16:56:09, 16:56:23
+KILL, mos2ex05/mos2ex05.in, 16:56:26, 16:59:31
+DONE, mos2ex09/mos2ex09.in, 16:59:34, 16:59:51
+KILL, mos2ex25/mos2ex25.in, 16:59:54, 17:03:02
+KILL, mos2ex27/mos2ex27.in, 17:03:05, 17:06:13
+KILL, mos2ex26/mos2ex26.in, 17:06:16, 17:09:24
+DONE, mos2ex12/mos2ex12.in, 17:09:27, 17:09:44
+KILL, mos2ex22/mos2ex22.in, 17:09:47, 17:12:53
+DONE, mos2ex06/mos2ex06.in, 17:12:56, 17:13:46
+DONE, mos2ex10/mos2ex10.in, 17:13:49, 17:14:06
+KILL, mos2ex28/mos2ex28.in, 17:14:09, 17:17:15
+DONE, mos2ex04/mos2ex04.in, 17:17:18, 17:17:46
+DONE, mos2ex24/mos2ex24.in, 17:17:49, 17:20:02
+DONE, mos2ex08/mos2ex08.in, 17:20:05, 17:20:35
+DONE, mos2ex23/mos2ex23.in, 17:20:38, 17:21:51
+DONE, mos2ex03/mos2ex03.in, 17:21:54, 17:22:12
+DONE, optoex09/optoex09.in, 17:22:15, 17:22:40
+DONE, optoex14/optoex14.in, 17:22:43, 17:23:04
+DONE, optoex12/optoex12.in, 17:23:07, 17:23:31
+KILL, optoex19/optoex19.in, 17:23:34, 17:26:40
+DONE, optoex11/optoex11.in, 17:26:43, 17:27:07
+DONE, optoex03/optoex03.in, 17:27:10, 17:27:24
+DONE, optoex10/optoex10.in, 17:27:27, 17:27:39
+DONE, optoex20/optoex20.in, 17:27:42, 17:30:48
+DONE, optoex08/optoex08.in, 17:30:51, 17:31:03
+DONE, optoex15/optoex15.in, 17:31:06, 17:31:32
+DONE, optoex02/optoex02.in, 17:31:35, 17:31:49
+DONE, optoex16/optoex16.in, 17:31:52, 17:32:03
+DONE, optoex07/optoex07.in, 17:32:06, 17:32:16
+DONE, optoex01/optoex01.in, 17:32:19, 17:32:30
+DONE, optoex17/optoex17.in, 17:32:33, 17:33:31
+DONE, optoex06/optoex06.in, 17:33:34, 17:34:04
+DONE, optoex04/optoex04.in, 17:34:07, 17:34:21
+DONE, optoex18/optoex18.in, 17:34:24, 17:34:58
+DONE, optoex13/optoex13.in, 17:35:01, 17:35:28
+DONE, optoex05/optoex05.in, 17:35:31, 17:35:47
+DONE, powerex19/powerex19.in, 17:35:50, 17:38:42
+DONE, powerex08/powerex08.in, 17:38:45, 17:39:08
+DONE, powerex13/powerex13.in, 17:39:11, 17:39:53
+DONE, powerex10/powerex10.in, 17:39:56, 17:40:33
+KILL, powerex11/powerex11.in, 17:40:36, 17:43:43
+DONE, powerex14/powerex14.in, 17:43:46, 17:44:31
+KILL, powerex18/powerex18.in, 17:44:34, 17:47:43
+KILL, powerex20/powerex20.in, 17:47:46, 17:50:53
+KILL, powerex16/powerex16.in, 17:50:56, 17:54:05
+KILL, powerex06/powerex06.in, 17:54:08, 17:57:14
+KILL, powerex22/powerex22.in, 17:57:17, 18:00:27
+KILL, powerex21/powerex21.in, 18:00:30, 18:03:35
+DONE, powerex09/powerex09.in, 18:03:38, 18:04:20
+DONE, powerex03/powerex03.in, 18:04:23, 18:04:55
+DONE, powerex12/powerex12.in, 18:04:58, 18:07:02
+DONE, powerex17/powerex17.in, 18:07:05, 18:09:05
+DONE, powerex04/powerex04.in, 18:09:08, 18:09:28
+DONE, powerex07/powerex07.in, 18:09:31, 18:10:13
+DONE, powerex05/powerex05.in, 18:10:16, 18:10:41
+KILL, powerex15/powerex15.in, 18:10:44, 18:13:50
+DONE, powerex01/powerex01.in, 18:13:53, 18:14:36
+DONE, powerex02/powerex02.in, 18:14:39, 18:14:55
+KILL, powerex23/powerex23.in, 18:14:58, 18:18:03
+KILL, powerex24/powerex24.in, 18:18:06, 18:21:13
+DONE, questex02/questex02.in, 18:21:16, 18:21:34
+DONE, questex08/questex08.in, 18:21:37, 18:21:55
+DONE, questex07/questex07.in, 18:21:58, 18:22:16
+DONE, questex05/questex05.in, 18:22:19, 18:22:37
+DONE, questex03/questex03.in, 18:22:40, 18:22:58
+DONE, questex14/questex14.in, 18:23:01, 18:23:20
+DONE, questex15/questex15.in, 18:23:23, 18:23:41
+DONE, questex01/questex01.in, 18:23:44, 18:24:02
+DONE, questex09/questex09.in, 18:24:05, 18:24:23
+DONE, questex10/questex10.in, 18:24:26, 18:24:44
+DONE, questex06/questex06.in, 18:24:47, 18:25:05
+DONE, questex16/questex16.in, 18:25:08, 18:25:26
+DONE, questex18/questex18.in, 18:25:29, 18:25:48
+DONE, questex04/questex04.in, 18:25:51, 18:26:10
+DONE, questex17/questex17.in, 18:26:13, 18:26:31
+DONE, questex12/questex12.in, 18:26:34, 18:26:52
+DONE, questex19/questex19.in, 18:26:55, 18:27:13
+DONE, questex11/questex11.in, 18:27:16, 18:27:34
+DONE, questex13/questex13.in, 18:27:37, 18:27:55
+DONE, hemtex06/hemtex06.in, 18:27:58, 18:28:16
+DONE, hemtex02/hemtex02.in, 18:28:19, 18:28:47
+DONE, hemtex03/hemtex03.in, 18:28:50, 18:29:09
+DONE, hemtex04/hemtex04.in, 18:29:12, 18:29:38
+DONE, hemtex05/hemtex05.in, 18:29:41, 18:30:08
+DONE, hemtex01/hemtex01.in, 18:30:11, 18:30:28
+DONE, vaex05/vaex05.in, 18:30:31, 18:30:59
+DONE, vaex04/vaex04.in, 18:31:02, 18:31:28
+DONE, vaex02/vaex02.in, 18:31:31, 18:31:41
+DONE, vaex03/vaex03.in, 18:31:44, 18:31:56
+DONE, vaex01/vaex01.in, 18:31:59, 18:32:06
+DONE, thermalex01/thermalex01.in, 18:32:09, 18:32:19
+DONE, thermalex07/thermalex07.in, 18:32:22, 18:32:33
+DONE, thermalex04/thermalex04.in, 18:32:36, 18:32:45
+DONE, thermalex03/thermalex03.in, 18:32:48, 18:33:01
+DONE, thermalex05/thermalex05.in, 18:33:04, 18:33:17
+DONE, thermalex02/thermalex02.in, 18:33:20, 18:33:34
+KILL, thermalex08/thermalex08.in, 18:33:37, 18:36:41
+DONE, thermalex06/thermalex06.in, 18:36:44, 18:36:58
+DONE, mos1ex12/mos1ex12.in, 18:37:01, 18:37:18
+DONE, mos1ex02/mos1ex02.in, 18:37:21, 18:37:42
+DONE, mos1ex04/mos1ex04.in, 18:37:45, 18:37:59
+DONE, mos1ex05/mos1ex05.in, 18:38:02, 18:38:27
+DONE, mos1ex01/mos1ex01.in, 18:38:30, 18:38:47
+DONE, mos1ex13/mos1ex13.in, 18:38:50, 18:39:20
+DONE, mos1ex06/mos1ex06.in, 18:39:23, 18:39:50
+DONE, mos1ex11/mos1ex11.in, 18:39:53, 18:40:10
+DONE, mos1ex03/mos1ex03.in, 18:40:13, 18:40:30
+DONE, mos1ex09/mos1ex09.in, 18:40:33, 18:40:50
+DONE, mos1ex07/mos1ex07.in, 18:40:53, 18:41:12
+DONE, mos1ex14/mos1ex14.in, 18:41:15, 18:41:33
+DONE, mos1ex15/mos1ex15.in, 18:41:36, 18:41:53
+DONE, mos1ex08/mos1ex08.in, 18:41:56, 18:42:11
+DONE, mos1ex10/mos1ex10.in, 18:42:14, 18:42:28
+DONE, eprmex03/eprmex03.in, 18:42:31, 18:42:58
+DONE, eprmex01/eprmex01.in, 18:43:01, 18:44:38
+KILL, eprmex02/eprmex02.in, 18:44:41, 18:47:48
+DONE, eprmex04/eprmex04.in, 18:47:51, 18:49:11
+DONE, eprmex05/eprmex05.in, 18:49:14, 18:50:05
+DONE, solarex12/solarex12.in, 18:50:08, 18:50:55
+DONE, solarex09/solarex09.in, 18:50:58, 18:51:19
+DONE, solarex11/solarex11.in, 18:51:22, 18:53:13
+DONE, solarex02/solarex02.in, 18:53:16, 18:53:39
+DONE, solarex14/solarex14.in, 18:53:42, 18:54:33
+DONE, solarex07/solarex07.in, 18:54:36, 18:54:49
+KILL, solarex18/solarex18.in, 18:54:52, 18:57:57
+DONE, solarex19/solarex19.in, 18:58:00, 18:58:25
+KILL, solarex06/solarex06.in, 18:58:28, 19:01:38
+KILL, solarex17/solarex17.in, 19:01:41, 19:04:49
+DONE, solarex05/solarex05.in, 19:04:52, 19:05:07
+DONE, solarex08/solarex08.in, 19:05:10, 19:05:25
+KILL, solarex16/solarex16.in, 19:05:28, 19:08:38
+DONE, solarex04/solarex04.in, 19:08:41, 19:09:10
+DONE, solarex10/solarex10.in, 19:09:13, 19:10:29
+KILL, solarex13/solarex13.in, 19:10:32, 19:13:42
+DONE, solarex01/solarex01.in, 19:13:45, 19:14:29
+DONE, solarex15/solarex15.in, 19:14:32, 19:15:15
+KILL, solarex21/solarex21.in, 19:15:18, 19:18:24
+KILL, solarex20/solarex20.in, 19:18:27, 19:21:32
+DONE, solarex03/solarex03.in, 19:21:35, 19:22:27
+DONE, magneticex04/magneticex04.in, 19:22:30, 19:22:49
+DONE, magneticex02/magneticex02.in, 19:22:52, 19:23:15
+DONE, magneticex01/magneticex01.in, 19:23:18, 19:23:37
+KILL, magneticex03/magneticex03.in, 19:23:40, 19:26:44
+DONE, highkex02/highkex02.in, 19:26:47, 19:27:01
+DONE, highkex01/highkex01.in, 19:27:04, 19:27:23
+DONE, noiseex05/noiseex05.in, 19:27:26, 19:27:56
+DONE, noiseex02/noiseex02.in, 19:27:59, 19:28:21
+DONE, noiseex04/noiseex04.in, 19:28:24, 19:28:38
+DONE, noiseex01/noiseex01.in, 19:28:41, 19:28:53
+DONE, noiseex03/noiseex03.in, 19:28:56, 19:29:17
+DONE, clex12/clex12.in, 19:29:20, 19:29:50
+DONE, clex18/clex18.in, 19:29:53, 19:30:16
+DONE, clex11/clex11.in, 19:30:19, 19:30:45
+DONE, clex01/clex01.in, 19:30:48, 19:31:07
+DONE, clex22/clex22.in, 19:31:10, 19:32:11
+DONE, clex25/clex25.in, 19:32:14, 19:32:47
+DONE, clex15/clex15.in, 19:32:50, 19:33:54
+DONE, clex09/clex09.in, 19:33:57, 19:34:20
+DONE, clex24/clex24.in, 19:34:23, 19:34:59
+DONE, clex02/clex02.in, 19:35:02, 19:35:22
+DONE, clex04/clex04.in, 19:35:25, 19:35:47
+DONE, clex05/clex05.in, 19:35:50, 19:36:09
+DONE, clex08/clex08.in, 19:36:12, 19:36:59
+DONE, clex21/clex21.in, 19:37:02, 19:37:24
+DONE, clex13/clex13.in, 19:37:27, 19:38:48
+DONE, clex07/clex07.in, 19:38:51, 19:39:20
+KILL, clex00/clex00.in, 19:39:23, 19:42:32
+DONE, clex23/clex23.in, 19:42:35, 19:43:50
+DONE, clex03/clex03.in, 19:43:53, 19:44:13
+KILL, clex17/clex17.in, 19:44:16, 19:47:21
+DONE, clex10/clex10.in, 19:47:24, 19:48:17
+KILL, clex20/clex20.in, 19:48:20, 19:51:28
+DONE, clex16/clex16.in, 19:51:31, 19:51:51
+DONE, clex06/clex06.in, 19:51:54, 19:52:13
+DONE, clex19/clex19.in, 19:52:16, 19:52:37
+DONE, clex14/clex14.in, 19:52:40, 19:53:10
+KILL, solidex03/solidex03.in, 15:54:27, 17:34:35
+KILL, solidex01/solidex01.in, 17:34:39, 19:14:45
+KILL, solidex04/solidex04.in, 19:14:48, 20:54:57
+DONE, solidex09/solidex09.in, 20:55:00, 22:00:27
+KILL, solidex05/solidex05.in, 22:00:30, 23:40:34
+DONE, solidex07/solidex07.in, 23:40:37, 23:56:15
+DONE, solidex02/solidex02.in, 23:56:18, 23:58:24
+DONE, solidex06/solidex06.in, 23:58:27, 00:00:58
+DONE, solidex10/solidex10.in, 00:01:01, 00:03:31
+DONE, solidex08/solidex08.in, 00:03:34, 00:08:02
+DONE, soiex04/soiex04.in, 00:08:05, 00:08:36
+DONE, soiex10/soiex10.in, 00:08:39, 00:09:23
+DONE, soiex13/soiex13.in, 00:09:26, 00:25:20
+DONE, soiex03/soiex03.in, 00:25:23, 00:25:45
+KILL, soiex15/soiex15.in, 00:25:48, 02:05:54
+KILL, soiex12/soiex12.in, 02:05:57, 03:46:03
+DONE, soiex08/soiex08.in, 03:46:06, 03:47:01
+DONE, soiex05/soiex05.in, 03:47:04, 03:47:51
+DONE, soiex02/soiex02.in, 03:47:54, 03:48:05
+DONE, soiex06/soiex06.in, 03:48:08, 03:48:43
+DONE, soiex01/soiex01.in, 03:48:46, 03:48:58
+KILL, soiex14/soiex14.in, 03:49:01, 05:29:09
+KILL, soiex11/soiex11.in, 05:29:13, 07:09:17
+DONE, soiex07/soiex07.in, 07:09:20, 07:09:39
+DONE, soiex09/soiex09.in, 07:09:42, 07:15:28
+DONE, ledex08/ledex08.in, 07:15:31, 07:51:08
+DONE, ledex03/ledex03.in, 07:51:11, 07:52:09
+DONE, ledex01/ledex01.in, 07:52:12, 07:52:33
+DONE, ledex02/ledex02.in, 07:52:36, 07:52:55
+DONE, ledex06/ledex06.in, 07:52:58, 08:18:05
+DONE, ledex09/ledex09.in, 08:18:08, 08:20:24
+DONE, ledex05/ledex05.in, 08:20:28, 08:21:02
+DONE, ledex07/ledex07.in, 08:21:05, 08:56:35
+DONE, ledex10/ledex10.in, 08:56:38, 08:57:47
+DONE, ledex04/ledex04.in, 08:57:50, 08:58:43
+DONE, bjtex01/bjtex01.in, 08:58:46, 08:59:04
+DONE, bjtex02/bjtex02.in, 08:59:07, 08:59:34
+DONE, bjtex04/bjtex04.in, 08:59:37, 09:00:10
+DONE, bjtex07/bjtex07.in, 09:00:13, 09:00:39
+DONE, bjtex05/bjtex05.in, 09:00:42, 09:00:55
+DONE, bjtex10/bjtex10.in, 09:00:58, 09:01:23
+DONE, bjtex11/bjtex11.in, 09:01:26, 09:01:47
+DONE, bjtex06/bjtex06.in, 09:01:50, 09:02:03
+DONE, bjtex08/bjtex08.in, 09:02:06, 09:02:47
+DONE, bjtex03/bjtex03.in, 09:02:50, 09:03:09
+DONE, bjtex09/bjtex09.in, 09:03:12, 09:03:58
+DONE, ferroex01/ferroex01.in, 09:04:01, 09:05:09
+DONE, ferroex03/ferroex03.in, 09:05:12, 09:05:33
+KILL, ferroex04/ferroex04.in, 09:05:36, 10:45:43
+DONE, ferroex02/ferroex02.in, 10:45:46, 10:46:04
+DONE, esdex04/esdex04.in, 10:46:07, 10:48:10
+DONE, esdex03/esdex03.in, 10:48:13, 10:49:35
+DONE, esdex01/esdex01.in, 10:49:38, 10:51:03
+DONE, esdex05/esdex05.in, 10:51:06, 10:51:28
+DONE, esdex02/esdex02.in, 10:51:31, 10:53:04
+DONE, hbtex04/hbtex04.in, 10:53:07, 10:53:50
+DONE, hbtex03/hbtex03.in, 10:53:53, 10:54:15
+DONE, hbtex08/hbtex08.in, 10:54:18, 10:54:54
+DONE, hbtex07/hbtex07.in, 10:54:57, 10:56:01
+DONE, hbtex06/hbtex06.in, 10:56:04, 10:56:21
+DONE, hbtex02/hbtex02.in, 10:56:24, 10:56:40
+DONE, hbtex01/hbtex01.in, 10:56:43, 10:56:58
+DONE, hbtex05/hbtex05.in, 10:57:02, 10:57:14
+DONE, sicex10/sicex10.in, 10:57:17, 11:01:16
+DONE, sicex14/sicex14.in, 11:01:19, 11:02:33
+DONE, sicex08/sicex08.in, 11:02:36, 11:13:38
+DONE, sicex04/sicex04.in, 11:13:41, 11:18:05
+KILL, sicex07/sicex07.in, 11:18:08, 12:58:13
+KILL, sicex09/sicex09.in, 12:58:16, 14:38:21
+DONE, sicex01/sicex01.in, 14:38:24, 14:40:28
+DONE, sicex06/sicex06.in, 14:40:31, 14:42:43
+DONE, sicex05/sicex05.in, 14:42:46, 14:43:44
+DONE, sicex02/sicex02.in, 14:43:47, 14:44:30
+DONE, sicex11/sicex11.in, 14:44:33, 15:28:51
+DONE, sicex03/sicex03.in, 15:28:54, 15:29:31
+DONE, sicex13/sicex13.in, 15:29:34, 15:30:30
+DONE, sicex12/sicex12.in, 15:30:33, 15:43:55
+DONE, mercuryex01/mercuryex01.in, 15:43:58, 15:44:12
+DONE, mercuryex06/mercuryex06.in, 15:44:15, 15:49:17
+DONE, mercuryex04/mercuryex04.in, 15:49:20, 15:49:29
+DONE, mercuryex07/mercuryex07.in, 15:49:32, 16:52:20
+DONE, mercuryex03/mercuryex03.in, 16:52:23, 16:52:35
+DONE, mercuryex05/mercuryex05.in, 16:52:38, 16:52:57
+DONE, mercuryex08/mercuryex08.in, 16:53:00, 17:09:07
+DONE, mercuryex02/mercuryex02.in, 17:09:10, 17:09:24
+DONE, vcselex02/vcselex02.in, 17:09:27, 17:28:02
+DONE, vcselex03/vcselex03.in, 17:28:05, 17:46:33
+DONE, vcselex01/vcselex01.in, 17:46:36, 18:00:39
+DONE, vcselex04/vcselex04.in, 18:00:42, 18:26:09
+DONE, imagesensorex02/imagesensorex02.in, 18:26:12, 18:26:46
+DONE, imagesensorex05/imagesensorex05.in, 18:26:49, 18:33:50
+DONE, imagesensorex01/imagesensorex01.in, 18:33:53, 18:46:07
+DONE, imagesensorex03/imagesensorex03.in, 18:46:10, 19:28:12
+DONE, imagesensorex06/imagesensorex06.in, 19:28:15, 19:42:19
+KILL, imagesensorex04/imagesensorex04.in, 19:42:22, 21:22:27
+KILL, cryoex03/cryoex03.in, 21:22:30, 23:02:35
+DONE, cryoex02/cryoex02.in, 23:02:38, 23:08:19
+DONE, cryoex01/cryoex01.in, 23:08:22, 23:32:49
+DONE, organicex05/organicex05.in, 23:32:52, 23:33:14
+DONE, organicex10/organicex10.in, 23:33:17, 00:08:17
+DONE, organicex04/organicex04.in, 00:08:20, 00:08:57
+DONE, organicex03/organicex03.in, 00:09:00, 00:14:42
+DONE, organicex02/organicex02.in, 00:14:45, 00:15:00
+DONE, organicex09/organicex09.in, 00:15:03, 00:17:22
+DONE, organicex06/organicex06.in, 00:17:25, 00:24:58
+DONE, organicex08/organicex08.in, 00:25:01, 00:25:50
+DONE, organicex11/organicex11.in, 00:25:53, 00:26:18
+DONE, organicex01/organicex01.in, 00:26:21, 00:26:37
+DONE, organicex07/organicex07.in, 00:26:40, 00:33:19
+DONE, diodeex12/diodeex12.in, 00:33:22, 00:34:42
+DONE, diodeex10/diodeex10.in, 00:34:45, 00:35:55
+DONE, diodeex05/diodeex05.in, 00:35:58, 00:36:23
+DONE, diodeex03/diodeex03.in, 00:36:26, 00:36:44
+DONE, diodeex09/diodeex09.in, 00:36:47, 00:38:39
+DONE, diodeex08/diodeex08.in, 00:38:42, 00:38:57
+DONE, diodeex06/diodeex06.in, 00:39:00, 00:39:15
+DONE, diodeex11/diodeex11.in, 00:39:18, 00:40:14
+DONE, diodeex02/diodeex02.in, 00:40:17, 00:41:34
+DONE, diodeex01/diodeex01.in, 00:41:37, 00:41:50
+DONE, diodeex07/diodeex07.in, 00:41:53, 00:43:02
+DONE, diodeex04/diodeex04.in, 00:43:05, 00:43:30
+DONE, diodeex13/diodeex13.in, 00:43:33, 00:55:49
+DONE, mesfetex04/mesfetex04.in, 00:55:52, 00:56:14
+DONE, mesfetex03/mesfetex03.in, 00:56:17, 00:56:40
+DONE, mesfetex06/mesfetex06.in, 00:56:43, 00:57:00
+DONE, mesfetex02/mesfetex02.in, 00:57:03, 00:57:20
+DONE, mesfetex01/mesfetex01.in, 00:57:23, 00:57:43
+DONE, mesfetex05/mesfetex05.in, 00:57:46, 00:58:10
+DONE, quantumex02/quantumex02.in, 00:58:13, 00:58:59
+DONE, quantumex22/quantumex22.in, 00:59:02, 01:00:59
+DONE, quantumex07/quantumex07.in, 01:01:02, 01:02:50
+DONE, quantumex08/quantumex08.in, 01:02:53, 01:07:42
+DONE, quantumex14/quantumex14.in, 01:07:45, 01:09:19
+DONE, quantumex13/quantumex13.in, 01:09:22, 01:11:37
+DONE, quantumex01/quantumex01.in, 01:11:40, 01:12:13
+DONE, quantumex03/quantumex03.in, 01:12:16, 01:12:56
+DONE, quantumex23/quantumex23.in, 01:12:59, 01:13:53
+DONE, quantumex17/quantumex17.in, 01:13:56, 01:15:30
+DONE, quantumex20/quantumex20.in, 01:15:33, 01:16:10
+DONE, quantumex18/quantumex18.in, 01:16:13, 01:18:09
+DONE, quantumex09/quantumex09.in, 01:18:12, 01:18:30
+DONE, quantumex05/quantumex05.in, 01:18:33, 01:19:39
+DONE, quantumex04/quantumex04.in, 01:19:42, 01:20:03
+DONE, quantumex19/quantumex19.in, 01:20:06, 01:26:32
+DONE, quantumex10/quantumex10.in, 01:26:35, 01:27:09
+DONE, quantumex11/quantumex11.in, 01:27:12, 01:28:18
+DONE, quantumex15/quantumex15.in, 01:28:21, 01:28:33
+DONE, quantumex06/quantumex06.in, 01:28:36, 01:30:05
+DONE, quantumex21/quantumex21.in, 01:30:08, 01:57:15
+DONE, quantumex24/quantumex24.in, 01:57:18, 01:58:22
+DONE, quantumex16/quantumex16.in, 01:58:25, 02:49:33
+DONE, quantumex12/quantumex12.in, 02:49:36, 02:53:32
+DONE, laserex08/laserex08.in, 02:53:35, 03:52:43
+DONE, laserex13/laserex13.in, 03:52:46, 04:30:55
+DONE, laserex07/laserex07.in, 04:30:58, 04:44:17
+DONE, laserex01/laserex01.in, 04:44:20, 04:44:46
+DONE, laserex04/laserex04.in, 04:44:49, 04:45:39
+DONE, laserex03/laserex03.in, 04:45:42, 04:48:48
+DONE, laserex12/laserex12.in, 04:48:51, 04:59:47
+DONE, laserex11/laserex11.in, 04:59:50, 05:02:30
+DONE, laserex09/laserex09.in, 05:02:33, 05:35:52
+DONE, laserex02/laserex02.in, 05:35:55, 05:37:56
+KILL, laserex05/laserex05.in, 05:37:59, 07:18:06
+DONE, laserex06/laserex06.in, 07:18:09, 07:39:20
+DONE, laserex10/laserex10.in, 07:39:23, 07:47:43
+DONE, radex01/radex01.in, 07:47:46, 07:49:51
+DONE, radex05/radex05.in, 07:49:54, 07:50:07
+DONE, radex16/radex16.in, 07:50:10, 07:50:27
+DONE, radex02/radex02.in, 07:50:30, 07:53:09
+KILL, radex10/radex10.in, 07:53:12, 09:33:16
+DONE, radex06/radex06.in, 09:33:19, 09:39:33
+DONE, radex03/radex03.in, 09:39:36, 09:48:07
+DONE, radex18/radex18.in, 09:48:10, 09:58:06
+DONE, radex11/radex11.in, 09:58:09, 11:04:21
+DONE, radex04/radex04.in, 11:04:24, 11:04:33
+DONE, radex14/radex14.in, 11:04:36, 11:07:36
+KILL, radex09/radex09.in, 11:07:39, 12:47:47
+KILL, radex17/radex17.in, 12:47:50, 14:27:57
+DONE, radex13/radex13.in, 14:28:00, 15:06:33
+KILL, radex08/radex08.in, 15:06:36, 16:46:42
+DONE, radex12/radex12.in, 16:46:45, 16:50:31
+DONE, radex07/radex07.in, 16:50:34, 17:16:36
+DONE, radex15/radex15.in, 17:16:39, 17:19:42
+DONE, vpex04/vpex04.in, 17:19:45, 17:20:00
+DONE, vpex06/vpex06.in, 17:20:03, 17:20:16
+DONE, vpex10/vpex10.in, 17:20:19, 17:21:20
+DONE, vpex09/vpex09.in, 17:21:23, 17:21:48
+DONE, vpex13/vpex13.in, 17:21:51, 17:22:07
+DONE, vpex07/vpex07.in, 17:22:10, 17:37:12
+DONE, vpex02/vpex02.in, 17:37:15, 17:38:13
+DONE, vpex12/vpex12.in, 17:38:16, 18:44:31
+DONE, vpex05/vpex05.in, 18:44:34, 18:50:57
+DONE, vpex11/vpex11.in, 18:51:00, 18:52:45
+DONE, vpex08/vpex08.in, 18:52:48, 18:55:40
+DONE, vpex03/vpex03.in, 18:55:43, 19:05:53
+DONE, tftex12/tftex12.in, 19:05:56, 19:06:43
+DONE, tftex03/tftex03.in, 19:06:46, 19:07:03
+DONE, tftex10/tftex10.in, 19:07:06, 19:12:43
+DONE, tftex22/tftex22.in, 19:12:46, 19:14:27
+DONE, tftex07/tftex07.in, 19:14:30, 19:14:53
+DONE, tftex18/tftex18.in, 19:14:56, 19:23:47
+DONE, tftex13/tftex13.in, 19:23:50, 19:41:53
+DONE, tftex14/tftex14.in, 19:41:56, 19:45:51
+DONE, tftex06/tftex06.in, 19:45:54, 19:46:24
+DONE, tftex05/tftex05.in, 19:46:27, 19:46:48
+DONE, tftex21/tftex21.in, 19:46:51, 19:51:03
+DONE, tftex16/tftex16.in, 19:51:06, 19:58:11
+DONE, tftex02/tftex02.in, 19:58:14, 19:58:30
+KILL, tftex11/tftex11.in, 19:58:33, 21:38:40
+KILL, tftex19/tftex19.in, 21:38:43, 23:18:50
+DONE, tftex01/tftex01.in, 23:18:53, 23:19:09
+DONE, tftex17/tftex17.in, 23:19:12, 23:31:24
+DONE, tftex20/tftex20.in, 23:31:27, 23:38:15
+DONE, tftex08/tftex08.in, 23:38:18, 23:38:36
+DONE, tftex04/tftex04.in, 23:38:39, 23:38:54
+DONE, tftex09/tftex09.in, 23:38:57, 23:39:18
+DONE, tftex15/tftex15.in, 23:39:21, 23:40:05
+DONE, latchex04/latchex04.in, 23:40:08, 23:44:57
+DONE, latchex03/latchex03.in, 23:45:00, 23:45:33
+DONE, latchex02/latchex02.in, 23:45:36, 23:46:21
+DONE, latchex01/latchex01.in, 23:46:24, 23:46:58
+DONE, vsex06/vsex06.in, 23:47:01, 23:49:07
+DONE, vsex02/vsex02.in, 23:49:10, 23:49:54
+DONE, vsex08/vsex08.in, 23:49:57, 23:51:00
+DONE, vsex04/vsex04.in, 23:51:03, 23:51:19
+DONE, vsex09/vsex09.in, 23:51:22, 23:53:08
+DONE, vsex01/vsex01.in, 23:53:11, 23:54:04
+KILL, vsex05/vsex05.in, 23:54:07, 01:34:13
+DONE, vsex03/vsex03.in, 01:34:16, 01:34:29
+DONE, vsex07/vsex07.in, 01:34:32, 01:46:21
+DONE, ccdex01/ccdex01.in, 01:46:24, 01:46:56
+DONE, ccdex02/ccdex02.in, 01:46:59, 01:47:20
+DONE, ccdex03/ccdex03.in, 01:47:23, 01:47:39
+DONE, vp2dex11/vp2dex11.in, 01:47:42, 01:47:59
+DONE, vp2dex05/vp2dex05.in, 01:48:02, 01:50:09
+DONE, vp2dex08/vp2dex08.in, 01:50:12, 02:56:26
+DONE, vp2dex06/vp2dex06.in, 02:56:29, 04:02:41
+DONE, vp2dex03/vp2dex03.in, 04:02:44, 05:08:59
+DONE, vp2dex01/vp2dex01.in, 05:09:02, 05:09:15
+DONE, vp2dex12/vp2dex12.in, 05:09:18, 05:09:35
+DONE, vp2dex10/vp2dex10.in, 05:09:38, 06:15:50
+DONE, vp2dex09/vp2dex09.in, 06:15:53, 06:16:10
+DONE, vp2dex02/vp2dex02.in, 06:16:13, 06:16:26
+DONE, vp2dex13/vp2dex13.in, 06:16:29, 06:17:36
+DONE, vp2dex07/vp2dex07.in, 06:17:39, 07:23:53
+DONE, vp2dex04/vp2dex04.in, 07:23:56, 07:24:40
+DONE, sonosex06/sonosex06.in, 07:24:43, 07:31:21
+DONE, sonosex07/sonosex07.in, 07:31:24, 08:13:37
+DONE, sonosex02/sonosex02.in, 08:13:40, 08:32:30
+DONE, sonosex04/sonosex04.in, 08:32:33, 08:35:07
+DONE, sonosex03/sonosex03.in, 08:35:10, 08:37:42
+DONE, sonosex01/sonosex01.in, 08:37:45, 08:47:23
+DONE, sonosex05/sonosex05.in, 08:47:26, 08:48:43
+DONE, mcdeviceex01/mcdeviceex01.in, 08:48:46, 08:49:05
+DONE, mcdeviceex03/mcdeviceex03.in, 08:49:08, 08:50:14
+DONE, mcdeviceex05/mcdeviceex05.in, 08:50:17, 08:50:36
+DONE, mcdeviceex02/mcdeviceex02.in, 08:50:39, 08:51:01
+DONE, mcdeviceex04/mcdeviceex04.in, 08:51:04, 08:51:30
+DONE, doeex02/doeex02.in, 08:51:33, 08:57:49
+DONE, doeex01/doeex01.in, 08:57:52, 09:11:36
+DONE, isolationex02/isolationex02.in, 09:11:39, 09:11:56
+DONE, isolationex01/isolationex01.in, 09:11:59, 09:12:28
+KILL, ganfetex17/ganfetex17.in, 09:12:31, 10:52:38
+DONE, ganfetex12/ganfetex12.in, 10:52:41, 11:03:14
+KILL, ganfetex18/ganfetex18.in, 11:03:17, 12:43:29
+DONE, ganfetex08/ganfetex08.in, 12:43:32, 13:14:05
+DONE, ganfetex13/ganfetex13.in, 13:14:08, 13:14:26
+DONE, ganfetex09/ganfetex09.in, 13:14:29, 13:17:00
+DONE, ganfetex01/ganfetex01.in, 13:17:03, 13:17:55
+KILL, ganfetex19/ganfetex19.in, 13:17:58, 14:58:06
+DONE, ganfetex14/ganfetex14.in, 14:58:09, 15:05:36
+DONE, ganfetex21/ganfetex21.in, 15:05:39, 16:24:52
+KILL, ganfetex06/ganfetex06.in, 16:24:55, 18:05:04
+Tue Mar  8 22:23:34 CST 2022
+Tue Mar  8 22:26:06 CST 2022
+Tue Mar  8 22:28:02 CST 2022
+Tue Mar  8 22:31:33 CST 2022
+Tue Mar  8 22:32:58 CST 2022
+Tue Mar  8 22:37:18 CST 2022
+Tue Mar  8 22:40:05 CST 2022
+Tue Mar  8 22:43:32 CST 2022
+Tue Mar  8 22:54:43 CST 2022
+Tue Mar  8 22:55:45 CST 2022
+Tue Mar  8 23:04:24 CST 2022
+Tue Mar  8 23:05:21 CST 2022
+Tue Mar  8 23:16:53 CST 2022
+Tue Mar 15 10:09:09 CST 2022
+Tue Mar 15 17:23:31 CST 2022
+DONE, vaex01/vaex01.in, Tue Mar 15 17:23:31 CST 2022, Tue Mar 15 17:23:43 CST 2022
+DONE, bjtex05/bjtex05.in, Tue Mar 15 17:23:46 CST 2022, Tue Mar 15 17:24:09 CST 2022
+DONE, mercuryex04/mercuryex04.in, Tue Mar 15 17:24:12 CST 2022, Tue Mar 15 17:24:38 CST 2022
+DONE, radex04/radex04.in, Tue Mar 15 17:24:41 CST 2022, Tue Mar 15 17:24:57 CST 2022
+DONE, thermalex04/thermalex04.in, Tue Mar 15 17:25:00 CST 2022, Tue Mar 15 17:25:14 CST 2022
+DONE, optoex07/optoex07.in, Tue Mar 15 17:25:17 CST 2022, Tue Mar 15 17:25:34 CST 2022
+DONE, thermalex01/thermalex01.in, Tue Mar 15 17:25:37 CST 2022, Tue Mar 15 17:25:52 CST 2022
+DONE, vaex02/vaex02.in, Tue Mar 15 17:25:55 CST 2022, Tue Mar 15 17:26:07 CST 2022
+DONE, optoex01/optoex01.in, Tue Mar 15 17:26:10 CST 2022, Tue Mar 15 17:26:25 CST 2022
+DONE, optoex16/optoex16.in, Tue Mar 15 17:26:28 CST 2022, Tue Mar 15 17:26:46 CST 2022
+DONE, soiex02/soiex02.in, Tue Mar 15 17:26:49 CST 2022, Tue Mar 15 17:27:14 CST 2022
+DONE, thermalex07/thermalex07.in, Tue Mar 15 17:27:17 CST 2022, Tue Mar 15 17:27:47 CST 2022
+DONE, bjtex01/bjtex01.in, Tue Mar 15 17:27:50 CST 2022, Tue Mar 15 17:28:18 CST 2022
+DONE, bjtex06/bjtex06.in, Tue Mar 15 17:28:21 CST 2022, Tue Mar 15 17:28:45 CST 2022
+DONE, diodeex01/diodeex01.in, Tue Mar 15 17:28:48 CST 2022, Tue Mar 15 17:29:08 CST 2022
+DONE, hbtex05/hbtex05.in, Tue Mar 15 17:29:11 CST 2022, Tue Mar 15 17:29:35 CST 2022
+DONE, mercuryex01/mercuryex01.in, Tue Mar 15 17:29:38 CST 2022, Tue Mar 15 17:30:07 CST 2022
+DONE, mercuryex03/mercuryex03.in, Tue Mar 15 17:30:10 CST 2022, Tue Mar 15 17:30:38 CST 2022
+DONE, noiseex01/noiseex01.in, Tue Mar 15 17:30:41 CST 2022, Tue Mar 15 17:31:04 CST 2022
+DONE, optoex08/optoex08.in, Tue Mar 15 17:31:07 CST 2022, Tue Mar 15 17:31:24 CST 2022
+DONE, optoex10/optoex10.in, Tue Mar 15 17:31:27 CST 2022, Tue Mar 15 17:31:44 CST 2022
+DONE, quantumex15/quantumex15.in, Tue Mar 15 17:31:47 CST 2022, Tue Mar 15 17:32:07 CST 2022
+DONE, soiex01/soiex01.in, Tue Mar 15 17:32:10 CST 2022, Tue Mar 15 17:32:36 CST 2022
+DONE, tftex08/tftex08.in, Tue Mar 15 17:32:39 CST 2022, Tue Mar 15 17:33:02 CST 2022
+DONE, vaex03/vaex03.in, Tue Mar 15 17:33:05 CST 2022, Tue Mar 15 17:33:22 CST 2022
+DONE, vp2dex02/vp2dex02.in, Tue Mar 15 17:33:25 CST 2022, Tue Mar 15 17:33:50 CST 2022
+DONE, vsex03/vsex03.in, Tue Mar 15 17:33:53 CST 2022, Tue Mar 15 17:36:18 CST 2022
+DONE, radex05/radex05.in, Tue Mar 15 17:36:21 CST 2022, Tue Mar 15 17:36:39 CST 2022
+DONE, solarex07/solarex07.in, Tue Mar 15 17:36:42 CST 2022, Tue Mar 15 17:36:59 CST 2022
+DONE, tftex04/tftex04.in, Tue Mar 15 17:37:02 CST 2022, Tue Mar 15 17:37:25 CST 2022
+DONE, thermalex03/thermalex03.in, Tue Mar 15 17:37:28 CST 2022, Tue Mar 15 17:37:44 CST 2022
+DONE, thermalex05/thermalex05.in, Tue Mar 15 17:37:47 CST 2022, Tue Mar 15 17:38:12 CST 2022
+DONE, vp2dex01/vp2dex01.in, Tue Mar 15 17:38:15 CST 2022, Tue Mar 15 17:38:38 CST 2022
+DONE, vpex04/vpex04.in, Tue Mar 15 17:38:41 CST 2022, Tue Mar 15 17:39:19 CST 2022
+DONE, vpex06/vpex06.in, Tue Mar 15 17:39:22 CST 2022, Tue Mar 15 17:42:32 CST 2022
+DONE, hbtex02/hbtex02.in, Tue Mar 15 17:42:35 CST 2022, Tue Mar 15 17:43:02 CST 2022
+DONE, highkex02/highkex02.in, Tue Mar 15 17:43:05 CST 2022, Tue Mar 15 17:43:23 CST 2022
+DONE, mercuryex02/mercuryex02.in, Tue Mar 15 17:43:26 CST 2022, Tue Mar 15 17:43:57 CST 2022
+DONE, mos1ex04/mos1ex04.in, Tue Mar 15 17:44:00 CST 2022, Tue Mar 15 17:44:26 CST 2022
+DONE, mos1ex10/mos1ex10.in, Tue Mar 15 17:44:29 CST 2022, Tue Mar 15 17:44:56 CST 2022
+DONE, mos2ex11/mos2ex11.in, Tue Mar 15 17:44:59 CST 2022, Tue Mar 15 17:45:19 CST 2022
+DONE, noiseex04/noiseex04.in, Tue Mar 15 17:45:22 CST 2022, Tue Mar 15 17:45:55 CST 2022
+DONE, optoex02/optoex02.in, Tue Mar 15 17:45:58 CST 2022, Tue Mar 15 17:46:22 CST 2022
+DONE, optoex03/optoex03.in, Tue Mar 15 17:46:25 CST 2022, Tue Mar 15 17:46:48 CST 2022
+DONE, optoex04/optoex04.in, Tue Mar 15 17:46:51 CST 2022, Tue Mar 15 17:47:11 CST 2022
+DONE, organicex01/organicex01.in, Tue Mar 15 17:47:14 CST 2022, Tue Mar 15 17:47:55 CST 2022
+DONE, organicex02/organicex02.in, Tue Mar 15 17:47:58 CST 2022, Tue Mar 15 17:48:31 CST 2022
+DONE, tftex01/tftex01.in, Tue Mar 15 17:48:34 CST 2022, Tue Mar 15 17:48:57 CST 2022
+DONE, thermalex02/thermalex02.in, Tue Mar 15 17:49:00 CST 2022, Tue Mar 15 17:49:21 CST 2022
+DONE, thermalex06/thermalex06.in, Tue Mar 15 17:49:24 CST 2022, Tue Mar 15 17:50:18 CST 2022
+DONE, diodeex06/diodeex06.in, Tue Mar 15 17:50:21 CST 2022, Tue Mar 15 17:50:51 CST 2022
+DONE, diodeex08/diodeex08.in, Tue Mar 15 17:50:54 CST 2022, Tue Mar 15 17:52:31 CST 2022
+DONE, hbtex01/hbtex01.in, Tue Mar 15 17:52:34 CST 2022, Tue Mar 15 17:52:59 CST 2022
+DONE, mos1ex08/mos1ex08.in, Tue Mar 15 17:53:02 CST 2022, Tue Mar 15 17:53:26 CST 2022
+DONE, solarex05/solarex05.in, Tue Mar 15 17:53:29 CST 2022, Tue Mar 15 17:53:56 CST 2022
+DONE, solarex08/solarex08.in, Tue Mar 15 17:53:59 CST 2022, Tue Mar 15 17:54:25 CST 2022
+DONE, tftex03/tftex03.in, Tue Mar 15 17:54:28 CST 2022, Tue Mar 15 17:54:53 CST 2022
+DONE, ccdex03/ccdex03.in, Tue Mar 15 17:54:56 CST 2022, Tue Mar 15 17:55:19 CST 2022
+DONE, diodeex03/diodeex03.in, Tue Mar 15 17:55:22 CST 2022, Tue Mar 15 17:55:44 CST 2022
+DONE, ganfetex13/ganfetex13.in, Tue Mar 15 17:55:47 CST 2022, Tue Mar 15 17:56:09 CST 2022
+DONE, mesfetex02/mesfetex02.in, Tue Mar 15 17:56:12 CST 2022, Tue Mar 15 17:56:45 CST 2022
+DONE, optoex05/optoex05.in, Tue Mar 15 17:56:48 CST 2022, Tue Mar 15 17:57:08 CST 2022
+DONE, powerex02/powerex02.in, Tue Mar 15 17:57:11 CST 2022, Tue Mar 15 17:57:39 CST 2022
+DONE, radex16/radex16.in, Tue Mar 15 17:57:42 CST 2022, Tue Mar 15 17:58:00 CST 2022
+DONE, tftex02/tftex02.in, Tue Mar 15 17:58:03 CST 2022, Tue Mar 15 17:58:27 CST 2022
+DONE, vp2dex12/vp2dex12.in, Tue Mar 15 17:58:30 CST 2022, Tue Mar 15 17:58:48 CST 2022
+DONE, vpex13/vpex13.in, Tue Mar 15 17:58:51 CST 2022, Tue Mar 15 17:59:10 CST 2022
+DONE, vsex04/vsex04.in, Tue Mar 15 17:59:13 CST 2022, Tue Mar 15 17:59:50 CST 2022
+DONE, hbtex06/hbtex06.in, Tue Mar 15 17:59:53 CST 2022, Tue Mar 15 18:00:54 CST 2022
+DONE, hemtex01/hemtex01.in, Tue Mar 15 18:00:57 CST 2022, Tue Mar 15 18:01:20 CST 2022
+DONE, isolationex02/isolationex02.in, Tue Mar 15 18:01:23 CST 2022, Tue Mar 15 18:01:48 CST 2022
+DONE, mesfetex06/mesfetex06.in, Tue Mar 15 18:01:52 CST 2022, Tue Mar 15 18:02:23 CST 2022
+DONE, mos1ex01/mos1ex01.in, Tue Mar 15 18:02:26 CST 2022, Tue Mar 15 18:02:55 CST 2022
+DONE, mos1ex03/mos1ex03.in, Tue Mar 15 18:02:58 CST 2022, Tue Mar 15 18:03:24 CST 2022
+DONE, mos1ex09/mos1ex09.in, Tue Mar 15 18:03:27 CST 2022, Tue Mar 15 18:03:58 CST 2022
+DONE, mos1ex11/mos1ex11.in, Tue Mar 15 18:04:01 CST 2022, Tue Mar 15 18:04:29 CST 2022
+DONE, mos1ex12/mos1ex12.in, Tue Mar 15 18:04:32 CST 2022, Tue Mar 15 18:04:59 CST 2022
+DONE, mos1ex15/mos1ex15.in, Tue Mar 15 18:05:02 CST 2022, Tue Mar 15 18:05:31 CST 2022
+DONE, mos2ex09/mos2ex09.in, Tue Mar 15 18:05:34 CST 2022, Tue Mar 15 18:06:02 CST 2022
+DONE, mos2ex10/mos2ex10.in, Tue Mar 15 18:06:05 CST 2022, Tue Mar 15 18:06:31 CST 2022
+DONE, mos2ex12/mos2ex12.in, Tue Mar 15 18:06:34 CST 2022, Tue Mar 15 18:07:01 CST 2022
+DONE, vp2dex09/vp2dex09.in, Tue Mar 15 18:07:05 CST 2022, Tue Mar 15 18:07:23 CST 2022
+DONE, vp2dex11/vp2dex11.in, Tue Mar 15 18:07:26 CST 2022, Tue Mar 15 18:07:44 CST 2022
+DONE, bjtex02/bjtex02.in, Tue Mar 15 18:07:47 CST 2022, Tue Mar 15 18:08:20 CST 2022
+DONE, ferroex02/ferroex02.in, Tue Mar 15 18:08:23 CST 2022, Tue Mar 15 18:08:56 CST 2022
+DONE, ferroex03/ferroex03.in, Tue Mar 15 18:08:59 CST 2022, Tue Mar 15 18:09:25 CST 2022
+DONE, hemtex06/hemtex06.in, Tue Mar 15 18:09:28 CST 2022, Tue Mar 15 18:10:02 CST 2022
+DONE, ledex02/ledex02.in, Tue Mar 15 18:10:05 CST 2022, Tue Mar 15 18:10:46 CST 2022
+DONE, mcdeviceex05/mcdeviceex05.in, Tue Mar 15 18:10:49 CST 2022, Tue Mar 15 18:11:15 CST 2022
+DONE, mos1ex14/mos1ex14.in, Tue Mar 15 18:11:18 CST 2022, Tue Mar 15 18:11:46 CST 2022
+DONE, mos2ex03/mos2ex03.in, Tue Mar 15 18:11:49 CST 2022, Tue Mar 15 18:12:15 CST 2022
+DONE, quantumex09/quantumex09.in, Tue Mar 15 18:12:18 CST 2022, Tue Mar 15 18:12:39 CST 2022
+DONE, questex01/questex01.in, Tue Mar 15 18:12:42 CST 2022, Tue Mar 15 18:13:00 CST 2022
+DONE, questex02/questex02.in, Tue Mar 15 18:13:03 CST 2022, Tue Mar 15 18:13:22 CST 2022
+DONE, questex03/questex03.in, Tue Mar 15 18:13:25 CST 2022, Tue Mar 15 18:13:43 CST 2022
+DONE, questex05/questex05.in, Tue Mar 15 18:13:46 CST 2022, Tue Mar 15 18:14:04 CST 2022
+DONE, questex06/questex06.in, Tue Mar 15 18:14:07 CST 2022, Tue Mar 15 18:14:26 CST 2022
+DONE, questex07/questex07.in, Tue Mar 15 18:14:29 CST 2022, Tue Mar 15 18:14:47 CST 2022
+DONE, questex08/questex08.in, Tue Mar 15 18:14:50 CST 2022, Tue Mar 15 18:15:09 CST 2022
+DONE, questex09/questex09.in, Tue Mar 15 18:15:12 CST 2022, Tue Mar 15 18:15:30 CST 2022
+DONE, questex10/questex10.in, Tue Mar 15 18:15:33 CST 2022, Tue Mar 15 18:15:51 CST 2022
+DONE, questex11/questex11.in, Tue Mar 15 18:15:54 CST 2022, Tue Mar 15 18:16:13 CST 2022
+DONE, questex12/questex12.in, Tue Mar 15 18:16:16 CST 2022, Tue Mar 15 18:16:34 CST 2022
+DONE, questex13/questex13.in, Tue Mar 15 18:16:37 CST 2022, Tue Mar 15 18:16:56 CST 2022
+DONE, questex15/questex15.in, Tue Mar 15 18:16:59 CST 2022, Tue Mar 15 18:17:17 CST 2022
+DONE, questex16/questex16.in, Tue Mar 15 18:17:20 CST 2022, Tue Mar 15 18:17:39 CST 2022
+DONE, questex17/questex17.in, Tue Mar 15 18:17:42 CST 2022, Tue Mar 15 18:18:00 CST 2022
+DONE, questex19/questex19.in, Tue Mar 15 18:18:03 CST 2022, Tue Mar 15 18:18:21 CST 2022
+DONE, bjtex03/bjtex03.in, Tue Mar 15 18:18:24 CST 2022, Tue Mar 15 18:18:53 CST 2022
+DONE, clex01/clex01.in, Tue Mar 15 18:18:56 CST 2022, Tue Mar 15 18:19:17 CST 2022
+DONE, clex05/clex05.in, Tue Mar 15 18:19:20 CST 2022, Tue Mar 15 18:19:42 CST 2022
+DONE, clex06/clex06.in, Tue Mar 15 18:19:45 CST 2022, Tue Mar 15 18:20:06 CST 2022
+DONE, hbtex03/hbtex03.in, Tue Mar 15 18:20:09 CST 2022, Tue Mar 15 18:20:42 CST 2022
+DONE, hemtex03/hemtex03.in, Tue Mar 15 18:20:45 CST 2022, Tue Mar 15 18:21:10 CST 2022
+DONE, highkex01/highkex01.in, Tue Mar 15 18:21:13 CST 2022, Tue Mar 15 18:21:40 CST 2022
+DONE, magneticex01/magneticex01.in, Tue Mar 15 18:21:43 CST 2022, Tue Mar 15 18:22:07 CST 2022
+DONE, magneticex04/magneticex04.in, Tue Mar 15 18:22:10 CST 2022, Tue Mar 15 18:22:34 CST 2022
+DONE, mcdeviceex01/mcdeviceex01.in, Tue Mar 15 18:22:38 CST 2022, Tue Mar 15 18:23:01 CST 2022
+DONE, mercuryex05/mercuryex05.in, Tue Mar 15 18:23:04 CST 2022, Tue Mar 15 18:23:25 CST 2022
+DONE, mos1ex07/mos1ex07.in, Tue Mar 15 18:23:28 CST 2022, Tue Mar 15 18:24:01 CST 2022
+DONE, quantumex04/quantumex04.in, Tue Mar 15 18:24:04 CST 2022, Tue Mar 15 18:24:29 CST 2022
+DONE, questex04/questex04.in, Tue Mar 15 18:24:32 CST 2022, Tue Mar 15 18:24:50 CST 2022
+DONE, questex14/questex14.in, Tue Mar 15 18:24:53 CST 2022, Tue Mar 15 18:25:12 CST 2022
+DONE, questex18/questex18.in, Tue Mar 15 18:25:15 CST 2022, Tue Mar 15 18:25:33 CST 2022
+DONE, soiex07/soiex07.in, Tue Mar 15 18:25:36 CST 2022, Tue Mar 15 18:29:14 CST 2022
+DONE, tftex05/tftex05.in, Tue Mar 15 18:29:17 CST 2022, Tue Mar 15 18:29:46 CST 2022
+DONE, bjtex11/bjtex11.in, Tue Mar 15 18:29:50 CST 2022, Tue Mar 15 18:30:13 CST 2022
+DONE, ccdex02/ccdex02.in, Tue Mar 15 18:30:16 CST 2022, Tue Mar 15 18:30:52 CST 2022
+DONE, clex02/clex02.in, Tue Mar 15 18:30:55 CST 2022, Tue Mar 15 18:31:16 CST 2022
+DONE, clex03/clex03.in, Tue Mar 15 18:31:19 CST 2022, Tue Mar 15 18:31:41 CST 2022
+DONE, clex16/clex16.in, Tue Mar 15 18:31:44 CST 2022, Tue Mar 15 18:32:06 CST 2022
+DONE, laserex01/laserex01.in, Tue Mar 15 18:32:09 CST 2022, Tue Mar 15 18:32:45 CST 2022
+DONE, mesfetex01/mesfetex01.in, Tue Mar 15 18:32:48 CST 2022, Tue Mar 15 18:33:23 CST 2022
+DONE, mesfetex04/mesfetex04.in, Tue Mar 15 18:33:26 CST 2022, Tue Mar 15 18:33:59 CST 2022
+DONE, powerex04/powerex04.in, Tue Mar 15 18:34:02 CST 2022, Tue Mar 15 18:34:28 CST 2022
+DONE, soiex03/soiex03.in, Tue Mar 15 18:34:31 CST 2022, Tue Mar 15 18:35:00 CST 2022
+DONE, clex19/clex19.in, Tue Mar 15 18:35:03 CST 2022, Tue Mar 15 18:35:25 CST 2022
+DONE, diodeex05/diodeex05.in, Tue Mar 15 18:35:28 CST 2022, Tue Mar 15 18:36:00 CST 2022
+DONE, ledex01/ledex01.in, Tue Mar 15 18:36:03 CST 2022, Tue Mar 15 18:36:47 CST 2022
+DONE, mos1ex02/mos1ex02.in, Tue Mar 15 18:36:50 CST 2022, Tue Mar 15 18:37:23 CST 2022
+DONE, noiseex03/noiseex03.in, Tue Mar 15 18:37:27 CST 2022, Tue Mar 15 18:38:01 CST 2022
+DONE, optoex14/optoex14.in, Tue Mar 15 18:38:04 CST 2022, Tue Mar 15 18:38:28 CST 2022
+DONE, solarex09/solarex09.in, Tue Mar 15 18:38:31 CST 2022, Tue Mar 15 18:38:56 CST 2022
+DONE, tftex09/tftex09.in, Tue Mar 15 18:38:59 CST 2022, Tue Mar 15 18:39:42 CST 2022
+DONE, clex04/clex04.in, Tue Mar 15 18:39:45 CST 2022, Tue Mar 15 18:40:10 CST 2022
+DONE, clex21/clex21.in, Tue Mar 15 18:40:13 CST 2022, Tue Mar 15 18:40:34 CST 2022
+DONE, esdex05/esdex05.in, Tue Mar 15 18:40:37 CST 2022, Tue Mar 15 18:41:11 CST 2022
+DONE, mcdeviceex02/mcdeviceex02.in, Tue Mar 15 18:41:14 CST 2022, Tue Mar 15 18:41:47 CST 2022
+DONE, mesfetex03/mesfetex03.in, Tue Mar 15 18:41:50 CST 2022, Tue Mar 15 18:42:22 CST 2022
+DONE, noiseex02/noiseex02.in, Tue Mar 15 18:42:25 CST 2022, Tue Mar 15 18:42:57 CST 2022
+DONE, organicex05/organicex05.in, Tue Mar 15 18:43:01 CST 2022, Tue Mar 15 18:43:35 CST 2022
+DONE, clex09/clex09.in, Tue Mar 15 18:43:38 CST 2022, Tue Mar 15 18:44:03 CST 2022
+DONE, clex18/clex18.in, Tue Mar 15 18:44:06 CST 2022, Tue Mar 15 18:44:30 CST 2022
+DONE, magneticex02/magneticex02.in, Tue Mar 15 18:44:33 CST 2022, Tue Mar 15 18:44:59 CST 2022
+DONE, powerex08/powerex08.in, Tue Mar 15 18:45:02 CST 2022, Tue Mar 15 18:45:33 CST 2022
+DONE, solarex02/solarex02.in, Tue Mar 15 18:45:36 CST 2022, Tue Mar 15 18:46:11 CST 2022
+DONE, tftex07/tftex07.in, Tue Mar 15 18:46:14 CST 2022, Tue Mar 15 18:46:47 CST 2022
+DONE, bjtex10/bjtex10.in, Tue Mar 15 18:46:50 CST 2022, Tue Mar 15 18:47:25 CST 2022
+DONE, diodeex04/diodeex04.in, Tue Mar 15 18:47:28 CST 2022, Tue Mar 15 18:48:02 CST 2022
+DONE, mesfetex05/mesfetex05.in, Tue Mar 15 18:48:05 CST 2022, Tue Mar 15 18:48:42 CST 2022
+DONE, optoex11/optoex11.in, Tue Mar 15 18:48:45 CST 2022, Tue Mar 15 18:49:22 CST 2022
+DONE, optoex12/optoex12.in, Tue Mar 15 18:49:25 CST 2022, Tue Mar 15 18:50:02 CST 2022
+DONE, organicex11/organicex11.in, Tue Mar 15 18:50:05 CST 2022, Tue Mar 15 18:50:35 CST 2022
+DONE, vpex09/vpex09.in, Tue Mar 15 18:50:38 CST 2022, Tue Mar 15 18:54:07 CST 2022
+DONE, mos1ex05/mos1ex05.in, Tue Mar 15 18:54:10 CST 2022, Tue Mar 15 18:54:43 CST 2022
+DONE, optoex09/optoex09.in, Tue Mar 15 18:54:46 CST 2022, Tue Mar 15 18:55:17 CST 2022
+DONE, powerex05/powerex05.in, Tue Mar 15 18:55:20 CST 2022, Tue Mar 15 18:55:58 CST 2022
+DONE, solarex19/solarex19.in, Tue Mar 15 18:56:01 CST 2022, Tue Mar 15 18:58:17 CST 2022
+DONE, bjtex04/bjtex04.in, Tue Mar 15 18:58:20 CST 2022, Tue Mar 15 18:58:56 CST 2022
+DONE, bjtex07/bjtex07.in, Tue Mar 15 18:58:59 CST 2022, Tue Mar 15 18:59:39 CST 2022
+DONE, clex11/clex11.in, Tue Mar 15 18:59:42 CST 2022, Tue Mar 15 19:00:10 CST 2022
+DONE, hemtex04/hemtex04.in, Tue Mar 15 19:00:13 CST 2022, Tue Mar 15 19:00:44 CST 2022
+DONE, mcdeviceex04/mcdeviceex04.in, Tue Mar 15 19:00:47 CST 2022, Tue Mar 15 19:01:21 CST 2022
+DONE, optoex15/optoex15.in, Tue Mar 15 19:01:24 CST 2022, Tue Mar 15 19:01:57 CST 2022
+DONE, vaex04/vaex04.in, Tue Mar 15 19:02:00 CST 2022, Tue Mar 15 19:02:34 CST 2022
+DONE, eprmex03/eprmex03.in, Tue Mar 15 19:02:37 CST 2022, Tue Mar 15 19:03:10 CST 2022
+DONE, hemtex05/hemtex05.in, Tue Mar 15 19:03:13 CST 2022, Tue Mar 15 19:03:51 CST 2022
+DONE, isolationex01/isolationex01.in, Tue Mar 15 19:03:54 CST 2022, Tue Mar 15 19:04:34 CST 2022
+DONE, ledex05/ledex05.in, Tue Mar 15 19:04:37 CST 2022, Tue Mar 15 19:05:46 CST 2022
+DONE, mos1ex06/mos1ex06.in, Tue Mar 15 19:05:49 CST 2022, Tue Mar 15 19:06:28 CST 2022
+DONE, optoex13/optoex13.in, Tue Mar 15 19:06:31 CST 2022, Tue Mar 15 19:07:08 CST 2022
+DONE, soiex04/soiex04.in, Tue Mar 15 19:07:11 CST 2022, Tue Mar 15 19:07:49 CST 2022
+DONE, hemtex02/hemtex02.in, Tue Mar 15 19:07:52 CST 2022, Tue Mar 15 19:08:23 CST 2022
+DONE, mos2ex04/mos2ex04.in, Tue Mar 15 19:08:26 CST 2022, Tue Mar 15 19:09:03 CST 2022
+DONE, vaex05/vaex05.in, Tue Mar 15 19:09:06 CST 2022, Tue Mar 15 19:09:40 CST 2022
+DONE, ccdex01/ccdex01.in, Tue Mar 15 19:09:43 CST 2022, Tue Mar 15 19:10:29 CST 2022
+DONE, clex07/clex07.in, Tue Mar 15 19:10:32 CST 2022, Tue Mar 15 19:11:04 CST 2022
+DONE, mos2ex16/mos2ex16.in, Tue Mar 15 19:11:07 CST 2022, Tue Mar 15 19:11:40 CST 2022
+DONE, solarex04/solarex04.in, Tue Mar 15 19:11:43 CST 2022, Tue Mar 15 19:12:19 CST 2022
+DONE, clex12/clex12.in, Tue Mar 15 19:12:22 CST 2022, Tue Mar 15 19:12:56 CST 2022
+DONE, clex14/clex14.in, Tue Mar 15 19:12:59 CST 2022, Tue Mar 15 19:13:36 CST 2022
+DONE, laserex02/laserex02.in, Tue Mar 15 19:13:39 CST 2022, Tue Mar 15 19:14:35 CST 2022
+DONE, mos1ex13/mos1ex13.in, Tue Mar 15 19:14:38 CST 2022, Tue Mar 15 19:15:21 CST 2022
+DONE, mos2ex07/mos2ex07.in, Tue Mar 15 19:15:24 CST 2022, Tue Mar 15 19:16:08 CST 2022
+DONE, mos2ex08/mos2ex08.in, Tue Mar 15 19:16:11 CST 2022, Tue Mar 15 19:16:50 CST 2022
+DONE, mos2ex14/mos2ex14.in, Tue Mar 15 19:16:53 CST 2022, Tue Mar 15 19:17:41 CST 2022
+DONE, noiseex05/noiseex05.in, Tue Mar 15 19:17:44 CST 2022, Tue Mar 15 19:18:24 CST 2022
+DONE, optoex06/optoex06.in, Tue Mar 15 19:18:27 CST 2022, Tue Mar 15 19:19:17 CST 2022
+DONE, tftex06/tftex06.in, Tue Mar 15 19:19:20 CST 2022, Tue Mar 15 19:20:15 CST 2022
+DONE, imagesensorex02/imagesensorex02.in, Tue Mar 15 19:20:18 CST 2022, Tue Mar 15 19:21:14 CST 2022
+DONE, mos2ex15/mos2ex15.in, Tue Mar 15 19:21:17 CST 2022, Tue Mar 15 19:21:51 CST 2022
+DONE, quantumex10/quantumex10.in, Tue Mar 15 19:21:54 CST 2022, Tue Mar 15 19:22:30 CST 2022
+DONE, powerex03/powerex03.in, Tue Mar 15 19:22:33 CST 2022, Tue Mar 15 19:23:12 CST 2022
+DONE, sicex03/sicex03.in, Tue Mar 15 19:23:15 CST 2022, Tue Mar 15 19:23:57 CST 2022
+DONE, soiex06/soiex06.in, Tue Mar 15 19:24:00 CST 2022, Tue Mar 15 19:24:47 CST 2022
+DONE, clex25/clex25.in, Tue Mar 15 19:24:50 CST 2022, Tue Mar 15 19:25:29 CST 2022
+DONE, latchex01/latchex01.in, Tue Mar 15 19:25:32 CST 2022, Tue Mar 15 19:26:16 CST 2022
+DONE, latchex03/latchex03.in, Tue Mar 15 19:26:19 CST 2022, Tue Mar 15 19:27:05 CST 2022
+DONE, quantumex01/quantumex01.in, Tue Mar 15 19:27:08 CST 2022, Tue Mar 15 19:27:53 CST 2022
+DONE, optoex18/optoex18.in, Tue Mar 15 19:27:56 CST 2022, Tue Mar 15 19:28:48 CST 2022
+DONE, bjtex08/bjtex08.in, Tue Mar 15 19:28:51 CST 2022, Tue Mar 15 19:29:40 CST 2022
+DONE, hbtex04/hbtex04.in, Tue Mar 15 19:29:43 CST 2022, Tue Mar 15 19:30:36 CST 2022
+DONE, organicex04/organicex04.in, Tue Mar 15 19:30:39 CST 2022, Tue Mar 15 19:31:27 CST 2022
+DONE, clex24/clex24.in, Tue Mar 15 19:31:30 CST 2022, Tue Mar 15 19:32:10 CST 2022
+DONE, hbtex08/hbtex08.in, Tue Mar 15 19:32:13 CST 2022, Tue Mar 15 19:33:04 CST 2022
+DONE, powerex10/powerex10.in, Tue Mar 15 19:33:07 CST 2022, Tue Mar 15 19:33:50 CST 2022
+DONE, quantumex02/quantumex02.in, Tue Mar 15 19:33:53 CST 2022, Tue Mar 15 19:34:45 CST 2022
+DONE, quantumex20/quantumex20.in, Tue Mar 15 19:34:48 CST 2022, Tue Mar 15 19:35:44 CST 2022
+DONE, laserex04/laserex04.in, Tue Mar 15 19:35:47 CST 2022, Tue Mar 15 19:36:36 CST 2022
+DONE, quantumex03/quantumex03.in, Tue Mar 15 19:36:39 CST 2022, Tue Mar 15 19:37:32 CST 2022
+DONE, sicex02/sicex02.in, Tue Mar 15 19:37:35 CST 2022, Tue Mar 15 19:38:20 CST 2022
+DONE, latchex02/latchex02.in, Tue Mar 15 19:38:23 CST 2022, Tue Mar 15 19:39:24 CST 2022
+DONE, powerex07/powerex07.in, Tue Mar 15 19:39:27 CST 2022, Tue Mar 15 19:40:20 CST 2022
+DONE, powerex09/powerex09.in, Tue Mar 15 19:40:23 CST 2022, Tue Mar 15 19:41:09 CST 2022
+DONE, powerex13/powerex13.in, Tue Mar 15 19:41:12 CST 2022, Tue Mar 15 19:42:10 CST 2022
+DONE, powerex01/powerex01.in, Tue Mar 15 19:42:13 CST 2022, Tue Mar 15 19:42:58 CST 2022
+DONE, soiex05/soiex05.in, Tue Mar 15 19:43:01 CST 2022, Tue Mar 15 19:44:01 CST 2022
+KILL, soiex10/soiex10.in, Tue Mar 15 19:44:04 CST 2022, Tue Mar 15 20:44:16 CST 2022
+DONE, solarex15/solarex15.in, Tue Mar 15 20:44:19 CST 2022, Tue Mar 15 20:45:14 CST 2022
+DONE, solarex01/solarex01.in, Tue Mar 15 20:45:17 CST 2022, Tue Mar 15 20:46:15 CST 2022
+DONE, tftex12/tftex12.in, Tue Mar 15 20:46:18 CST 2022, Tue Mar 15 20:47:16 CST 2022
+DONE, tftex15/tftex15.in, Tue Mar 15 20:47:19 CST 2022, Tue Mar 15 21:00:44 CST 2022
+DONE, vp2dex04/vp2dex04.in, Tue Mar 15 21:00:47 CST 2022, Tue Mar 15 21:01:50 CST 2022
+KILL, vsex02/vsex02.in, Tue Mar 15 21:01:53 CST 2022, Tue Mar 15 22:02:07 CST 2022
+DONE, mos2ex13/mos2ex13.in, Tue Mar 15 22:02:10 CST 2022, Tue Mar 15 22:03:00 CST 2022
+DONE, powerex14/powerex14.in, Tue Mar 15 22:03:03 CST 2022, Tue Mar 15 22:04:06 CST 2022
+DONE, bjtex09/bjtex09.in, Tue Mar 15 22:04:09 CST 2022, Tue Mar 15 22:05:07 CST 2022
+DONE, clex08/clex08.in, Tue Mar 15 22:05:10 CST 2022, Tue Mar 15 22:06:00 CST 2022
+DONE, solarex12/solarex12.in, Tue Mar 15 22:06:03 CST 2022, Tue Mar 15 22:06:54 CST 2022
+DONE, organicex08/organicex08.in, Tue Mar 15 22:06:57 CST 2022, Tue Mar 15 22:08:05 CST 2022
+DONE, quantumex23/quantumex23.in, Tue Mar 15 22:08:09 CST 2022, Tue Mar 15 22:09:16 CST 2022
+DONE, sicex13/sicex13.in, Tue Mar 15 22:09:19 CST 2022, Tue Mar 15 22:10:34 CST 2022
+DONE, ganfetex04/ganfetex04.in, Tue Mar 15 22:10:37 CST 2022, Tue Mar 15 22:11:30 CST 2022
+DONE, laserex03/laserex03.in, Tue Mar 15 22:11:33 CST 2022, Tue Mar 15 22:12:36 CST 2022
+DONE, mos2ex06/mos2ex06.in, Tue Mar 15 22:12:39 CST 2022, Tue Mar 15 22:13:35 CST 2022
+DONE, soiex08/soiex08.in, Tue Mar 15 22:13:38 CST 2022, Tue Mar 15 22:14:53 CST 2022
+DONE, vsex01/vsex01.in, Tue Mar 15 22:14:56 CST 2022, Tue Mar 15 22:16:14 CST 2022
+DONE, eprmex05/eprmex05.in, Tue Mar 15 22:16:17 CST 2022, Tue Mar 15 22:17:22 CST 2022
+DONE, solarex14/solarex14.in, Tue Mar 15 22:17:25 CST 2022, Tue Mar 15 22:18:33 CST 2022
+DONE, ganfetex01/ganfetex01.in, Tue Mar 15 22:18:37 CST 2022, Tue Mar 15 22:19:29 CST 2022
+DONE, ledex04/ledex04.in, Tue Mar 15 22:19:32 CST 2022, Tue Mar 15 22:20:47 CST 2022
+DONE, solarex03/solarex03.in, Tue Mar 15 22:20:51 CST 2022, Tue Mar 15 22:21:53 CST 2022
+DONE, clex10/clex10.in, Tue Mar 15 22:21:56 CST 2022, Tue Mar 15 22:22:55 CST 2022
+DONE, diodeex11/diodeex11.in, Tue Mar 15 22:22:59 CST 2022, Tue Mar 15 22:24:09 CST 2022
+DONE, vpex02/vpex02.in, Tue Mar 15 22:24:12 CST 2022, Tue Mar 15 22:48:38 CST 2022
+DONE, sicex05/sicex05.in, Tue Mar 15 22:48:41 CST 2022, Tue Mar 15 22:49:50 CST 2022
+DONE, ledex03/ledex03.in, Tue Mar 15 22:49:53 CST 2022, Tue Mar 15 22:51:08 CST 2022
+DONE, optoex17/optoex17.in, Tue Mar 15 22:51:11 CST 2022, Tue Mar 15 22:52:16 CST 2022
+DONE, ferroex01/ferroex01.in, Tue Mar 15 22:52:19 CST 2022, Tue Mar 15 22:53:40 CST 2022
+DONE, vpex10/vpex10.in, Tue Mar 15 22:53:43 CST 2022, Tue Mar 15 22:55:06 CST 2022
+DONE, clex22/clex22.in, Tue Mar 15 22:55:09 CST 2022, Tue Mar 15 22:56:14 CST 2022
+DONE, quantumex05/quantumex05.in, Tue Mar 15 22:56:17 CST 2022, Tue Mar 15 22:57:22 CST 2022
+DONE, quantumex24/quantumex24.in, Tue Mar 15 22:57:25 CST 2022, Tue Mar 15 22:58:54 CST 2022
+DONE, quantumex11/quantumex11.in, Tue Mar 15 22:58:57 CST 2022, Tue Mar 15 23:00:10 CST 2022
+DONE, vsex08/vsex08.in, Tue Mar 15 23:00:13 CST 2022, Tue Mar 15 23:01:33 CST 2022
+DONE, ledex10/ledex10.in, Tue Mar 15 23:01:36 CST 2022, Tue Mar 15 23:03:36 CST 2022
+DONE, mcdeviceex03/mcdeviceex03.in, Tue Mar 15 23:03:39 CST 2022, Tue Mar 15 23:04:59 CST 2022
+DONE, clex15/clex15.in, Tue Mar 15 23:05:02 CST 2022, Tue Mar 15 23:06:22 CST 2022
+DONE, diodeex07/diodeex07.in, Tue Mar 15 23:06:25 CST 2022, Tue Mar 15 23:07:45 CST 2022
+DONE, hbtex07/hbtex07.in, Tue Mar 15 23:07:48 CST 2022, Tue Mar 15 23:13:51 CST 2022
+DONE, laserex11/laserex11.in, Tue Mar 15 23:13:54 CST 2022, Tue Mar 15 23:15:15 CST 2022
+DONE, sicex14/sicex14.in, Tue Mar 15 23:15:18 CST 2022, Tue Mar 15 23:17:07 CST 2022
+DONE, vp2dex13/vp2dex13.in, Tue Mar 15 23:17:10 CST 2022, Tue Mar 15 23:18:35 CST 2022
+DONE, diodeex10/diodeex10.in, Tue Mar 15 23:18:38 CST 2022, Tue Mar 15 23:19:58 CST 2022
+DONE, esdex03/esdex03.in, Tue Mar 15 23:20:01 CST 2022, Tue Mar 15 23:21:36 CST 2022
+DONE, diodeex02/diodeex02.in, Tue Mar 15 23:21:39 CST 2022, Tue Mar 15 23:22:59 CST 2022
+DONE, mos2ex23/mos2ex23.in, Tue Mar 15 23:23:02 CST 2022, Tue Mar 15 23:24:31 CST 2022
+DONE, clex23/clex23.in, Tue Mar 15 23:24:34 CST 2022, Tue Mar 15 23:25:54 CST 2022
+DONE, quantumex06/quantumex06.in, Tue Mar 15 23:25:57 CST 2022, Tue Mar 15 23:27:38 CST 2022
+DONE, solarex10/solarex10.in, Tue Mar 15 23:27:41 CST 2022, Tue Mar 15 23:29:05 CST 2022
+DONE, sonosex05/sonosex05.in, Tue Mar 15 23:29:08 CST 2022, Tue Mar 15 23:30:37 CST 2022
+DONE, esdex01/esdex01.in, Tue Mar 15 23:30:40 CST 2022, Tue Mar 15 23:32:15 CST 2022
+DONE, diodeex12/diodeex12.in, Tue Mar 15 23:32:18 CST 2022, Tue Mar 15 23:33:57 CST 2022
+DONE, eprmex04/eprmex04.in, Tue Mar 15 23:34:01 CST 2022, Tue Mar 15 23:35:42 CST 2022
+DONE, clex13/clex13.in, Tue Mar 15 23:35:46 CST 2022, Tue Mar 15 23:37:16 CST 2022
+DONE, esdex02/esdex02.in, Tue Mar 15 23:37:19 CST 2022, Tue Mar 15 23:39:42 CST 2022
+DONE, mos2ex01/mos2ex01.in, Tue Mar 15 23:39:45 CST 2022, Tue Mar 15 23:41:27 CST 2022
+DONE, mos2ex02/mos2ex02.in, Tue Mar 15 23:41:30 CST 2022, Tue Mar 15 23:42:57 CST 2022
+DONE, quantumex17/quantumex17.in, Tue Mar 15 23:43:00 CST 2022, Tue Mar 15 23:44:38 CST 2022
+DONE, quantumex14/quantumex14.in, Tue Mar 15 23:44:41 CST 2022, Tue Mar 15 23:46:23 CST 2022
+DONE, tftex22/tftex22.in, Tue Mar 15 23:46:26 CST 2022, Tue Mar 15 23:48:18 CST 2022
+DONE, esdex04/esdex04.in, Tue Mar 15 23:48:21 CST 2022, Tue Mar 15 23:50:38 CST 2022
+DONE, ganfetex03/ganfetex03.in, Tue Mar 15 23:50:41 CST 2022, Tue Mar 15 23:52:42 CST 2022
+DONE, eprmex01/eprmex01.in, Tue Mar 15 23:52:45 CST 2022, Tue Mar 15 23:54:36 CST 2022
+DONE, diodeex09/diodeex09.in, Tue Mar 15 23:54:39 CST 2022, Tue Mar 15 23:56:22 CST 2022
+DONE, vpex11/vpex11.in, Tue Mar 15 23:56:25 CST 2022, Tue Mar 15 23:58:25 CST 2022
+DONE, quantumex07/quantumex07.in, Tue Mar 15 23:58:28 CST 2022, Wed Mar 16 00:00:31 CST 2022
+DONE, vsex09/vsex09.in, Wed Mar 16 00:00:35 CST 2022, Wed Mar 16 00:33:25 CST 2022
+DONE, quantumex22/quantumex22.in, Wed Mar 16 00:33:28 CST 2022, Wed Mar 16 00:36:03 CST 2022
+KILL, solidex05/solidex05.in, Wed Mar 16 00:36:06 CST 2022, Wed Mar 16 01:36:18 CST 2022
+DONE, mos2ex19/mos2ex19.in, Wed Mar 16 01:36:21 CST 2022, Wed Mar 16 01:38:16 CST 2022
+DONE, solarex11/solarex11.in, Wed Mar 16 01:38:19 CST 2022, Wed Mar 16 01:40:08 CST 2022
+DONE, quantumex18/quantumex18.in, Wed Mar 16 01:40:11 CST 2022, Wed Mar 16 01:42:32 CST 2022
+DONE, sicex01/sicex01.in, Wed Mar 16 01:42:35 CST 2022, Wed Mar 16 01:44:44 CST 2022
+DONE, powerex17/powerex17.in, Wed Mar 16 01:44:47 CST 2022, Wed Mar 16 01:46:48 CST 2022
+DONE, powerex12/powerex12.in, Wed Mar 16 01:46:51 CST 2022, Wed Mar 16 01:49:21 CST 2022
+DONE, radex01/radex01.in, Wed Mar 16 01:49:24 CST 2022, Wed Mar 16 01:51:58 CST 2022
+DONE, solidex02/solidex02.in, Wed Mar 16 01:52:01 CST 2022, Wed Mar 16 01:58:11 CST 2022
+DONE, vp2dex05/vp2dex05.in, Wed Mar 16 01:58:14 CST 2022, Wed Mar 16 02:01:17 CST 2022
+KILL, vsex06/vsex06.in, Wed Mar 16 02:01:20 CST 2022, Wed Mar 16 03:01:31 CST 2022
+DONE, vpex12/vpex12.in, Wed Mar 16 03:01:34 CST 2022, Wed Mar 16 03:04:27 CST 2022
+DONE, mercuryex07/mercuryex07.in, Wed Mar 16 03:04:30 CST 2022, Wed Mar 16 03:06:19 CST 2022
+DONE, sicex06/sicex06.in, Wed Mar 16 03:06:22 CST 2022, Wed Mar 16 03:07:08 CST 2022
+DONE, ledex09/ledex09.in, Wed Mar 16 03:07:11 CST 2022, Wed Mar 16 03:09:46 CST 2022
+DONE, ganfetex09/ganfetex09.in, Wed Mar 16 03:09:49 CST 2022, Wed Mar 16 03:11:47 CST 2022
+DONE, quantumex13/quantumex13.in, Wed Mar 16 03:11:50 CST 2022, Wed Mar 16 03:14:15 CST 2022
+KILL, mos2ex24/mos2ex24.in, Wed Mar 16 03:14:18 CST 2022, Wed Mar 16 04:14:39 CST 2022
+DONE, organicex09/organicex09.in, Wed Mar 16 04:14:42 CST 2022, Wed Mar 16 04:16:59 CST 2022
+DONE, solidex06/solidex06.in, Wed Mar 16 04:17:02 CST 2022, Wed Mar 16 04:19:40 CST 2022
+DONE, solidex10/solidex10.in, Wed Mar 16 04:19:43 CST 2022, Wed Mar 16 04:25:02 CST 2022
+DONE, sonosex03/sonosex03.in, Wed Mar 16 04:25:05 CST 2022, Wed Mar 16 04:28:02 CST 2022
+DONE, sonosex04/sonosex04.in, Wed Mar 16 04:28:05 CST 2022, Wed Mar 16 04:30:40 CST 2022
+DONE, radex02/radex02.in, Wed Mar 16 04:30:43 CST 2022, Wed Mar 16 04:33:53 CST 2022
+KILL, vpex08/vpex08.in, Wed Mar 16 04:33:56 CST 2022, Wed Mar 16 05:34:07 CST 2022
+KILL, radex15/radex15.in, Wed Mar 16 05:34:10 CST 2022, Wed Mar 16 06:34:31 CST 2022
+DONE, powerex19/powerex19.in, Wed Mar 16 06:34:34 CST 2022, Wed Mar 16 06:59:34 CST 2022
+KILL, radex14/radex14.in, Wed Mar 16 06:59:37 CST 2022, Wed Mar 16 07:59:53 CST 2022
+DONE, laserex06/laserex06.in, Wed Mar 16 07:59:56 CST 2022, Wed Mar 16 08:03:10 CST 2022
+DONE, optoex20/optoex20.in, Wed Mar 16 08:03:13 CST 2022, Wed Mar 16 08:06:05 CST 2022
+KILL, radex12/radex12.in, Wed Mar 16 08:06:08 CST 2022, Wed Mar 16 09:06:23 CST 2022
+DONE, tftex14/tftex14.in, Wed Mar 16 09:06:26 CST 2022, Wed Mar 16 09:10:28 CST 2022
+DONE, quantumex12/quantumex12.in, Wed Mar 16 09:10:31 CST 2022, Wed Mar 16 09:14:29 CST 2022
+DONE, sicex10/sicex10.in, Wed Mar 16 09:14:32 CST 2022, Wed Mar 16 09:18:41 CST 2022
+DONE, tftex21/tftex21.in, Wed Mar 16 09:18:44 CST 2022, Wed Mar 16 09:23:16 CST 2022
+DONE, sicex04/sicex04.in, Wed Mar 16 09:23:19 CST 2022, Wed Mar 16 09:28:00 CST 2022
+DONE, solidex08/solidex08.in, Wed Mar 16 09:28:03 CST 2022, Wed Mar 16 09:32:27 CST 2022
+DONE, latchex04/latchex04.in, Wed Mar 16 09:32:30 CST 2022, Wed Mar 16 09:38:33 CST 2022
+DONE, quantumex08/quantumex08.in, Wed Mar 16 09:38:36 CST 2022, Wed Mar 16 09:45:44 CST 2022
+DONE, mercuryex06/mercuryex06.in, Wed Mar 16 09:45:47 CST 2022, Wed Mar 16 09:51:20 CST 2022
+DONE, tftex10/tftex10.in, Wed Mar 16 09:51:23 CST 2022, Wed Mar 16 09:57:21 CST 2022
+DONE, cryoex02/cryoex02.in, Wed Mar 16 09:57:24 CST 2022, Wed Mar 16 10:02:02 CST 2022
+DONE, organicex03/organicex03.in, Wed Mar 16 10:02:05 CST 2022, Wed Mar 16 10:07:21 CST 2022
+Wed Mar 16 16:30:32 CST 2022
+END of 0 decks
+Wed Mar 16 16:31:34 CST 2022
+END of 0 decks
+Wed Mar 16 16:33:08 CST 2022
+END of 0 decks
+Wed Mar 16 16:53:52 CST 2022
+END of 0 decks
+Wed Mar 16 17:00:52 CST 2022
+END of 0 decks
+Wed Mar 16 17:15:51 CST 2022
+END of 0 decks
+Wed Mar 16 17:18:08 CST 2022
+Wed Mar 16 17:23:51 CST 2022
+Wed Mar 16 17:29:47 CST 2022
+DONE, vaex01/vaex01.in, Wed Mar 16 17:29:47 CST 2022, Wed Mar 16 17:30:05 CST 2022
+DONE, bjtex05/bjtex05.in, Wed Mar 16 17:30:08 CST 2022, Wed Mar 16 17:33:28 CST 2022
+DONE, mercuryex04/mercuryex04.in, Wed Mar 16 17:33:31 CST 2022, Wed Mar 16 17:33:56 CST 2022
+DONE, radex04/radex04.in, Wed Mar 16 17:33:59 CST 2022, Wed Mar 16 17:34:14 CST 2022
+DONE, thermalex04/thermalex04.in, Wed Mar 16 17:34:17 CST 2022, Wed Mar 16 17:34:32 CST 2022
+DONE, optoex07/optoex07.in, Wed Mar 16 17:34:35 CST 2022, Wed Mar 16 17:34:54 CST 2022
+DONE, thermalex01/thermalex01.in, Wed Mar 16 17:34:57 CST 2022, Wed Mar 16 17:35:12 CST 2022
+DONE, vaex02/vaex02.in, Wed Mar 16 17:35:15 CST 2022, Wed Mar 16 17:35:27 CST 2022
+DONE, optoex01/optoex01.in, Wed Mar 16 17:35:30 CST 2022, Wed Mar 16 17:35:48 CST 2022
+DONE, optoex16/optoex16.in, Wed Mar 16 17:35:51 CST 2022, Wed Mar 16 17:36:52 CST 2022
+DONE, soiex02/soiex02.in, Wed Mar 16 17:36:55 CST 2022, Wed Mar 16 17:38:17 CST 2022
+DONE, thermalex07/thermalex07.in, Wed Mar 16 17:38:20 CST 2022, Wed Mar 16 17:38:48 CST 2022
+DONE, bjtex01/bjtex01.in, Wed Mar 16 17:38:51 CST 2022, Wed Mar 16 17:40:19 CST 2022
+DONE, bjtex06/bjtex06.in, Wed Mar 16 17:40:22 CST 2022, Wed Mar 16 17:42:34 CST 2022
+DONE, diodeex01/diodeex01.in, Wed Mar 16 17:42:37 CST 2022, Wed Mar 16 17:44:07 CST 2022
+DONE, hbtex05/hbtex05.in, Wed Mar 16 17:44:10 CST 2022, Wed Mar 16 17:46:08 CST 2022
+DONE, mercuryex01/mercuryex01.in, Wed Mar 16 17:46:12 CST 2022, Wed Mar 16 17:46:32 CST 2022
+DONE, mercuryex03/mercuryex03.in, Wed Mar 16 17:46:35 CST 2022, Wed Mar 16 17:47:00 CST 2022
+DONE, noiseex01/noiseex01.in, Wed Mar 16 17:47:03 CST 2022, Wed Mar 16 17:49:10 CST 2022
+DONE, optoex08/optoex08.in, Wed Mar 16 17:49:13 CST 2022, Wed Mar 16 17:50:02 CST 2022
+DONE, optoex10/optoex10.in, Wed Mar 16 17:50:05 CST 2022, Wed Mar 16 17:50:48 CST 2022
+DONE, quantumex15/quantumex15.in, Wed Mar 16 17:50:51 CST 2022, Wed Mar 16 17:51:22 CST 2022
+DONE, soiex01/soiex01.in, Wed Mar 16 17:51:25 CST 2022, Wed Mar 16 17:52:20 CST 2022
+DONE, tftex08/tftex08.in, Wed Mar 16 17:52:23 CST 2022, Wed Mar 16 17:55:26 CST 2022
+DONE, vaex03/vaex03.in, Wed Mar 16 17:55:29 CST 2022, Wed Mar 16 17:56:00 CST 2022
+DONE, vp2dex02/vp2dex02.in, Wed Mar 16 17:56:03 CST 2022, Wed Mar 16 17:56:39 CST 2022
+DONE, vsex03/vsex03.in, Wed Mar 16 17:56:42 CST 2022, Wed Mar 16 18:00:09 CST 2022
+DONE, radex05/radex05.in, Wed Mar 16 18:00:13 CST 2022, Wed Mar 16 18:00:45 CST 2022
+DONE, solarex07/solarex07.in, Wed Mar 16 18:00:48 CST 2022, Wed Mar 16 18:07:08 CST 2022
+DONE, tftex04/tftex04.in, Wed Mar 16 18:07:11 CST 2022, Wed Mar 16 18:07:40 CST 2022
+DONE, thermalex03/thermalex03.in, Wed Mar 16 18:07:43 CST 2022, Wed Mar 16 18:08:04 CST 2022
+DONE, thermalex05/thermalex05.in, Wed Mar 16 18:08:07 CST 2022, Wed Mar 16 18:08:35 CST 2022
+DONE, vp2dex01/vp2dex01.in, Wed Mar 16 18:08:38 CST 2022, Wed Mar 16 18:09:04 CST 2022
+DONE, vpex04/vpex04.in, Wed Mar 16 18:09:07 CST 2022, Wed Mar 16 18:09:48 CST 2022
+DONE, vpex06/vpex06.in, Wed Mar 16 18:09:51 CST 2022, Wed Mar 16 18:13:08 CST 2022
+DONE, hbtex02/hbtex02.in, Wed Mar 16 18:13:11 CST 2022, Wed Mar 16 18:13:42 CST 2022
+DONE, highkex02/highkex02.in, Wed Mar 16 18:13:45 CST 2022, Wed Mar 16 18:14:07 CST 2022
+DONE, mercuryex02/mercuryex02.in, Wed Mar 16 18:14:10 CST 2022, Wed Mar 16 18:14:46 CST 2022
+DONE, mos1ex04/mos1ex04.in, Wed Mar 16 18:14:49 CST 2022, Wed Mar 16 18:15:19 CST 2022
+DONE, mos1ex10/mos1ex10.in, Wed Mar 16 18:15:22 CST 2022, Wed Mar 16 18:15:49 CST 2022
+DONE, mos2ex11/mos2ex11.in, Wed Mar 16 18:15:52 CST 2022, Wed Mar 16 18:16:15 CST 2022
+DONE, noiseex04/noiseex04.in, Wed Mar 16 18:16:18 CST 2022, Wed Mar 16 18:16:54 CST 2022
+DONE, optoex02/optoex02.in, Wed Mar 16 18:16:57 CST 2022, Wed Mar 16 18:17:23 CST 2022
+DONE, optoex03/optoex03.in, Wed Mar 16 18:17:26 CST 2022, Wed Mar 16 18:17:50 CST 2022
+DONE, optoex04/optoex04.in, Wed Mar 16 18:17:53 CST 2022, Wed Mar 16 18:18:20 CST 2022
+DONE, organicex01/organicex01.in, Wed Mar 16 18:18:23 CST 2022, Wed Mar 16 18:18:57 CST 2022
+DONE, organicex02/organicex02.in, Wed Mar 16 18:19:00 CST 2022, Wed Mar 16 18:20:00 CST 2022
+DONE, tftex01/tftex01.in, Wed Mar 16 18:20:03 CST 2022, Wed Mar 16 18:20:28 CST 2022
+DONE, thermalex02/thermalex02.in, Wed Mar 16 18:20:31 CST 2022, Wed Mar 16 18:20:52 CST 2022
+DONE, thermalex06/thermalex06.in, Wed Mar 16 18:20:55 CST 2022, Wed Mar 16 18:21:25 CST 2022
+DONE, diodeex06/diodeex06.in, Wed Mar 16 18:21:28 CST 2022, Wed Mar 16 18:21:57 CST 2022
+DONE, diodeex08/diodeex08.in, Wed Mar 16 18:22:00 CST 2022, Wed Mar 16 18:23:37 CST 2022
+DONE, hbtex01/hbtex01.in, Wed Mar 16 18:23:40 CST 2022, Wed Mar 16 18:24:06 CST 2022
+DONE, mos1ex08/mos1ex08.in, Wed Mar 16 18:24:09 CST 2022, Wed Mar 16 18:24:38 CST 2022
+DONE, solarex05/solarex05.in, Wed Mar 16 18:24:41 CST 2022, Wed Mar 16 18:25:10 CST 2022
+DONE, solarex08/solarex08.in, Wed Mar 16 18:25:13 CST 2022, Wed Mar 16 18:25:45 CST 2022
+DONE, tftex03/tftex03.in, Wed Mar 16 18:25:48 CST 2022, Wed Mar 16 18:26:14 CST 2022
+DONE, ccdex03/ccdex03.in, Wed Mar 16 18:26:17 CST 2022, Wed Mar 16 18:26:47 CST 2022
+DONE, diodeex03/diodeex03.in, Wed Mar 16 18:26:50 CST 2022, Wed Mar 16 18:27:15 CST 2022
+DONE, ganfetex13/ganfetex13.in, Wed Mar 16 18:27:18 CST 2022, Wed Mar 16 18:27:48 CST 2022
+DONE, mesfetex02/mesfetex02.in, Wed Mar 16 18:27:51 CST 2022, Wed Mar 16 18:28:20 CST 2022
+DONE, optoex05/optoex05.in, Wed Mar 16 18:28:23 CST 2022, Wed Mar 16 18:28:50 CST 2022
+DONE, powerex02/powerex02.in, Wed Mar 16 18:28:53 CST 2022, Wed Mar 16 18:29:25 CST 2022
+DONE, radex16/radex16.in, Wed Mar 16 18:29:28 CST 2022, Wed Mar 16 18:29:52 CST 2022
+DONE, tftex02/tftex02.in, Wed Mar 16 18:29:55 CST 2022, Wed Mar 16 18:30:22 CST 2022
+DONE, vp2dex12/vp2dex12.in, Wed Mar 16 18:30:25 CST 2022, Wed Mar 16 18:30:50 CST 2022
+DONE, vpex13/vpex13.in, Wed Mar 16 18:30:53 CST 2022, Wed Mar 16 18:31:14 CST 2022
+DONE, vsex04/vsex04.in, Wed Mar 16 18:31:17 CST 2022, Wed Mar 16 18:31:56 CST 2022
+DONE, hbtex06/hbtex06.in, Wed Mar 16 18:31:59 CST 2022, Wed Mar 16 18:32:38 CST 2022
+DONE, hemtex01/hemtex01.in, Wed Mar 16 18:32:41 CST 2022, Wed Mar 16 18:33:11 CST 2022
+DONE, isolationex02/isolationex02.in, Wed Mar 16 18:33:14 CST 2022, Wed Mar 16 18:33:40 CST 2022
+DONE, mesfetex06/mesfetex06.in, Wed Mar 16 18:33:43 CST 2022, Wed Mar 16 18:34:19 CST 2022
+DONE, mos1ex01/mos1ex01.in, Wed Mar 16 18:34:22 CST 2022, Wed Mar 16 18:34:55 CST 2022
+DONE, mos1ex03/mos1ex03.in, Wed Mar 16 18:34:58 CST 2022, Wed Mar 16 18:35:24 CST 2022
+DONE, mos1ex09/mos1ex09.in, Wed Mar 16 18:35:27 CST 2022, Wed Mar 16 18:35:56 CST 2022
+DONE, mos1ex11/mos1ex11.in, Wed Mar 16 18:35:59 CST 2022, Wed Mar 16 18:36:29 CST 2022
+DONE, mos1ex12/mos1ex12.in, Wed Mar 16 18:36:32 CST 2022, Wed Mar 16 18:37:00 CST 2022
+DONE, mos1ex15/mos1ex15.in, Wed Mar 16 18:37:03 CST 2022, Wed Mar 16 18:37:34 CST 2022
+DONE, mos2ex09/mos2ex09.in, Wed Mar 16 18:37:37 CST 2022, Wed Mar 16 18:38:08 CST 2022
+DONE, mos2ex10/mos2ex10.in, Wed Mar 16 18:38:11 CST 2022, Wed Mar 16 18:38:38 CST 2022
+DONE, mos2ex12/mos2ex12.in, Wed Mar 16 18:38:41 CST 2022, Wed Mar 16 18:39:10 CST 2022
+DONE, vp2dex09/vp2dex09.in, Wed Mar 16 18:39:13 CST 2022, Wed Mar 16 18:39:38 CST 2022
+DONE, vp2dex11/vp2dex11.in, Wed Mar 16 18:39:41 CST 2022, Wed Mar 16 18:40:06 CST 2022
+DONE, bjtex02/bjtex02.in, Wed Mar 16 18:40:09 CST 2022, Wed Mar 16 18:40:45 CST 2022
+DONE, ferroex02/ferroex02.in, Wed Mar 16 18:40:48 CST 2022, Wed Mar 16 18:41:22 CST 2022
+DONE, ferroex03/ferroex03.in, Wed Mar 16 18:41:25 CST 2022, Wed Mar 16 18:41:59 CST 2022
+DONE, hemtex06/hemtex06.in, Wed Mar 16 18:42:02 CST 2022, Wed Mar 16 18:42:36 CST 2022
+DONE, ledex02/ledex02.in, Wed Mar 16 18:42:39 CST 2022, Wed Mar 16 18:43:33 CST 2022
+DONE, mcdeviceex05/mcdeviceex05.in, Wed Mar 16 18:43:36 CST 2022, Wed Mar 16 18:44:10 CST 2022
+DONE, mos1ex14/mos1ex14.in, Wed Mar 16 18:44:13 CST 2022, Wed Mar 16 18:44:45 CST 2022
+DONE, mos2ex03/mos2ex03.in, Wed Mar 16 18:44:48 CST 2022, Wed Mar 16 18:45:14 CST 2022
+DONE, quantumex09/quantumex09.in, Wed Mar 16 18:45:17 CST 2022, Wed Mar 16 18:45:44 CST 2022
+DONE, questex01/questex01.in, Wed Mar 16 18:45:47 CST 2022, Wed Mar 16 18:46:12 CST 2022
+DONE, questex02/questex02.in, Wed Mar 16 18:46:15 CST 2022, Wed Mar 16 18:46:40 CST 2022
+DONE, questex03/questex03.in, Wed Mar 16 18:46:43 CST 2022, Wed Mar 16 18:47:08 CST 2022
+DONE, questex04/questex04.in, Wed Mar 16 18:47:11 CST 2022, Wed Mar 16 18:47:36 CST 2022
+DONE, questex05/questex05.in, Wed Mar 16 18:47:39 CST 2022, Wed Mar 16 18:48:04 CST 2022
+DONE, questex06/questex06.in, Wed Mar 16 18:48:07 CST 2022, Wed Mar 16 18:48:32 CST 2022
+DONE, questex07/questex07.in, Wed Mar 16 18:48:35 CST 2022, Wed Mar 16 18:49:00 CST 2022
+DONE, questex08/questex08.in, Wed Mar 16 18:49:03 CST 2022, Wed Mar 16 18:49:28 CST 2022
+DONE, questex09/questex09.in, Wed Mar 16 18:49:31 CST 2022, Wed Mar 16 18:49:56 CST 2022
+DONE, questex10/questex10.in, Wed Mar 16 18:49:59 CST 2022, Wed Mar 16 18:50:23 CST 2022
+DONE, questex11/questex11.in, Wed Mar 16 18:50:26 CST 2022, Wed Mar 16 18:50:51 CST 2022
+DONE, questex12/questex12.in, Wed Mar 16 18:50:54 CST 2022, Wed Mar 16 18:51:19 CST 2022
+DONE, questex13/questex13.in, Wed Mar 16 18:51:22 CST 2022, Wed Mar 16 18:51:47 CST 2022
+DONE, questex15/questex15.in, Wed Mar 16 18:51:50 CST 2022, Wed Mar 16 18:52:15 CST 2022
+DONE, questex16/questex16.in, Wed Mar 16 18:52:18 CST 2022, Wed Mar 16 18:52:43 CST 2022
+DONE, questex17/questex17.in, Wed Mar 16 18:52:46 CST 2022, Wed Mar 16 18:53:11 CST 2022
+DONE, questex18/questex18.in, Wed Mar 16 18:53:14 CST 2022, Wed Mar 16 18:53:39 CST 2022
+DONE, questex19/questex19.in, Wed Mar 16 18:53:42 CST 2022, Wed Mar 16 18:54:06 CST 2022
+DONE, bjtex03/bjtex03.in, Wed Mar 16 18:54:09 CST 2022, Wed Mar 16 18:54:43 CST 2022
+DONE, clex01/clex01.in, Wed Mar 16 18:54:46 CST 2022, Wed Mar 16 18:55:11 CST 2022
+DONE, clex05/clex05.in, Wed Mar 16 18:55:14 CST 2022, Wed Mar 16 18:55:44 CST 2022
+DONE, clex06/clex06.in, Wed Mar 16 18:55:47 CST 2022, Wed Mar 16 18:56:16 CST 2022
+DONE, hbtex03/hbtex03.in, Wed Mar 16 18:56:19 CST 2022, Wed Mar 16 18:56:54 CST 2022
+DONE, hemtex03/hemtex03.in, Wed Mar 16 18:56:57 CST 2022, Wed Mar 16 18:57:28 CST 2022
+DONE, highkex01/highkex01.in, Wed Mar 16 18:57:31 CST 2022, Wed Mar 16 18:58:00 CST 2022
+DONE, magneticex01/magneticex01.in, Wed Mar 16 18:58:03 CST 2022, Wed Mar 16 18:58:30 CST 2022
+DONE, magneticex04/magneticex04.in, Wed Mar 16 18:58:33 CST 2022, Wed Mar 16 18:59:02 CST 2022
+DONE, mcdeviceex01/mcdeviceex01.in, Wed Mar 16 18:59:05 CST 2022, Wed Mar 16 18:59:29 CST 2022
+DONE, mercuryex05/mercuryex05.in, Wed Mar 16 18:59:32 CST 2022, Wed Mar 16 18:59:55 CST 2022
+DONE, mos1ex07/mos1ex07.in, Wed Mar 16 18:59:58 CST 2022, Wed Mar 16 19:00:34 CST 2022
+DONE, quantumex04/quantumex04.in, Wed Mar 16 19:00:37 CST 2022, Wed Mar 16 19:01:04 CST 2022
+DONE, questex14/questex14.in, Wed Mar 16 19:01:07 CST 2022, Wed Mar 16 19:01:32 CST 2022
+DONE, soiex07/soiex07.in, Wed Mar 16 19:01:35 CST 2022, Wed Mar 16 19:05:24 CST 2022
+DONE, tftex05/tftex05.in, Wed Mar 16 19:05:27 CST 2022, Wed Mar 16 19:06:05 CST 2022
+DONE, bjtex11/bjtex11.in, Wed Mar 16 19:06:08 CST 2022, Wed Mar 16 19:06:37 CST 2022
+DONE, ccdex02/ccdex02.in, Wed Mar 16 19:06:40 CST 2022, Wed Mar 16 19:07:17 CST 2022
+DONE, clex02/clex02.in, Wed Mar 16 19:07:20 CST 2022, Wed Mar 16 19:07:49 CST 2022
+DONE, clex03/clex03.in, Wed Mar 16 19:07:52 CST 2022, Wed Mar 16 19:08:22 CST 2022
+DONE, clex16/clex16.in, Wed Mar 16 19:08:25 CST 2022, Wed Mar 16 19:08:55 CST 2022
+DONE, laserex01/laserex01.in, Wed Mar 16 19:08:58 CST 2022, Wed Mar 16 19:09:53 CST 2022
+DONE, mesfetex01/mesfetex01.in, Wed Mar 16 19:09:56 CST 2022, Wed Mar 16 19:10:34 CST 2022
+DONE, mesfetex04/mesfetex04.in, Wed Mar 16 19:10:37 CST 2022, Wed Mar 16 19:11:11 CST 2022
+DONE, powerex04/powerex04.in, Wed Mar 16 19:11:15 CST 2022, Wed Mar 16 19:11:52 CST 2022
+DONE, soiex03/soiex03.in, Wed Mar 16 19:11:55 CST 2022, Wed Mar 16 19:12:29 CST 2022
+DONE, clex19/clex19.in, Wed Mar 16 19:12:32 CST 2022, Wed Mar 16 19:13:02 CST 2022
+DONE, clex21/clex21.in, Wed Mar 16 19:13:05 CST 2022, Wed Mar 16 19:13:34 CST 2022
+DONE, diodeex05/diodeex05.in, Wed Mar 16 19:13:37 CST 2022, Wed Mar 16 19:14:15 CST 2022
+DONE, ledex01/ledex01.in, Wed Mar 16 19:14:18 CST 2022, Wed Mar 16 19:15:08 CST 2022
+DONE, mos1ex02/mos1ex02.in, Wed Mar 16 19:15:11 CST 2022, Wed Mar 16 19:15:48 CST 2022
+DONE, noiseex03/noiseex03.in, Wed Mar 16 19:15:51 CST 2022, Wed Mar 16 19:16:32 CST 2022
+DONE, optoex14/optoex14.in, Wed Mar 16 19:16:35 CST 2022, Wed Mar 16 19:17:03 CST 2022
+DONE, solarex09/solarex09.in, Wed Mar 16 19:17:06 CST 2022, Wed Mar 16 19:17:40 CST 2022
+DONE, tftex09/tftex09.in, Wed Mar 16 19:17:43 CST 2022, Wed Mar 16 19:18:33 CST 2022
+DONE, clex04/clex04.in, Wed Mar 16 19:18:36 CST 2022, Wed Mar 16 19:19:06 CST 2022
+DONE, esdex05/esdex05.in, Wed Mar 16 19:19:09 CST 2022, Wed Mar 16 19:19:47 CST 2022
+DONE, mcdeviceex02/mcdeviceex02.in, Wed Mar 16 19:19:50 CST 2022, Wed Mar 16 19:20:30 CST 2022
+DONE, mesfetex03/mesfetex03.in, Wed Mar 16 19:20:33 CST 2022, Wed Mar 16 19:21:11 CST 2022
+DONE, noiseex02/noiseex02.in, Wed Mar 16 19:21:14 CST 2022, Wed Mar 16 19:21:53 CST 2022
+DONE, organicex05/organicex05.in, Wed Mar 16 19:21:56 CST 2022, Wed Mar 16 19:22:31 CST 2022
+DONE, clex09/clex09.in, Wed Mar 16 19:22:34 CST 2022, Wed Mar 16 19:23:05 CST 2022
+DONE, clex18/clex18.in, Wed Mar 16 19:23:08 CST 2022, Wed Mar 16 19:23:38 CST 2022
+DONE, magneticex02/magneticex02.in, Wed Mar 16 19:23:41 CST 2022, Wed Mar 16 19:24:15 CST 2022
+DONE, powerex08/powerex08.in, Wed Mar 16 19:24:18 CST 2022, Wed Mar 16 19:24:56 CST 2022
+DONE, solarex02/solarex02.in, Wed Mar 16 19:24:59 CST 2022, Wed Mar 16 19:25:37 CST 2022
+DONE, tftex07/tftex07.in, Wed Mar 16 19:25:40 CST 2022, Wed Mar 16 19:26:16 CST 2022
+DONE, bjtex10/bjtex10.in, Wed Mar 16 19:26:19 CST 2022, Wed Mar 16 19:26:59 CST 2022
+DONE, diodeex04/diodeex04.in, Wed Mar 16 19:27:02 CST 2022, Wed Mar 16 19:27:40 CST 2022
+DONE, mesfetex05/mesfetex05.in, Wed Mar 16 19:27:43 CST 2022, Wed Mar 16 19:28:22 CST 2022
+DONE, optoex11/optoex11.in, Wed Mar 16 19:28:25 CST 2022, Wed Mar 16 19:28:59 CST 2022
+DONE, optoex12/optoex12.in, Wed Mar 16 19:29:02 CST 2022, Wed Mar 16 19:29:43 CST 2022
+DONE, organicex11/organicex11.in, Wed Mar 16 19:29:46 CST 2022, Wed Mar 16 19:30:21 CST 2022
+DONE, vpex09/vpex09.in, Wed Mar 16 19:30:24 CST 2022, Wed Mar 16 19:34:04 CST 2022
+DONE, mos1ex05/mos1ex05.in, Wed Mar 16 19:34:07 CST 2022, Wed Mar 16 19:34:45 CST 2022
+DONE, optoex09/optoex09.in, Wed Mar 16 19:34:48 CST 2022, Wed Mar 16 19:35:24 CST 2022
+DONE, powerex05/powerex05.in, Wed Mar 16 19:35:27 CST 2022, Wed Mar 16 19:36:10 CST 2022
+DONE, solarex19/solarex19.in, Wed Mar 16 19:36:13 CST 2022, Wed Mar 16 19:38:38 CST 2022
+DONE, bjtex04/bjtex04.in, Wed Mar 16 19:38:41 CST 2022, Wed Mar 16 19:39:26 CST 2022
+DONE, bjtex07/bjtex07.in, Wed Mar 16 19:39:29 CST 2022, Wed Mar 16 19:40:10 CST 2022
+DONE, clex11/clex11.in, Wed Mar 16 19:40:13 CST 2022, Wed Mar 16 19:40:48 CST 2022
+DONE, hemtex04/hemtex04.in, Wed Mar 16 19:40:51 CST 2022, Wed Mar 16 19:41:30 CST 2022
+DONE, mcdeviceex04/mcdeviceex04.in, Wed Mar 16 19:41:33 CST 2022, Wed Mar 16 19:42:09 CST 2022
+DONE, optoex15/optoex15.in, Wed Mar 16 19:42:12 CST 2022, Wed Mar 16 19:42:53 CST 2022
+DONE, vaex04/vaex04.in, Wed Mar 16 19:42:56 CST 2022, Wed Mar 16 19:43:32 CST 2022
+DONE, eprmex03/eprmex03.in, Wed Mar 16 19:43:35 CST 2022, Wed Mar 16 19:44:22 CST 2022
+DONE, hemtex05/hemtex05.in, Wed Mar 16 19:44:25 CST 2022, Wed Mar 16 19:45:05 CST 2022
+DONE, isolationex01/isolationex01.in, Wed Mar 16 19:45:08 CST 2022, Wed Mar 16 19:45:55 CST 2022
+DONE, ledex05/ledex05.in, Wed Mar 16 19:45:58 CST 2022, Wed Mar 16 19:47:10 CST 2022
+DONE, mos1ex06/mos1ex06.in, Wed Mar 16 19:47:13 CST 2022, Wed Mar 16 19:47:58 CST 2022
+DONE, optoex13/optoex13.in, Wed Mar 16 19:48:01 CST 2022, Wed Mar 16 19:48:40 CST 2022
+DONE, soiex04/soiex04.in, Wed Mar 16 19:48:43 CST 2022, Wed Mar 16 19:49:29 CST 2022
+DONE, hemtex02/hemtex02.in, Wed Mar 16 19:49:32 CST 2022, Wed Mar 16 19:50:09 CST 2022
+DONE, mos2ex04/mos2ex04.in, Wed Mar 16 19:50:12 CST 2022, Wed Mar 16 19:50:52 CST 2022
+DONE, vaex05/vaex05.in, Wed Mar 16 19:50:55 CST 2022, Wed Mar 16 19:51:34 CST 2022
+DONE, ccdex01/ccdex01.in, Wed Mar 16 19:51:37 CST 2022, Wed Mar 16 19:52:27 CST 2022
+DONE, clex07/clex07.in, Wed Mar 16 19:52:30 CST 2022, Wed Mar 16 19:53:09 CST 2022
+DONE, mos2ex16/mos2ex16.in, Wed Mar 16 19:53:12 CST 2022, Wed Mar 16 19:53:46 CST 2022
+DONE, solarex04/solarex04.in, Wed Mar 16 19:53:49 CST 2022, Wed Mar 16 19:54:30 CST 2022
+DONE, clex12/clex12.in, Wed Mar 16 19:54:34 CST 2022, Wed Mar 16 19:55:13 CST 2022
+DONE, clex14/clex14.in, Wed Mar 16 19:55:16 CST 2022, Wed Mar 16 19:55:54 CST 2022
+DONE, laserex02/laserex02.in, Wed Mar 16 19:55:58 CST 2022, Wed Mar 16 19:56:57 CST 2022
+DONE, mos1ex13/mos1ex13.in, Wed Mar 16 19:57:00 CST 2022, Wed Mar 16 19:57:48 CST 2022
+DONE, mos2ex07/mos2ex07.in, Wed Mar 16 19:57:51 CST 2022, Wed Mar 16 19:58:37 CST 2022
+DONE, mos2ex08/mos2ex08.in, Wed Mar 16 19:58:40 CST 2022, Wed Mar 16 19:59:36 CST 2022
+DONE, mos2ex14/mos2ex14.in, Wed Mar 16 19:59:39 CST 2022, Wed Mar 16 20:00:25 CST 2022
+DONE, noiseex05/noiseex05.in, Wed Mar 16 20:00:28 CST 2022, Wed Mar 16 20:01:11 CST 2022
+DONE, optoex06/optoex06.in, Wed Mar 16 20:01:14 CST 2022, Wed Mar 16 20:02:10 CST 2022
+DONE, tftex06/tftex06.in, Wed Mar 16 20:02:13 CST 2022, Wed Mar 16 20:03:03 CST 2022
+DONE, imagesensorex02/imagesensorex02.in, Wed Mar 16 20:03:06 CST 2022, Wed Mar 16 20:04:04 CST 2022
+DONE, mos2ex15/mos2ex15.in, Wed Mar 16 20:04:07 CST 2022, Wed Mar 16 20:04:49 CST 2022
+DONE, quantumex10/quantumex10.in, Wed Mar 16 20:04:52 CST 2022, Wed Mar 16 20:05:39 CST 2022
+DONE, powerex03/powerex03.in, Wed Mar 16 20:05:42 CST 2022, Wed Mar 16 20:06:23 CST 2022
+DONE, sicex03/sicex03.in, Wed Mar 16 20:06:26 CST 2022, Wed Mar 16 20:07:15 CST 2022
+DONE, soiex06/soiex06.in, Wed Mar 16 20:07:18 CST 2022, Wed Mar 16 20:08:11 CST 2022
+DONE, clex25/clex25.in, Wed Mar 16 20:08:14 CST 2022, Wed Mar 16 20:08:59 CST 2022
+DONE, latchex01/latchex01.in, Wed Mar 16 20:09:02 CST 2022, Wed Mar 16 20:09:52 CST 2022
+DONE, latchex03/latchex03.in, Wed Mar 16 20:09:55 CST 2022, Wed Mar 16 20:10:49 CST 2022
+DONE, quantumex01/quantumex01.in, Wed Mar 16 20:10:52 CST 2022, Wed Mar 16 20:11:50 CST 2022
+DONE, optoex18/optoex18.in, Wed Mar 16 20:11:53 CST 2022, Wed Mar 16 20:12:53 CST 2022
+DONE, bjtex08/bjtex08.in, Wed Mar 16 20:12:56 CST 2022, Wed Mar 16 20:13:54 CST 2022
+DONE, hbtex04/hbtex04.in, Wed Mar 16 20:13:57 CST 2022, Wed Mar 16 20:14:56 CST 2022
+DONE, organicex04/organicex04.in, Wed Mar 16 20:14:59 CST 2022, Wed Mar 16 20:16:02 CST 2022
+DONE, clex24/clex24.in, Wed Mar 16 20:16:05 CST 2022, Wed Mar 16 20:16:52 CST 2022
+DONE, hbtex08/hbtex08.in, Wed Mar 16 20:16:55 CST 2022, Wed Mar 16 20:17:55 CST 2022
+DONE, powerex10/powerex10.in, Wed Mar 16 20:17:58 CST 2022, Wed Mar 16 20:18:45 CST 2022
+DONE, quantumex02/quantumex02.in, Wed Mar 16 20:18:48 CST 2022, Wed Mar 16 20:19:48 CST 2022
+DONE, quantumex20/quantumex20.in, Wed Mar 16 20:19:51 CST 2022, Wed Mar 16 20:20:47 CST 2022
+DONE, laserex04/laserex04.in, Wed Mar 16 20:20:50 CST 2022, Wed Mar 16 20:21:49 CST 2022
+DONE, quantumex03/quantumex03.in, Wed Mar 16 20:21:52 CST 2022, Wed Mar 16 20:22:55 CST 2022
+DONE, sicex02/sicex02.in, Wed Mar 16 20:22:58 CST 2022, Wed Mar 16 20:23:48 CST 2022
+DONE, latchex02/latchex02.in, Wed Mar 16 20:23:51 CST 2022, Wed Mar 16 20:25:24 CST 2022
+DONE, powerex07/powerex07.in, Wed Mar 16 20:25:27 CST 2022, Wed Mar 16 20:26:27 CST 2022
+DONE, powerex09/powerex09.in, Wed Mar 16 20:26:30 CST 2022, Wed Mar 16 20:27:25 CST 2022
+DONE, powerex13/powerex13.in, Wed Mar 16 20:27:28 CST 2022, Wed Mar 16 20:28:33 CST 2022
+DONE, powerex01/powerex01.in, Wed Mar 16 20:28:37 CST 2022, Wed Mar 16 20:29:27 CST 2022
+DONE, soiex05/soiex05.in, Wed Mar 16 20:29:30 CST 2022, Wed Mar 16 20:30:37 CST 2022
+KILL, soiex10/soiex10.in, Wed Mar 16 20:30:40 CST 2022, Wed Mar 16 21:30:54 CST 2022
+DONE, solarex15/solarex15.in, Wed Mar 16 21:30:57 CST 2022, Wed Mar 16 21:32:07 CST 2022
+DONE, solarex01/solarex01.in, Wed Mar 16 21:32:10 CST 2022, Wed Mar 16 21:33:16 CST 2022
+DONE, tftex12/tftex12.in, Wed Mar 16 21:33:19 CST 2022, Wed Mar 16 21:34:21 CST 2022
+DONE, tftex15/tftex15.in, Wed Mar 16 21:34:24 CST 2022, Wed Mar 16 21:47:46 CST 2022
+DONE, vp2dex04/vp2dex04.in, Wed Mar 16 21:47:49 CST 2022, Wed Mar 16 21:49:00 CST 2022
+KILL, vsex02/vsex02.in, Wed Mar 16 21:49:03 CST 2022, Wed Mar 16 22:49:19 CST 2022
+DONE, mos2ex13/mos2ex13.in, Wed Mar 16 22:49:22 CST 2022, Wed Mar 16 22:50:14 CST 2022
+DONE, powerex14/powerex14.in, Wed Mar 16 22:50:17 CST 2022, Wed Mar 16 22:51:22 CST 2022
+DONE, bjtex09/bjtex09.in, Wed Mar 16 22:51:25 CST 2022, Wed Mar 16 22:52:24 CST 2022
+DONE, sicex06/sicex06.in, Wed Mar 16 22:52:27 CST 2022, Wed Mar 16 22:53:15 CST 2022
+DONE, clex08/clex08.in, Wed Mar 16 22:53:18 CST 2022, Wed Mar 16 22:54:14 CST 2022
+DONE, solarex12/solarex12.in, Wed Mar 16 22:54:17 CST 2022, Wed Mar 16 22:55:57 CST 2022
+DONE, organicex08/organicex08.in, Wed Mar 16 22:56:00 CST 2022, Wed Mar 16 22:57:21 CST 2022
+DONE, quantumex23/quantumex23.in, Wed Mar 16 22:57:24 CST 2022, Wed Mar 16 22:58:36 CST 2022
+DONE, sicex13/sicex13.in, Wed Mar 16 22:58:39 CST 2022, Wed Mar 16 22:59:54 CST 2022
+DONE, ganfetex04/ganfetex04.in, Wed Mar 16 22:59:57 CST 2022, Wed Mar 16 23:00:56 CST 2022
+DONE, laserex03/laserex03.in, Wed Mar 16 23:00:59 CST 2022, Wed Mar 16 23:02:04 CST 2022
+DONE, mos2ex06/mos2ex06.in, Wed Mar 16 23:02:08 CST 2022, Wed Mar 16 23:03:10 CST 2022
+DONE, soiex08/soiex08.in, Wed Mar 16 23:03:13 CST 2022, Wed Mar 16 23:04:39 CST 2022
+DONE, vsex01/vsex01.in, Wed Mar 16 23:04:42 CST 2022, Wed Mar 16 23:06:01 CST 2022
+DONE, eprmex05/eprmex05.in, Wed Mar 16 23:06:04 CST 2022, Wed Mar 16 23:07:20 CST 2022
+DONE, solarex14/solarex14.in, Wed Mar 16 23:07:23 CST 2022, Wed Mar 16 23:08:32 CST 2022
+DONE, ganfetex01/ganfetex01.in, Wed Mar 16 23:08:35 CST 2022, Wed Mar 16 23:09:28 CST 2022
+DONE, ledex04/ledex04.in, Wed Mar 16 23:09:31 CST 2022, Wed Mar 16 23:10:55 CST 2022
+DONE, solarex03/solarex03.in, Wed Mar 16 23:10:58 CST 2022, Wed Mar 16 23:12:50 CST 2022
+DONE, clex10/clex10.in, Wed Mar 16 23:12:53 CST 2022, Wed Mar 16 23:13:59 CST 2022
+DONE, diodeex11/diodeex11.in, Wed Mar 16 23:14:02 CST 2022, Wed Mar 16 23:15:22 CST 2022
+DONE, vpex02/vpex02.in, Wed Mar 16 23:15:25 CST 2022, Wed Mar 16 23:39:46 CST 2022
+DONE, sicex05/sicex05.in, Wed Mar 16 23:39:49 CST 2022, Wed Mar 16 23:41:03 CST 2022
+DONE, ledex03/ledex03.in, Wed Mar 16 23:41:06 CST 2022, Wed Mar 16 23:42:29 CST 2022
+DONE, optoex17/optoex17.in, Wed Mar 16 23:42:32 CST 2022, Wed Mar 16 23:43:40 CST 2022
+DONE, ferroex01/ferroex01.in, Wed Mar 16 23:43:43 CST 2022, Wed Mar 16 23:45:13 CST 2022
+DONE, vpex10/vpex10.in, Wed Mar 16 23:45:16 CST 2022, Wed Mar 16 23:46:41 CST 2022
+DONE, clex22/clex22.in, Wed Mar 16 23:46:44 CST 2022, Wed Mar 16 23:47:53 CST 2022
+DONE, quantumex05/quantumex05.in, Wed Mar 16 23:47:56 CST 2022, Wed Mar 16 23:49:15 CST 2022
+DONE, quantumex24/quantumex24.in, Wed Mar 16 23:49:18 CST 2022, Wed Mar 16 23:51:04 CST 2022
+DONE, quantumex11/quantumex11.in, Wed Mar 16 23:51:07 CST 2022, Wed Mar 16 23:52:34 CST 2022
+DONE, vsex08/vsex08.in, Wed Mar 16 23:52:37 CST 2022, Wed Mar 16 23:54:04 CST 2022
+DONE, ledex10/ledex10.in, Wed Mar 16 23:54:07 CST 2022, Wed Mar 16 23:56:25 CST 2022
+DONE, mcdeviceex03/mcdeviceex03.in, Wed Mar 16 23:56:28 CST 2022, Wed Mar 16 23:57:48 CST 2022
+DONE, clex15/clex15.in, Wed Mar 16 23:57:51 CST 2022, Wed Mar 16 23:59:21 CST 2022
+DONE, diodeex07/diodeex07.in, Wed Mar 16 23:59:24 CST 2022, Thu Mar 17 00:01:00 CST 2022
+DONE, hbtex07/hbtex07.in, Thu Mar 17 00:01:03 CST 2022, Thu Mar 17 00:07:10 CST 2022
+DONE, laserex11/laserex11.in, Thu Mar 17 00:07:13 CST 2022, Thu Mar 17 00:08:47 CST 2022
+DONE, sicex14/sicex14.in, Thu Mar 17 00:08:50 CST 2022, Thu Mar 17 00:10:50 CST 2022
+DONE, vp2dex13/vp2dex13.in, Thu Mar 17 00:10:53 CST 2022, Thu Mar 17 00:12:19 CST 2022
+DONE, diodeex10/diodeex10.in, Thu Mar 17 00:12:22 CST 2022, Thu Mar 17 00:13:44 CST 2022
+DONE, esdex03/esdex03.in, Thu Mar 17 00:13:47 CST 2022, Thu Mar 17 00:15:31 CST 2022
+DONE, diodeex02/diodeex02.in, Thu Mar 17 00:15:34 CST 2022, Thu Mar 17 00:17:11 CST 2022
+DONE, mos2ex23/mos2ex23.in, Thu Mar 17 00:17:14 CST 2022, Thu Mar 17 00:18:57 CST 2022
+DONE, clex23/clex23.in, Thu Mar 17 00:19:00 CST 2022, Thu Mar 17 00:20:25 CST 2022
+DONE, quantumex06/quantumex06.in, Thu Mar 17 00:20:28 CST 2022, Thu Mar 17 00:22:24 CST 2022
+DONE, solarex10/solarex10.in, Thu Mar 17 00:22:27 CST 2022, Thu Mar 17 00:24:08 CST 2022
+DONE, sonosex05/sonosex05.in, Thu Mar 17 00:24:11 CST 2022, Thu Mar 17 00:25:56 CST 2022
+DONE, esdex01/esdex01.in, Thu Mar 17 00:25:59 CST 2022, Thu Mar 17 00:27:49 CST 2022
+DONE, diodeex12/diodeex12.in, Thu Mar 17 00:27:52 CST 2022, Thu Mar 17 00:29:36 CST 2022
+DONE, eprmex04/eprmex04.in, Thu Mar 17 00:29:39 CST 2022, Thu Mar 17 00:31:32 CST 2022
+DONE, clex13/clex13.in, Thu Mar 17 00:31:35 CST 2022, Thu Mar 17 00:33:12 CST 2022
+DONE, esdex02/esdex02.in, Thu Mar 17 00:33:15 CST 2022, Thu Mar 17 00:35:18 CST 2022
+DONE, mos2ex02/mos2ex02.in, Thu Mar 17 00:35:21 CST 2022, Thu Mar 17 00:37:00 CST 2022
+DONE, mos2ex01/mos2ex01.in, Thu Mar 17 00:37:03 CST 2022, Thu Mar 17 00:38:48 CST 2022
+DONE, quantumex17/quantumex17.in, Thu Mar 17 00:38:51 CST 2022, Thu Mar 17 00:40:30 CST 2022
+DONE, quantumex14/quantumex14.in, Thu Mar 17 00:40:33 CST 2022, Thu Mar 17 00:42:30 CST 2022
+DONE, tftex22/tftex22.in, Thu Mar 17 00:42:33 CST 2022, Thu Mar 17 00:44:34 CST 2022
+DONE, esdex04/esdex04.in, Thu Mar 17 00:44:37 CST 2022, Thu Mar 17 00:47:11 CST 2022
+DONE, ganfetex03/ganfetex03.in, Thu Mar 17 00:47:14 CST 2022, Thu Mar 17 00:49:26 CST 2022
+DONE, eprmex01/eprmex01.in, Thu Mar 17 00:49:29 CST 2022, Thu Mar 17 00:51:39 CST 2022
+DONE, diodeex09/diodeex09.in, Thu Mar 17 00:51:42 CST 2022, Thu Mar 17 00:53:36 CST 2022
+DONE, vpex11/vpex11.in, Thu Mar 17 00:53:39 CST 2022, Thu Mar 17 00:55:45 CST 2022
+DONE, quantumex07/quantumex07.in, Thu Mar 17 00:55:48 CST 2022, Thu Mar 17 00:58:13 CST 2022
+DONE, vsex09/vsex09.in, Thu Mar 17 00:58:16 CST 2022, Thu Mar 17 01:32:15 CST 2022
+DONE, quantumex22/quantumex22.in, Thu Mar 17 01:32:18 CST 2022, Thu Mar 17 01:35:21 CST 2022
+DONE, mercuryex07/mercuryex07.in, Thu Mar 17 01:35:24 CST 2022, Thu Mar 17 01:37:13 CST 2022
+DONE, solarex11/solarex11.in, Thu Mar 17 01:37:16 CST 2022, Thu Mar 17 01:39:17 CST 2022
+KILL, solidex05/solidex05.in, Thu Mar 17 01:39:20 CST 2022, Thu Mar 17 02:39:35 CST 2022
+DONE, mos2ex19/mos2ex19.in, Thu Mar 17 02:39:38 CST 2022, Thu Mar 17 02:41:41 CST 2022
+DONE, quantumex18/quantumex18.in, Thu Mar 17 02:41:44 CST 2022, Thu Mar 17 02:44:22 CST 2022
+DONE, ganfetex09/ganfetex09.in, Thu Mar 17 02:44:25 CST 2022, Thu Mar 17 02:46:39 CST 2022
+DONE, sicex01/sicex01.in, Thu Mar 17 02:46:42 CST 2022, Thu Mar 17 02:49:16 CST 2022
+DONE, powerex17/powerex17.in, Thu Mar 17 02:49:19 CST 2022, Thu Mar 17 02:51:36 CST 2022
+DONE, powerex12/powerex12.in, Thu Mar 17 02:51:39 CST 2022, Thu Mar 17 02:54:10 CST 2022
+DONE, radex01/radex01.in, Thu Mar 17 02:54:13 CST 2022, Thu Mar 17 02:56:45 CST 2022
+DONE, solidex02/solidex02.in, Thu Mar 17 02:56:48 CST 2022, Thu Mar 17 03:03:08 CST 2022
+DONE, vp2dex05/vp2dex05.in, Thu Mar 17 03:03:11 CST 2022, Thu Mar 17 03:06:25 CST 2022
+KILL, vsex06/vsex06.in, Thu Mar 17 03:06:28 CST 2022, Thu Mar 17 04:06:42 CST 2022
+DONE, vpex12/vpex12.in, Thu Mar 17 04:06:45 CST 2022, Thu Mar 17 04:09:29 CST 2022
+DONE, ledex09/ledex09.in, Thu Mar 17 04:09:32 CST 2022, Thu Mar 17 04:12:23 CST 2022
+DONE, quantumex13/quantumex13.in, Thu Mar 17 04:12:26 CST 2022, Thu Mar 17 04:15:23 CST 2022
+KILL, mos2ex24/mos2ex24.in, Thu Mar 17 04:15:26 CST 2022, Thu Mar 17 05:15:43 CST 2022
+DONE, organicex09/organicex09.in, Thu Mar 17 05:15:46 CST 2022, Thu Mar 17 05:18:20 CST 2022
+DONE, solidex06/solidex06.in, Thu Mar 17 05:18:23 CST 2022, Thu Mar 17 05:21:04 CST 2022
+DONE, solidex10/solidex10.in, Thu Mar 17 05:21:07 CST 2022, Thu Mar 17 05:26:35 CST 2022
+DONE, sonosex03/sonosex03.in, Thu Mar 17 05:26:38 CST 2022, Thu Mar 17 05:29:42 CST 2022
+DONE, sonosex04/sonosex04.in, Thu Mar 17 05:29:45 CST 2022, Thu Mar 17 05:32:46 CST 2022
+DONE, radex02/radex02.in, Thu Mar 17 05:32:49 CST 2022, Thu Mar 17 05:36:01 CST 2022
+KILL, vpex08/vpex08.in, Thu Mar 17 05:36:04 CST 2022, Thu Mar 17 06:36:18 CST 2022
+KILL, radex15/radex15.in, Thu Mar 17 06:36:21 CST 2022, Thu Mar 17 07:36:42 CST 2022
+DONE, optoex20/optoex20.in, Thu Mar 17 07:36:45 CST 2022, Thu Mar 17 07:39:33 CST 2022
+DONE, powerex19/powerex19.in, Thu Mar 17 07:39:36 CST 2022, Thu Mar 17 08:05:17 CST 2022
+KILL, radex14/radex14.in, Thu Mar 17 08:05:20 CST 2022, Thu Mar 17 09:05:36 CST 2022
+DONE, laserex06/laserex06.in, Thu Mar 17 09:05:39 CST 2022, Thu Mar 17 09:09:09 CST 2022
+KILL, radex12/radex12.in, Thu Mar 17 09:09:13 CST 2022, Thu Mar 17 10:09:32 CST 2022
+DONE, tftex14/tftex14.in, Thu Mar 17 10:09:35 CST 2022, Thu Mar 17 10:14:09 CST 2022
+DONE, quantumex12/quantumex12.in, Thu Mar 17 10:14:12 CST 2022, Thu Mar 17 10:18:36 CST 2022
+DONE, sicex10/sicex10.in, Thu Mar 17 10:18:39 CST 2022, Thu Mar 17 10:22:56 CST 2022
+DONE, tftex21/tftex21.in, Thu Mar 17 10:22:59 CST 2022, Thu Mar 17 10:28:01 CST 2022
+DONE, sicex04/sicex04.in, Thu Mar 17 10:28:04 CST 2022, Thu Mar 17 10:32:48 CST 2022
+DONE, solidex08/solidex08.in, Thu Mar 17 10:32:51 CST 2022, Thu Mar 17 10:37:42 CST 2022
+DONE, cryoex02/cryoex02.in, Thu Mar 17 10:37:45 CST 2022, Thu Mar 17 10:43:19 CST 2022
+DONE, latchex04/latchex04.in, Thu Mar 17 10:43:22 CST 2022, Thu Mar 17 10:49:47 CST 2022
+DONE, quantumex08/quantumex08.in, Thu Mar 17 10:49:50 CST 2022, Thu Mar 17 10:56:18 CST 2022
+DONE, mercuryex06/mercuryex06.in, Thu Mar 17 10:56:21 CST 2022, Thu Mar 17 11:01:58 CST 2022
+DONE, organicex03/organicex03.in, Thu Mar 17 11:02:01 CST 2022, Thu Mar 17 11:07:16 CST 2022
+DONE, tftex10/tftex10.in, Thu Mar 17 11:07:19 CST 2022, Thu Mar 17 11:13:58 CST 2022
+DONE, soiex09/soiex09.in, Thu Mar 17 11:14:01 CST 2022, Thu Mar 17 11:21:25 CST 2022
+DONE, radex06/radex06.in, Thu Mar 17 11:21:28 CST 2022, Thu Mar 17 11:29:24 CST 2022
+DONE, doeex02/doeex02.in, Thu Mar 17 11:29:27 CST 2022, Thu Mar 17 11:34:59 CST 2022
+DONE, vpex05/vpex05.in, Thu Mar 17 11:35:02 CST 2022, Thu Mar 17 11:44:03 CST 2022
+DONE, quantumex19/quantumex19.in, Thu Mar 17 11:44:06 CST 2022, Thu Mar 17 11:51:39 CST 2022
+DONE, sonosex06/sonosex06.in, Thu Mar 17 11:51:42 CST 2022, Thu Mar 17 11:59:03 CST 2022
+DONE, organicex07/organicex07.in, Thu Mar 17 11:59:06 CST 2022, Thu Mar 17 12:06:26 CST 2022
+DONE, tftex20/tftex20.in, Thu Mar 17 12:06:29 CST 2022, Thu Mar 17 12:15:52 CST 2022
+DONE, imagesensorex05/imagesensorex05.in, Thu Mar 17 12:15:55 CST 2022, Thu Mar 17 12:26:45 CST 2022
+DONE, tftex16/tftex16.in, Thu Mar 17 12:26:48 CST 2022, Thu Mar 17 12:35:08 CST 2022
+DONE, ganfetex14/ganfetex14.in, Thu Mar 17 12:35:11 CST 2022, Thu Mar 17 12:43:47 CST 2022
+DONE, organicex06/organicex06.in, Thu Mar 17 12:43:50 CST 2022, Thu Mar 17 12:51:34 CST 2022
+DONE, laserex10/laserex10.in, Thu Mar 17 12:51:37 CST 2022, Thu Mar 17 12:55:45 CST 2022
+DONE, radex03/radex03.in, Thu Mar 17 12:55:48 CST 2022, Thu Mar 17 13:05:46 CST 2022
+DONE, tftex18/tftex18.in, Thu Mar 17 13:05:49 CST 2022, Thu Mar 17 13:16:13 CST 2022
+DONE, sonosex01/sonosex01.in, Thu Mar 17 13:16:16 CST 2022, Thu Mar 17 13:26:52 CST 2022
+DONE, radex18/radex18.in, Thu Mar 17 13:26:55 CST 2022, Thu Mar 17 13:38:00 CST 2022
+DONE, vpex03/vpex03.in, Thu Mar 17 13:38:03 CST 2022, Thu Mar 17 13:50:08 CST 2022
+DONE, ganfetex12/ganfetex12.in, Thu Mar 17 13:50:11 CST 2022, Thu Mar 17 14:06:45 CST 2022
+DONE, laserex12/laserex12.in, Thu Mar 17 14:06:48 CST 2022, Thu Mar 17 14:22:07 CST 2022
+KILL, sicex08/sicex08.in, Thu Mar 17 14:22:10 CST 2022, Thu Mar 17 15:22:29 CST 2022
+KILL, vsex07/vsex07.in, Thu Mar 17 15:22:32 CST 2022, Thu Mar 17 16:22:47 CST 2022
+DONE, tftex17/tftex17.in, Thu Mar 17 16:22:50 CST 2022, Thu Mar 17 16:35:52 CST 2022
+DONE, imagesensorex01/imagesensorex01.in, Thu Mar 17 16:35:55 CST 2022, Thu Mar 17 16:52:57 CST 2022
+DONE, diodeex13/diodeex13.in, Thu Mar 17 16:53:00 CST 2022, Thu Mar 17 17:07:16 CST 2022
+DONE, laserex07/laserex07.in, Thu Mar 17 17:07:19 CST 2022, Thu Mar 17 17:15:06 CST 2022
+DONE, sicex12/sicex12.in, Thu Mar 17 17:15:09 CST 2022, Thu Mar 17 17:30:40 CST 2022
+DONE, doeex01/doeex01.in, Thu Mar 17 17:30:43 CST 2022, Thu Mar 17 17:37:51 CST 2022
+KILL, vcselex01/vcselex01.in, Thu Mar 17 17:37:54 CST 2022, Thu Mar 17 18:38:06 CST 2022
+DONE, imagesensorex06/imagesensorex06.in, Thu Mar 17 18:38:09 CST 2022, Thu Mar 17 18:55:54 CST 2022
+DONE, vpex07/vpex07.in, Thu Mar 17 18:55:57 CST 2022, Thu Mar 17 19:35:54 CST 2022
+DONE, solidex07/solidex07.in, Thu Mar 17 19:35:57 CST 2022, Thu Mar 17 19:50:41 CST 2022
+KILL, soiex13/soiex13.in, Thu Mar 17 19:50:44 CST 2022, Thu Mar 17 20:50:59 CST 2022
+DONE, mercuryex08/mercuryex08.in, Thu Mar 17 20:51:02 CST 2022, Thu Mar 17 21:05:40 CST 2022
+DONE, tftex13/tftex13.in, Thu Mar 17 21:05:43 CST 2022, Thu Mar 17 21:24:57 CST 2022
+DONE, vcselex03/vcselex03.in, Thu Mar 17 21:25:00 CST 2022, Thu Mar 17 21:46:06 CST 2022
+DONE, vcselex02/vcselex02.in, Thu Mar 17 21:46:09 CST 2022, Thu Mar 17 22:07:06 CST 2022
+DONE, sonosex02/sonosex02.in, Thu Mar 17 22:07:09 CST 2022, Thu Mar 17 22:28:06 CST 2022
+DONE, cryoex01/cryoex01.in, Thu Mar 17 22:28:09 CST 2022, Thu Mar 17 22:54:27 CST 2022
+DONE, ledex06/ledex06.in, Thu Mar 17 22:54:30 CST 2022, Thu Mar 17 23:23:11 CST 2022
+DONE, vcselex04/vcselex04.in, Thu Mar 17 23:23:14 CST 2022, Thu Mar 17 23:46:41 CST 2022
+KILL, radex07/radex07.in, Thu Mar 17 23:46:44 CST 2022, Fri Mar 18 00:47:08 CST 2022
+DONE, quantumex21/quantumex21.in, Fri Mar 18 00:47:11 CST 2022, Fri Mar 18 01:14:00 CST 2022
+DONE, ganfetex08/ganfetex08.in, Fri Mar 18 01:14:03 CST 2022, Fri Mar 18 01:48:15 CST 2022
+DONE, laserex09/laserex09.in, Fri Mar 18 01:48:18 CST 2022, Fri Mar 18 02:21:47 CST 2022
+DONE, organicex10/organicex10.in, Fri Mar 18 02:21:50 CST 2022, Fri Mar 18 02:51:35 CST 2022
+DONE, ledex07/ledex07.in, Fri Mar 18 02:51:38 CST 2022, Fri Mar 18 03:22:24 CST 2022
+Thu Mar 24 15:07:28 CST 2022
+DONE, vaex01/vaex01.in, Thu Mar 24 15:07:28 CST 2022, Thu Mar 24 15:07:40 CST 2022
+Fri Mar 25 10:32:20 CST 2022
+Fri Mar 25 10:45:35 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 10:45:35 CST 2022, Fri Mar 25 10:47:36 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 10:47:39 CST 2022, Fri Mar 25 10:48:14 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 10:48:17 CST 2022, Fri Mar 25 10:49:10 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 10:49:13 CST 2022, Fri Mar 25 10:50:02 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 10:50:05 CST 2022, Fri Mar 25 10:50:46 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 10:50:49 CST 2022, Fri Mar 25 10:51:10 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 10:51:13 CST 2022, Fri Mar 25 10:51:34 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 10:51:37 CST 2022, Fri Mar 25 10:52:16 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 10:52:19 CST 2022, Fri Mar 25 10:52:48 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 10:52:51 CST 2022, Fri Mar 25 10:53:25 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 10:53:28 CST 2022, Fri Mar 25 10:53:54 CST 2022
+Fri Mar 25 11:11:51 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 11:11:51 CST 2022, Fri Mar 25 11:12:15 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 11:12:18 CST 2022, Fri Mar 25 11:12:51 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 11:12:54 CST 2022, Fri Mar 25 11:13:46 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 11:13:49 CST 2022, Fri Mar 25 11:14:39 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 11:14:42 CST 2022, Fri Mar 25 11:15:23 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 11:15:26 CST 2022, Fri Mar 25 11:15:48 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 11:15:51 CST 2022, Fri Mar 25 11:16:30 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 11:16:33 CST 2022, Fri Mar 25 11:17:10 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 11:17:13 CST 2022, Fri Mar 25 11:17:44 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 11:17:47 CST 2022, Fri Mar 25 11:18:27 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 11:18:30 CST 2022, Fri Mar 25 11:18:57 CST 2022
+Fri Mar 25 11:23:48 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 11:23:48 CST 2022, Fri Mar 25 11:24:12 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 11:24:15 CST 2022, Fri Mar 25 11:24:47 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 11:24:50 CST 2022, Fri Mar 25 11:25:46 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 11:25:49 CST 2022, Fri Mar 25 11:26:39 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 11:26:42 CST 2022, Fri Mar 25 11:27:28 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 11:27:31 CST 2022, Fri Mar 25 11:27:52 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 11:27:55 CST 2022, Fri Mar 25 11:28:19 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 11:28:22 CST 2022, Fri Mar 25 11:29:02 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 11:29:05 CST 2022, Fri Mar 25 11:30:07 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 11:30:10 CST 2022, Fri Mar 25 11:30:43 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 11:30:46 CST 2022, Fri Mar 25 11:31:17 CST 2022
+Fri Mar 25 14:45:58 CST 2022
+Fri Mar 25 15:44:43 CST 2022
+Fri Mar 25 16:04:16 CST 2022
+Fri Mar 25 16:04:45 CST 2022
+Fri Mar 25 17:36:34 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 17:36:34 CST 2022, Fri Mar 25 17:37:23 CST 2022
+Fri Mar 25 17:38:06 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 17:38:06 CST 2022, Fri Mar 25 17:38:32 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 17:38:35 CST 2022, Fri Mar 25 17:39:10 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 17:39:13 CST 2022, Fri Mar 25 17:40:08 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 17:40:12 CST 2022, Fri Mar 25 17:41:01 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 17:41:04 CST 2022, Fri Mar 25 17:41:46 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 17:41:49 CST 2022, Fri Mar 25 17:42:14 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 17:42:17 CST 2022, Fri Mar 25 17:42:40 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 17:42:43 CST 2022, Fri Mar 25 17:43:25 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 17:43:28 CST 2022, Fri Mar 25 17:43:59 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 17:44:02 CST 2022, Fri Mar 25 17:44:35 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 17:44:38 CST 2022, Fri Mar 25 17:45:05 CST 2022
+END of 11 decks
+Fri Mar 25 18:20:07 CST 2022
+Fri Mar 25 18:26:40 CST 2022
+Fri Mar 25 18:27:41 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 18:27:41 CST 2022, Fri Mar 25 18:28:08 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 18:28:11 CST 2022, Fri Mar 25 18:28:47 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 18:28:50 CST 2022, Fri Mar 25 18:29:45 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 18:29:48 CST 2022, Fri Mar 25 18:30:38 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 18:30:41 CST 2022, Fri Mar 25 18:31:22 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 18:31:25 CST 2022, Fri Mar 25 18:31:47 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 18:31:51 CST 2022, Fri Mar 25 18:32:14 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 18:32:17 CST 2022, Fri Mar 25 18:32:58 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 18:33:01 CST 2022, Fri Mar 25 18:33:46 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 18:33:49 CST 2022, Fri Mar 25 18:34:24 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 18:34:27 CST 2022, Fri Mar 25 18:34:55 CST 2022
+END of 11 decks
+Fri Mar 25 18:55:05 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 18:55:05 CST 2022, Fri Mar 25 18:55:41 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 18:55:44 CST 2022, Fri Mar 25 18:56:30 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 18:56:33 CST 2022, Fri Mar 25 18:57:39 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 18:57:42 CST 2022, Fri Mar 25 18:58:44 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 18:58:47 CST 2022, Fri Mar 25 18:59:37 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 18:59:40 CST 2022, Fri Mar 25 19:00:16 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 19:00:19 CST 2022, Fri Mar 25 19:00:53 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 19:00:56 CST 2022, Fri Mar 25 19:01:45 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 19:01:48 CST 2022, Fri Mar 25 19:02:31 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 19:02:34 CST 2022, Fri Mar 25 19:03:18 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 19:03:21 CST 2022, Fri Mar 25 19:04:00 CST 2022
+END of 11 decks
+Fri Mar 25 19:07:49 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 19:07:49 CST 2022, Fri Mar 25 19:08:25 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 19:08:28 CST 2022, Fri Mar 25 19:09:14 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 19:09:17 CST 2022, Fri Mar 25 19:10:23 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 19:10:26 CST 2022, Fri Mar 25 19:11:27 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 19:11:30 CST 2022, Fri Mar 25 19:12:21 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 19:12:24 CST 2022, Fri Mar 25 19:12:58 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 19:13:01 CST 2022, Fri Mar 25 19:13:35 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 19:13:38 CST 2022, Fri Mar 25 19:14:27 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 19:14:30 CST 2022, Fri Mar 25 19:15:11 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 19:15:14 CST 2022, Fri Mar 25 19:15:58 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 19:16:01 CST 2022, Fri Mar 25 19:16:45 CST 2022
+END of 11 decks
+Fri Mar 25 19:53:41 CST 2022
+Fri Mar 25 19:55:09 CST 2022
+DONE, bjtex11/bjtex11.in, Fri Mar 25 19:55:09 CST 2022, Fri Mar 25 19:57:18 CST 2022
+DONE, bjtex10/bjtex10.in, Fri Mar 25 19:57:21 CST 2022, Fri Mar 25 19:59:41 CST 2022
+DONE, bjtex09/bjtex09.in, Fri Mar 25 19:59:44 CST 2022, Fri Mar 25 20:02:24 CST 2022
+DONE, bjtex08/bjtex08.in, Fri Mar 25 20:02:27 CST 2022, Fri Mar 25 20:05:12 CST 2022
+DONE, bjtex07/bjtex07.in, Fri Mar 25 20:05:15 CST 2022, Fri Mar 25 20:07:44 CST 2022
+DONE, bjtex06/bjtex06.in, Fri Mar 25 20:07:47 CST 2022, Fri Mar 25 20:09:57 CST 2022
+DONE, bjtex05/bjtex05.in, Fri Mar 25 20:10:00 CST 2022, Fri Mar 25 20:12:10 CST 2022
+DONE, bjtex04/bjtex04.in, Fri Mar 25 20:12:13 CST 2022, Fri Mar 25 20:14:41 CST 2022
+DONE, bjtex03/bjtex03.in, Fri Mar 25 20:14:44 CST 2022, Fri Mar 25 20:17:01 CST 2022
+DONE, bjtex02/bjtex02.in, Fri Mar 25 20:17:04 CST 2022, Fri Mar 25 20:19:20 CST 2022
+DONE, bjtex01/bjtex01.in, Fri Mar 25 20:19:23 CST 2022, Fri Mar 25 20:22:13 CST 2022
+END of 11 decks

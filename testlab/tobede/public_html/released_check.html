@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>Release Check</title>
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<link rel="stylesheet" href="../jquery-ui.css">
+	<link rel="stylesheet" href="../js_sorter/style.css" />
+	<script src="../js_sorter/script.js"></script>
+	<script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script src="../sweetalert2.js"></script>
+<STYLE>
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+} 
+
+.missing_notes {
+	border: 1;
+	}
+#sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	}
+
+#sortable li {
+	margin: 3px 3px 3px 3px;
+	padding: 0.3em;
+	padding-left: .3em;
+	font-size: 1.0em; 
+	height: 24px; 
+	}
+
+#sortable li span {
+	position: relative;
+/*	margin: 4px 4px 4px 4px;*/
+	}
+   </STYLE>
+</head>
+<body>
+
+<script>
+var myLayout;
+var sorter = new TINY.table.sorter("sorter");
+var year_tbl = new TINY.table.sorter("year_tbl");
+var prod_tbl = new TINY.table.sorter("prod_tbl");
+var error_tbl = new TINY.table.sorter("error_tbl");
+var packchk_rec;
+var pack_id;
+$(document).ready(function() {
+	pack_id = GetURLParameter("pack_id");
+	init_sortable();
+	init_layout();
+
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+	$("#forceajax").bind("click", function() {request2php();});
+	request2php();
+});
+
+function handleYear(e) {
+		delete packchk_rec.prodtbl;
+		packchk_rec.prodtable();
+		delete packchk_rec.errortbl;
+		packchk_rec.errortable();
+		delete packchk_rec.table;
+		packchk_rec.listtable(pack_id);
+}
+function init_sortable()
+{
+    sorter.head = "head";
+    sorter.asc = "asc";
+    sorter.desc = "desc";
+    sorter.even = "evenrow";
+    sorter.odd = "oddrow";
+    sorter.evensel = "evenselected";
+    sorter.oddsel = "oddselected";
+    sorter.paginate = false;
+    sorter.currentid = "currentpage";
+    sorter.limitid = "pagelimit";
+
+    year_tbl.head = "head";
+    year_tbl.asc = "asc";
+    year_tbl.desc = "desc";
+    year_tbl.even = "evenrow";
+    year_tbl.odd = "oddrow";
+    year_tbl.evensel = "evenselected";
+    year_tbl.oddsel = "oddselected";
+    year_tbl.paginate = false;
+    year_tbl.currentid = "currentpage";
+    year_tbl.limitid = "pagelimit";
+
+    prod_tbl.head = "head";
+    prod_tbl.asc = "asc";
+    prod_tbl.desc = "desc";
+    prod_tbl.even = "evenrow";
+    prod_tbl.odd = "oddrow";
+    prod_tbl.evensel = "evenselected";
+    prod_tbl.oddsel = "oddselected";
+    prod_tbl.paginate = false;
+    prod_tbl.currentid = "currentpage";
+    prod_tbl.limitid = "pagelimit";
+
+    error_tbl.head = "head";
+    error_tbl.asc = "asc";
+    error_tbl.desc = "desc";
+    error_tbl.even = "evenrow";
+    error_tbl.odd = "oddrow";
+    error_tbl.evensel = "evenselected";
+    error_tbl.oddsel = "oddselected";
+    error_tbl.paginate = false;
+    error_tbl.currentid = "currentpage";
+    error_tbl.limitid = "pagelimit";
+}
+function init_layout()
+{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			name:	"libver_layout",
+//			stateManagement__enabled:	true 
+			center__size:	.15,
+			west__size: .15,
+			east__size: .7
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+
+	function request2php ()
+	{
+		$.ajax({
+			method: "POST",
+			timeout: 0,
+			url: "download_check.php",
+			dataType: 'json',
+//			dataType: 'text',
+			beforeSend: function(){
+				swal({
+					type: 'info' ,
+					text: 'Downloading main.log, please waiting ...', 
+				} );
+			},
+			error: function(xhr, status, error) {
+				swal.close();
+				swal({
+					type : 'error',
+					title:	status ,
+					html:	xhr.responseText });
+			}
+        })
+		.done(function(txt) {
+			swal.close();
+			doit(txt);
+		});
+	}
+function doit(arr)
+{
+	console.log(arr);
+
+	packchk_rec = new Parse(arr);
+	packchk_rec.gen_years();
+//	packchk_rec.yeartable();
+	packchk_rec.prodtable();
+	packchk_rec.errortable();
+	packchk_rec.listtable();
+}
+function Parse(arr)
+{
+	var check_rec = [];
+	var bname_uniq = {};
+	var year_rec = [];
+	for (var i = 0; i < arr.length; i++) {
+		var jobj = arr[i];
+		
+		if (jobj['bname'] in bname_uniq) {
+			bname_uniq[jobj['bname']]++;
+		} else {
+			var d = jobj['latest_mtime'];
+			if (!d) {
+				d=0;
+			}
+			var tmp;
+			tmp = jobj['released_date'] = new Date(d*1000);
+			jobj['released_date_Y'] = tmp.getFullYear();
+			check_rec.push(jobj);
+			bname_uniq[jobj['bname']] = 1;
+		}
+	}
+	for (var i = 0 ; i < check_rec.length ; i++) {
+		var y = check_rec[i]['released_date_Y'];
+		if (y in year_rec) {
+			year_rec[y].push(i);
+		} else {
+			year_rec[y]= [i];
+		}
+	}
+	var row_len = 0;
+
+/*
+	for (var i = 0 ; i < check_rec.length ; i++) {
+		var d = 0;
+		if (check_rec[i]['bname'] in arr_combined['tt']) {
+			d = arr_combined['tt'][check_rec[i]['bname']];
+			if (!d) {
+				d = 0;
+			}
+		}
+		var tmp;
+		tmp = check_rec[i]['released_date'] = new Date(d*1000);
+		check_rec[i]['released_date_Y'] = tmp.getFullYear();
+	}
+*/
+
+//	console.log('bname_uniq');
+//	console.log(bname_uniq);
+	console.log(check_rec);
+
+	this.check_rec = check_rec;
+	this.year_rec = year_rec;
+//	this.cut_prod();
+//	this.lib_href = ext_lv();
+//	this.current = current_lv;
+
+
+			
+	function ext_lv() {
+		var lib_set = [];
+		for (var i = 0; i < current_lv.length; i++) {
+			var dstr = new Date(current_lv[i]['date']);
+			var mstr;
+			if (dstr.getMonth() < 9) {
+				mstr = '0' + (1+dstr.getMonth()).toString();
+			} else {
+				mstr = (1+dstr.getMonth()).toString();
+			}
+			current_lv[i]['year_month'] = dstr.getFullYear().toString() + mstr;
+
+			var libn = current_lv[i]['libn'];
+			if (lib_set[libn]) {
+				lib_set[libn].push(i);
+			} else {
+				lib_set[libn] = [i];
+			}
+		}
+		return lib_set;
+	}
+	
+
+	function rel_explode(fn) {
+		var dot_pos = fn.lastIndexOf(".");
+		var rel1 = {};
+		if ( dot_pos >= 0) {
+			rel1.ext = fn.substr(dot_pos + 1);
+			var ft = fn.substr(0, dot_pos).split("-");
+			rel1.id = ft[0];
+			rel1.prod = ft[1];
+			rel1.full = fn;
+			var version_4 = "ABCR";
+			var ft_len = ft.length;
+			if (ft_len < 5) {
+				var special_ver = fn.substr(0, dot_pos).match(/20\d\d\.\d\d/);
+				if ( special_ver && (ft_len == 4) ) {
+					rel1.ver = special_ver;
+					rel1.platform = ft[ft_len -1];
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+				return rel1;
+			}
+			if (version_4.indexOf(ft[ft_len-1]) >= 0) {
+				rel1.platform = "";
+			} else {
+				rel1.platform = ft[ft_len-1];
+				ft_len--;
+			}
+			if ((ft[ft_len-2].match(/20\d\d/)) && (ft[ft_len-1].match(/\d\d/))) {
+				if (ft_len == 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -=2;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			} else if ((ft[ft_len-4].match(/\d+/)) &&
+						(ft[ft_len-3].match(/\d+/)) &&
+						(ft[ft_len-2].match(/\d+/)) &&
+						(version_4.indexOf(ft[ft_len-1]))) {
+				if (ft_len == 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -= 4;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			}
+		} else {
+			unformat.push(fn);
+			rel1 = null;
+		}
+		return rel1;
+	}
+
+			
+}
+Parse.prototype.cut_error = function (years = "9999") {
+	var err_con = ['acl_error','notes_error','slc_error'];
+	var error_set = [];
+	var no_notes_set = [];
+	var prod = this.prod;
+	for (var i = 0 ; i < this.check_rec.length; i++) {
+		var rec1 = this.check_rec[i];
+		if (years && (years.indexOf(rec1['released_date_Y']) < 0)) {
+			continue;
+		}
+		if (prod && (rec1['prod'] != prod)) {
+			continue;
+		}
+		for (var j = 0 ; j < err_con.length ; j++) {
+			var errcode = err_con[j];
+			if (rec1[errcode] > 0) {
+				if (error_set[errcode]) {
+					error_set[errcode].push(i);
+				} else {
+					error_set[errcode] = [i];
+				}
+			}
+			if (errcode == "slc_error") {
+				var s = rec1["slc_error_lst"];
+				var missing_pdf = 0;
+				for (var k = 0 ; k < s.length; k++) {
+					var missing = s[k][1];
+					if (missing.substr(missing.length-3) == 'pdf') {
+						missing_pdf++;
+					}
+				}
+				if ((missing_pdf > 0) && (missing_pdf == s.length)) {
+					if (error_set['slc_error_pdf_only']) {
+						error_set['slc_error_pdf_only'].push(i);
+					} else {
+						error_set['slc_error_pdf_only'] = [i];
+					}
+				}
+			}
+		}
+		var no_notes = rec1['notes_error_lst'];
+		for (var j = 0 ; j < no_notes.length ; j++) {
+			if (no_notes[j][0] == 'NO notes') {
+				var err_desc= no_notes[j][1];
+				var libn = err_desc.substr(0 , err_desc.indexOf(' '));
+				if (no_notes_set[libn]) {
+					no_notes_set[libn].push(i);
+				} else {
+					no_notes_set[libn] = [i];
+				}
+			}
+		}
+	}
+	this.error_set =  error_set;
+	this.no_notes_set = no_notes_set;
+}
+Parse.prototype.cut_prod = function (years = "9999") {
+	var prod_set = [];
+	for (var i = 0 ; i < this.check_rec.length; i++) {
+		if (years && (years.indexOf(this.check_rec[i]['released_date_Y']) < 0)) {
+			continue;
+		}
+		var bname = this.check_rec[i]['bname'];
+		var fld = bname.split('-');
+		if (fld.length < 7) {
+			console.log("bname less info " + bname);
+		}
+		var prod = fld[1];
+		this.check_rec[i]['prod'] = prod;
+		if (prod_set[prod]) {
+			prod_set[prod].push(i);
+		} else {
+			prod_set[prod] = [i];
+		}
+	}
+	this.prod_set =  prod_set;
+	this.years = years;
+}
+	
+Parse.prototype.errortable = function() {
+	if (this.errortbl) {
+		return;
+	}
+	years = this.checked_years();
+
+	if ($("#errorsst")) {
+		$("#errorsst").remove();
+	}
+//	this.error = "";
+	var errorsst_top = document.createElement("Table");
+	errorsst_top.id = 'errorsst';
+	errorsst_top.className = 'sortable';
+
+	var header = errorsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Error type','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "errorsst_body";
+	errorsst_top.appendChild(tbd);
+
+	var row_len = 0;
+	this.cut_error(years);
+	for (var estr in this.error_set) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = estr;
+		var td2 = tr1.insertCell();
+		td2.innerHTML = this.error_set[estr].length + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		
+		td2.setAttribute("id_lst" , estr)
+	}
+	this.errortbl = errorsst_top;
+	var td_event = function() {
+        var tbd = document.getElementById('errorsst').tBodies[0];
+        for (var i = 0 ; i < tbd.rows.length ; i++) {
+			tbd.rows[i].cells[1].onclick = function() {
+				packchk_rec.error = this.getAttribute("id_lst");
+				delete packchk_rec.table;
+				packchk_rec.listtable(this.getAttribute("id_lst"));
+            }
+		}
+	}
+
+
+	$('#errorsummary').append(errorsst_top);
+	if (years ) {
+		$('#error_title').html("Error List of " + years );
+	} else {
+		$('#error_title').html("Error List of all" );
+	}
+
+	error_tbl.init("errorsst",1);
+	error_tbl.callback = td_event;
+//	error_tbl.wk(1);
+	this.notestable();
+}
+
+Parse.prototype.notestable = function() {
+	var notes_top = document.createElement("Table");
+	notes_top.id = 'notes';
+	notes_top.className= 'sortable';
+
+	var header = notes_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Lib','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+	var tbd = document.createElement("TBody");
+	var row_len = 0;
+	tbd.id = "notes_body";
+	notes_top.appendChild(tbd);
+	for (var libn in this.no_notes_set) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = libn;
+		var td2 = tr1.insertCell();
+		td2.innerHTML = this.no_notes_set[libn].length + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		
+		td2.setAttribute("id_lst" , libn)
+	}
+	$('#notessummary').append(notes_top);
+}
+Parse.prototype.prodtable = function() {
+	if (this.prodtbl) {
+		return;
+	}
+	years = this.checked_years();
+
+	if ($("#prodsst")) {
+		$("#prodsst").remove();
+	}
+	this.prod = "";
+	var prodsst_top = document.createElement("Table");
+	prodsst_top.id = 'prodsst';
+	prodsst_top.className = 'sortable';
+
+	var header = prodsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Pack name','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "prodsst_body";
+	prodsst_top.appendChild(tbd);
+
+	var prods = {};
+
+	var row_len = 0;
+	this.cut_prod(years);
+	for (var pstr in this.prod_set) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = pstr;
+		var td2 = tr1.insertCell();
+		td2.innerHTML = this.prod_set[pstr].length + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		
+		td2.setAttribute("id_lst" , pstr)
+	}
+	this.prodtbl = prodsst_top;
+	var td_event = function() {
+        var tbd = document.getElementById('prodsst').tBodies[0];
+        for (var i = 0 ; i < tbd.rows.length ; i++) {
+			tbd.rows[i].cells[1].onclick = function() {
+				delete packchk_rec.table;
+				delete packchk_rec.errortbl;
+				packchk_rec.prod = this.getAttribute("id_lst");
+				packchk_rec.errortable(this.getAttribute("id_lst"));
+				packchk_rec.listtable(this.getAttribute("id_lst"));
+            }
+		}
+	}
+
+
+	prodsst_top.align="right";
+	$('#prod').append(prodsst_top);
+	if (years ) {
+		$('#prod_title').html("Package List of " + years );
+	} else {
+		$('#prod_title').html("Package List of all" );
+	}
+
+	prod_tbl.init("prodsst",1);
+	prod_tbl.callback = td_event;
+	prod_tbl.wk(1);
+}
+function sortObjKeysAlphabetically(obj) {
+  var ordered = {};
+ Object.keys(obj).sort().forEach(function(key) {
+   ordered[key] = obj[key];
+ });
+return Object.keys(ordered).reverse();
+}
+Parse.prototype.listtable = function() {
+	if (this.table) {
+		return;
+	}
+
+	if ($("#sst")) {
+		$("#sst").remove();
+	}
+
+	var pstr = this.prod;
+	var estr = this.error;
+	var sst_top = document.createElement("Table");
+	sst_top.id = 'sst';
+	sst_top.className = 'sortable';
+
+	var header = sst_top.createTHead();
+	var sort_f = [];
+
+	var tr0 = header.insertRow();
+	var lrec = this.check_rec;
+	var hdr = Object.keys(lrec[0]);
+	hdr.sort();
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+		if (hdr[i] == 'date') {
+			sort_f[i] = function (f,c){
+				// compare on MM/dd/YYYY format
+                var g,h; g=f.v.split("/"); h=c.v.split("/");
+                return (g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:((g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:0)))));
+        	}
+		}
+		if (hdr[i] == 'ver') {
+			sort_f[i] = function (f,c){
+				// compare on 4.3.1.[ABCR] format
+                var g,h; g=f.v.split("-"); h=c.v.split("-");
+                return (g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:((g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:(g[3]>h[3]?1:(g[3]<h[3]?-1:0)))))));
+        	}
+		}
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "sst_body";
+	var years = this.years;
+	var row_len = 0;
+	sst_top.appendChild(tbd);
+	for (i = 0 ; i < lrec.length ; i++) {
+		var r1 = lrec[i];
+		if (years && (years.indexOf(this.check_rec[i]['released_date_Y']) <0)) {
+			continue;
+		}
+		if (pstr && (r1['prod'] != pstr)) {
+			continue;
+		}
+		if (estr && (r1[estr] <= 0)) {
+			continue;
+		}
+			gen_row();
+			row_len++;
+	}
+
+	this.table = sst_top;
+
+	$('#alllist').append(sst_top);
+    var newURL = window.location.protocol + "//" +
+                window.location.hostname +
+                window.location.pathname + "?pack_id=" + pstr;
+
+//    window.history.pushState('data to be passed','Title',newURL);
+
+
+	sorter.init("sst",0);
+	if (sort_f.length > 0) {
+		sorter.sort_f = sort_f;
+	}
+	if (pstr ) {
+//		$('#alllist_title').html(" " + baseline_packname + " and lib versions");
+		var t_str = "Released List of " + pstr + ", total " + row_len + " records";
+		$('#alllist_title').html(t_str);
+	} else {
+		var t_str = "Released List, total " + row_len + " records";
+		$('#alllist_title').html(t_str);
+	}
+	function gen_row(xtbl) {
+		var tr1 = tbd.insertRow();
+		var obj2str = function(obj) {
+			if ((typeof obj) == "object") {
+				var x='';
+				for (var k = 0 ; k < obj.length ; k++) {
+					x += obj2str(obj[k]) + '<br>';
+					if (k> 32) {
+						x+= "<font color='red'>more ...</font>";
+						break;
+					}
+				}
+				return x;
+			} else {
+				return obj;
+			}
+		}
+		var error_number = function(obj) {
+			var err_con = ['acl_error','notes_error','slc_error'];
+			var err_cnt = 0;
+			for (var i=0; i < err_con.length; i++) {
+				if (obj[err_con[i]] > 0) { err_cnt++;}
+			}
+			if (obj['slc_unknown'].length > 0) { err_cnt++;}
+			return err_cnt;
+		}
+				
+		for (var j = 0 ; j < hdr.length ; j++) {
+			var td0 = tr1.insertCell();
+			var val = r1[hdr[j]];
+			if (hdr[j] == 'start_tt') {
+				var d_tt = new Date(val*1000);
+				var dt_str = (d_tt.getMonth()+1) + "/" +
+                d_tt.getDate() +"/" +
+                d_tt.getFullYear() + " " +
+                d_tt.getHours() + ":" +
+                d_tt.getMinutes();
+
+				td0.innerHTML = dt_str;
+			} else if (hdr[j] == 'bname') {
+				if (error_number(r1) == 0) {
+					td0.style.backgroundColor = '#00a040';
+				}
+				td0.innerHTML = val;
+			} else {
+			
+				td0.innerHTML = '<p style="white-space: nowrap;">' + obj2str(val) + '</p>';
+			}
+		}
+	}
+}
+
+Parse.prototype.error_major = function() {
+	var err_con = ['acl_error','notes_error','slc_error'];
+}
+Parse.prototype.yeartable = function() {
+	if (this.yeartbl) {
+		return;
+	}
+
+	if ($("#yearsst")) {
+		$("#yearsst").remove();
+	}
+	var yearsst_top = document.createElement("Table");
+	yearsst_top.id = 'yearsst';
+	yearsst_top.className = 'sortable';
+
+	var header = yearsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	//var hdr = ['id','Packname','lib number'];
+	var hdr = ['Year','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "yearsst_body";
+	yearsst_top.appendChild(tbd);
+
+	var year_rec = [];
+	var years = [];
+	for (var i = 0 ; i < this.check_rec.length ; i++) {
+		var y = this.check_rec[i]['released_date_Y'];
+		if (y in year_rec) {
+			year_rec[y].push(i);
+		} else {
+			year_rec[y]= [i];
+			years.push(y);
+		}
+	}
+	var row_len = 0;
+//	this.gen_years();
+//	var years = Object.keys(this.year_rec);
+	years.sort(function(a, b){return b-a});
+	for (var i = 0 ; i < years.length ; i++) {
+		var tr1 = tbd.insertRow();
+		var bl = this.baseline;
+		row_len++;
+
+		var td0 = tr1.insertCell();
+		td0.innerHTML = years[i];
+		var td1 = tr1.insertCell();
+		td1.innerHTML = year_rec[years[i]].length + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		td1.setAttribute("id_lst" , years[i])
+	}
+	this.yeartbl = yearsst_top;
+	var td_event = function() {
+        var tbd = document.getElementById('yearsst').tBodies[0];
+        for (var i = 0 ; i < tbd.rows.length ; i++) {
+			tbd.rows[i].cells[1].onclick = function() {
+				delete packchk_rec.prodtbl;
+				packchk_rec.prodtable(this.getAttribute("id_lst"));
+            }
+		}
+	}
+
+//	$('#alllist_title').html("Released List total number <b>" + row_len + "</b>");
+	$('#yearlist').append(yearsst_top);
+
+	year_tbl.init("yearsst");
+	year_tbl.callback = td_event;
+	year_tbl.wk(0);
+	year_tbl.wk(0);
+}
+Parse.prototype.gen_years = function() {
+	if (this.year_btn_done) {
+		return;
+	}
+	var btn_str = "";
+	var all_years = Object.keys(this.year_rec);
+	all_years.sort(function(a, b){return a-b});
+
+	for (var j=0; j < all_years.length ; j++) {
+		var ystr = all_years[j];
+		var y_label = ystr + "(" + this.year_rec[ystr].length + " records)";
+		btn_str += "<label for='cbox-" + ystr + "'>" + y_label + "</label>";
+		btn_str += "<input class='year_sel' type='checkbox' name='cbox-" + ystr +
+					"' id='cbox-" + ystr + "'>";
+	}
+	$("#year_btn").html(btn_str);
+	$( "[id^=cbox-").checkboxradio();
+//	$( "label[for='cbox-2010']").html("2010<br>999");
+	$( ".year_sel" ).on("change",handleYear);
+	this.year_btn_done = 1;
+	this.checked_years = function() {
+		var years = "";
+		var value = $( ".year_sel" )
+            .filter( ":checked" )
+			.each(function() {
+			if (years == "") {
+				years += this.name.substr("cbox-".length);
+			} else {
+				years += "," + this.name.substr("cbox-".length);
+			}
+		});
+		return years;
+	}
+	$("#cbox-" + all_years[all_years.length-1]).click();
+}
+Parse.prototype.years = function() {
+	var y0 = 9999;
+	var y1 = 1000;
+	var yy = [];
+	
+	for (var i =0; i< this.rec.length; i++) {
+		var dstr = this.rec[i]['date'];
+		var year = dstr.substr(1 + dstr.lastIndexOf('/'));
+		if (y0 > year) {
+			y0 = year;
+		}
+		if (y1 < year) {
+			y1 = year;
+		}
+	}
+
+	for (var i=y0; i <= y1; i++) {
+		yy.push(i);
+	}
+	return yy;
+}
+Parse.prototype.get_unique = function(which) {
+	var ext_set = [];
+	for (var i =0; i< this.rec.length; i++) {
+		if ( ext_set[this.rec[i][which]]) {
+			ext_set[this.rec[i][which]]++;
+		} else {
+			ext_set[this.rec[i][which]] = 1;
+		}
+	}
+	return ext_set;
+}
+
+// lrec is an array of [{libn:"nnn", libv: "vvv"}, ...]
+// this.current is an array of [{libn:, libv, date: "May 27, 2012":, year_month: "201205"}, ...]
+// this.lib_href is an hash of {libn: [idx of this.current], ...}
+Parse.prototype.current_of_libnv = function(lrec) {
+	var date_lst = [];
+	var xlst = [];
+	var libv_ym = [];
+	for (var i = 0; i< lrec.length; i++) {
+		var lst_libn = this.lib_href[lrec[i]['libn']];
+		var libv = lrec[i]['libv'];
+		if (lst_libn) {
+		for (var j = 0 ; j < lst_libn.length; j++) {
+			var ym = this.current[lst_libn[j]]['year_month'];
+			if (this.current[lst_libn[j]]['libv'] == libv) {
+				libv_ym[i] = ym;
+			}
+				
+			if (date_lst[ym]) {
+				date_lst[ym]++;
+			} else {
+				date_lst[ym] = 1;
+			}
+			var lv = this.current[lst_libn[j]]['libv'];
+			if (lv == libv) {
+				lv = "<font color='red'>" + lv + "</font>";
+			}
+
+			if (xlst[lrec[i]['libn']]) {
+				if (xlst[lrec[i]['libn']][ym]) {
+				xlst[lrec[i]['libn']][ym] = xlst[lrec[i]['libn']][ym] +
+					"<br>" + lv;
+				} else {
+				xlst[lrec[i]['libn']][ym] = lv;
+				}
+			} else {
+				xlst[lrec[i]['libn']] = { ym : lv};
+			}
+		}
+		}
+	}
+	var ym_sorted = sortObjKeysAlphabetically(date_lst);
+	var xtbl = [];
+	for (var i = 0; i< lrec.length; i++) {
+		var row1 = [lrec[i]['libn'],"<font color='red'>" + lrec[i]['libv'] + "</font>"];
+		row1.push(libv_ym[i]);
+		for (var j = 0 ; j < ym_sorted.length ; j++) {
+			console.log(lrec[i]['libn']);
+			if (xlst.hasOwnProperty(lrec[i]['libn']) &&
+				xlst[lrec[i]['libn']].hasOwnProperty(ym_sorted[j])) {
+				row1.push(xlst[lrec[i]['libn']][ym_sorted[j]]);
+			} else {
+				row1.push(" ");
+			}
+		}
+		xtbl.push(row1);
+	}
+	this.xtbl = xtbl;
+	this.ym_sorted = ym_sorted;
+}
+
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table style="width:100%" class="HeaderBar">
+<tr>
+<td style="width:1%; white-space:nowrap;">
+<a href="http://svcwiki/index.php/Main_Page">Silvaco WiKi</a></td>
+<td style="white-space:nowrap;text-align: center;">
+&nbsp;Baseline and Components&nbsp;</td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td>
+<td style="width:1%;"><img id='person' style="vertical-align:middle" height='16' width='16' src='../person.png' alt='username' ></td>
+<td id=wikiusername style="font-weight: normal;width:1%">&nbsp;</td>
+<td style="width:1%;font-weight: normal;"> <b>HELP</b></td>
+</tr></table>
+
+<div id="basic_attr"></div>
+<ul id="sortable">
+  <li class="ui-state-default">
+	<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+	<span id='year_btn' ></span>
+	</li>
+</ul>
+</div>
+
+
+<div class="ui-layout-west">
+	<div id='prod_title'>Package List</div>
+	<div id="prod"></div>
+</div>
+
+<div class="ui-layout-center">
+	<div id='error_title' width='100%'>Pack Error Summary</div>
+	<div id="errorsummary" width='100%'></div>
+	<hr>
+	<div id='notes_title' width='100%'>Notes Error</div>
+	<div id="notessummary" width='100%'></div>
+</div>
+
+<div id="ui_for_table" class="ui-layout-east">
+	<div id='alllist_title'></div>
+	<p id="alllist"></p>
+</div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+
+</script>
+</body>
+</html> 

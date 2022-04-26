@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="author" content="Arnold Ho">
+    <link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+    <script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+    <script src="../sweetalert2.js"></script>
+    <script src="../json-serialization.js"></script>
+<style>
+</style>
+</head>
+<body>
+
+<script>
+    $(document).ready(function() {
+$("#forceajax").bind("click", function() {request2ttpro();});
+   });
+
+
+function request2ttpro (defectNumber='123')
+    {
+		var fn = "/site/silvaco/lib/smartspice/4.31.15.C/docs/smartspice_notes.pdf";
+		var pos = fn.lastIndexOf("/");
+		var ff = fn.substr(pos+1);
+        console.log(defectNumber);
+        $.ajax({
+            method: "POST",
+            timeout: 0,
+            url: "t.php",
+            data: { 'fname': fn },
+            dataType: 'text',
+            beforeSend: function(){
+                swal({
+                    type: 'info' ,
+                    text: 'Downloading ' + ff + ", please waiting ...",
+                } );
+            },
+            error: function(xhr, status, error) {
+                swal.close();
+                console.log("Enter error ajax [" + xhr.responseText + "]");
+                console.log("Enter error ajax [" + error + "]");
+                console.log("Enter error ajax [" + status + "]");
+                swal({
+                    type : 'error',
+                    title:  status ,
+                    html:   xhr.responseText });
+            }
+        })
+        .done(function(arr) {
+            swal.close();
+                console.log("Enter done ajax");
+            doit(arr);
+        });
+    }
+
+function b64toBlob(byteCharacters, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length ;
+            offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+    }
+
+function doit(arr)
+    {
+		var byteCharacters;
+        byteCharacters = atob(arr);
+
+		var show_type = 'application/pdf';
+		var atta_type = "";
+        var atta_size = "";
+        var blob = b64toBlob(byteCharacters, atta_type);
+        var blobUrl = URL.createObjectURL(blob);
+        var atta_size = blob.size;
+		var fn = "test.pdf";
+
+		var show_w = "<embed src='" + blobUrl + "' type='" + show_type + "' width='100%' height='600px'>";
+		var open_w = "<button onclick='window.open(\"" + blobUrl + "\");'> New Window </button>";
+        var download_w = "<a href='" + blobUrl + "' download='" + fn + "'>Download</a>";
+
+		var isChrome = !!window.chrome && !!window.chrome.webstore;
+		if (isChrome ) {
+			$("#attachment").html(download_w );
+		} else {
+			$("#attachment").html(open_w + download_w + "<br>" + show_w);
+		}
+	}
+</script>
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td>
+<div id="attachment" ></div>
+
+</body>
+</html>
+
+

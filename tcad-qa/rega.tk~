@@ -1,0 +1,148 @@
+#!/home/arnoldh/tcltk8610/bin/wish
+package require Tk
+package require json
+
+set w .
+##catch {destroy $w}
+
+wm title . "Rega"
+wm iconname $w "rega"
+wm geometry . 800x600+200+200
+
+font create mainFont   -family Helvetica -size 12
+set font mainFont
+
+
+proc get_id { dvar id } {
+puts "inside get_id $id"
+tk_messageBox -type ok -icon info -message $id -detail $id -parent . -title "Button Pressed"
+ puts [dict get $dvar $id]
+}
+
+proc reg_w { up_win } {
+	global reg_dis
+	global reg_path
+	global reg_content
+	$up_win add [ set reg_dis [ttk::panedwindow $up_win.inBottom -orient vertical]]
+	$reg_dis add [set reg_path [ttk::labelframe $reg_dis.top -text Hierarchy]]
+	$reg_dis add [set reg_content [ttk::labelframe $reg_dis.bot -text Text]]
+}
+
+proc reg_setting { } {
+	global reg_path
+	global reg_content
+	global hierarchy
+
+	set hierarchy "Hierarchy is here"
+
+# Fill the text pane
+
+    # The trick with the ttk::frame makes the text widget look like it fits with
+    # the current Ttk theme despite not being a themed widget itself. It is done
+    # by styling the frame like an entry, turning off the border in the text
+    # widget, and putting the text widget in the frame with enough space to allow
+    # the surrounding border to show through (2 pixels seems to be enough).
+    ttk::label $reg_path.h -textvariable hierarchy
+    pack $reg_path.h -fill both -expand 1
+
+    ttk::frame $reg_content.f -style TEntry
+    text $reg_content.txt -wrap word -yscroll "$reg_content.sb set" -width 30 -borderwidth 0
+    pack $reg_content.txt -fill both -expand 1 -in $reg_content.f -pady 2 -padx 2
+    ttk::scrollbar $reg_content.sb -orient vertical -command "$reg_content.txt yview"
+    pack $reg_content.sb -side right -fill y -in $reg_content
+    pack $reg_content.f -fill both -expand 1
+    ###pack $w.outer -fill both -expand 1
+}
+
+ttk::frame .f
+pack .f -fill both -expand 1
+set w .f
+ttk::panedwindow $w.outer -orient vertical
+$w.outer add [ttk::panedwindow $w.outer.inTop -orient horizontal]
+
+
+$w.outer.inTop  add [ttk::labelframe $w.outer.inTop.middle  -text Clocks]
+$w.outer.inTop add [ttk::labelframe $w.outer.inTop.right -text Find]
+$w.outer.inTop  add [ttk::labelframe $w.outer.inTop.left -width 100 -text Button ]
+reg_w $w.outer
+reg_setting
+
+pack $w.outer -fill both -expand 1
+
+
+# Fill the button pane
+ttk::button $w.outer.inTop.left.b -text "Press Me" -command {
+    set box_str [$w.outer.inTop.right.entry get]
+    tk_messageBox -type ok -icon info -message $box_str -detail $box_str -parent . -title "Button Pressed"
+}
+pack $w.outer.inTop.left.b -padx 2 -pady 2
+
+# Fill the clocks pane
+set i 0
+proc every {delay script} {
+    uplevel #0 $script
+    after $delay [list every $delay $script]
+}
+set testzones {
+    :Asia/Taipei
+}
+# Force a pre-load of all the timezones needed; otherwise can end up
+# poor-looking synch problems!
+set zones {}
+foreach zone $testzones {
+    if {![catch {clock format 0 -timezone $zone}]} {
+        lappend zones $zone
+    }
+}
+
+foreach zone $zones {
+    set city [string map {_ " "} [regexp -inline {[^/]+$} $zone]]
+#    if {$i} {
+#	pack [ttk::separator $w.outer.inLeft.bot.s$i] -fill x
+#    }
+#    ttk::label $w.outer.inTop.middle.l$i -text $city -anchor w
+    ttk::label $w.outer.inTop.middle.t$i -textvariable time($zone) -anchor w
+#    pack $w.outer.inTop.middle.l$i $w.outer.inTop.middle.t$i -fill x
+    pack $w.outer.inTop.middle.t$i -fill x
+    every 1000 "set time($zone) \[clock format \[clock seconds\] -timezone $zone -format %T\]"
+    incr i
+}
+set find_str "Input word to find"
+# Fill the entry pane
+ttk::entry $w.outer.inTop.right.entry -textvariable $find_str
+pack $w.outer.inTop.right.entry -fill both -expand 1
+
+
+
+
+
+set fp [open "/build/arnoldh/log/1225_0/reg_result_29351.json" r]
+##set fp [open "/home/arnold/Desktop/1225_0/reg_result_29351.json" r]
+set data [read $fp]
+close $fp
+
+set reg_res [::json::json2dict $data]
+
+set bold "-background #43ce80 -relief raised -borderwidth 1"
+set normal "-background {} -relief flat"
+foreach id [dict keys $reg_res] {
+	set lnk($id) "$id"
+
+	$reg_content.txt insert end $id $lnk($id)
+	$reg_content.txt insert end \n\n
+
+	$reg_content.txt tag bind $lnk($id) <Any-Enter> "$reg_content.txt tag configure $lnk($id) $bold"
+	$reg_content.txt tag bind $lnk($id) <Any-Leave> "$reg_content.txt tag configure $lnk($id) $normal"
+	$reg_content.txt tag bind $lnk($id) <1> { get_id $reg_res $lnk($id) }
+	
+
+	puts "id $id lnk $lnk($id)"
+
+}
+
+get_id $reg_res case_root
+
+
+
+
+

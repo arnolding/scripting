@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>Baseline Release and Libs</title>
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<link rel="stylesheet" href="../jquery-ui.css">
+	<link rel="stylesheet" href="../js_sorter/style.css" />
+	<script src="../js_sorter/script.js"></script>
+	<script src="../jquery-2.2.1.js"></script>
+    <script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+	<script src="../sweetalert2.js"></script>
+<STYLE>
+      .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+      }
+	.HeaderBar
+	{
+      font-family: Arial, sans-serif;
+      font-size: 14.5px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+	}
+      .evenrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ecebeb
+      }
+      .oddrow
+      {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      background-color: #ffffc0
+      }
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+} 
+
+#sortable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	}
+
+#sortable li {
+	margin: 3px 3px 3px 3px;
+	padding: 0.3em;
+	padding-left: .3em;
+	font-size: 1.0em; 
+	height: 24px; 
+	}
+
+#sortable li span {
+	position: relative;
+/*	margin: 4px 4px 4px 4px;*/
+	}
+   </STYLE>
+</head>
+<body>
+
+<script>
+var myLayout;
+var sorter = new TINY.table.sorter("sorter");
+var year_tbl = new TINY.table.sorter("year_tbl");
+var prod_tbl = new TINY.table.sorter("prod_tbl");
+var build_rec;
+var pack_id;
+$(document).ready(function() {
+	pack_id = GetURLParameter("pack_id");
+	init_sortable();
+	init_layout();
+
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+	$("#forceajax").bind("click", function() {request2php();});
+	request2php();
+});
+
+function handleYear(e) {
+		delete build_rec.table;
+		build_rec.listtable(pack_id);
+		delete build_rec.prodtbl;
+		build_rec.prodtable();
+}
+function init_sortable()
+{
+    sorter.head = "head";
+    sorter.asc = "asc";
+    sorter.desc = "desc";
+    sorter.even = "evenrow";
+    sorter.odd = "oddrow";
+    sorter.evensel = "evenselected";
+    sorter.oddsel = "oddselected";
+    sorter.paginate = false;
+    sorter.currentid = "currentpage";
+    sorter.limitid = "pagelimit";
+
+    year_tbl.head = "head";
+    year_tbl.asc = "asc";
+    year_tbl.desc = "desc";
+    year_tbl.even = "evenrow";
+    year_tbl.odd = "oddrow";
+    year_tbl.evensel = "evenselected";
+    year_tbl.oddsel = "oddselected";
+    year_tbl.paginate = false;
+    year_tbl.currentid = "currentpage";
+    year_tbl.limitid = "pagelimit";
+
+    prod_tbl.head = "head";
+    prod_tbl.asc = "asc";
+    prod_tbl.desc = "desc";
+    prod_tbl.even = "evenrow";
+    prod_tbl.odd = "oddrow";
+    prod_tbl.evensel = "evenselected";
+    prod_tbl.oddsel = "oddselected";
+    prod_tbl.paginate = false;
+    prod_tbl.currentid = "currentpage";
+    prod_tbl.limitid = "pagelimit";
+}
+function init_layout()
+{
+		if (myLayout) { return;}
+		myLayout = $('body').layout({
+			name:	"libver_layout",
+//			stateManagement__enabled:	true 
+			center__size:	.1,
+			west__size: .1,
+			east__size: .8
+       	});
+
+		/*
+		 *	DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+		 *	this functionality will be included in RC30.80
+		 */
+		$.layout.disableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled'
+			,	x	= 'textSelectionInitialized'
+			;
+			if ($.fn.disableSelection) {
+				if (!$d.data(x)) // document hasn't been initialized yet
+					$d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+				if (!$d.data(s))
+					$d.disableSelection().data(s, true);
+			}
+			//console.log('$.layout.disableTextSelection');
+		};
+		$.layout.enableTextSelection = function(){
+			var $d	= $(document)
+			,	s	= 'textSelectionDisabled';
+			if ($.fn.enableSelection && $d.data(s))
+				$d.enableSelection().data(s, false);
+			//console.log('$.layout.enableTextSelection');
+		};
+		$(".ui-layout-resizer")
+			.on('mousedown', $.layout.disableTextSelection ); // affects entire document
+		$("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+		$("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+	}
+
+	function request2php ()
+	{
+		$.ajax({
+			method: "POST",
+			timeout: 0,
+			url: "libver.php",
+			dataType: 'json',
+			beforeSend: function(){
+				swal({
+					type: 'info' ,
+					text: 'Downloading master_build.log, please waiting ...', 
+				} );
+			},
+			error: function(xhr, status, error) {
+				swal.close();
+				swal({
+					type : 'error',
+					title:	status ,
+					html:	xhr.responseText });
+			}
+        })
+		.done(function(txt) {
+			swal.close();
+			doit(txt);
+		});
+	}
+function doit(arr)
+{
+//	console.log(baseline_lib);
+
+	build_rec = new Parse(arr);
+	build_rec.gen_years();
+	build_rec.yeartable();
+}
+function Parse(arr)
+{
+	var current_lv = arr['libls'];
+	var baseline_lib = arr['basever'];
+
+	console.log(current_lv);
+	console.log(baseline_lib);
+
+	var year_rec = {};
+	for (var i = 0; i < baseline_lib.length; i++) {
+		var pn = baseline_lib[i]['packname'];
+console.log("pn" + pn);
+		var p2d = pn.lastIndexOf('-');
+		var p4d = pn.lastIndexOf('-', p2d-1);
+		var year = pn.substr( p4d+1, p2d-p4d-1 );
+		if (year_rec[year]) {
+			year_rec[year].push(baseline_lib[i]);
+		} else {
+			year_rec[year] = [ baseline_lib[i] ];
+		}
+	}
+
+	this.year_rec = year_rec;
+	this.baseline = baseline_lib;
+	this.lib_href = ext_lv();
+	this.current = current_lv;
+
+console.log(this.lib_href);
+console.log(this.current);
+
+	function ext_lv() {
+		var lib_set = [];
+		for (var i = 0; i < current_lv.length; i++) {
+			var dstr = new Date(current_lv[i]['date']);
+			var mstr;
+			if (dstr.getMonth() < 9) {
+				mstr = '0' + (1+dstr.getMonth()).toString();
+			} else {
+				mstr = (1+dstr.getMonth()).toString();
+			}
+			current_lv[i]['year_month'] = dstr.getFullYear().toString() + mstr;
+
+			var libn = current_lv[i]['libn'];
+			if (lib_set[libn]) {
+				lib_set[libn].push(i);
+			} else {
+				lib_set[libn] = [i];
+			}
+		}
+		return lib_set;
+	}	
+	
+
+	function rel_explode(fn) {
+		var dot_pos = fn.lastIndexOf(".");
+		var rel1 = {};
+		if ( dot_pos >= 0) {
+			rel1.ext = fn.substr(dot_pos + 1);
+			var ft = fn.substr(0, dot_pos).split("-");
+			rel1.id = ft[0];
+			rel1.prod = ft[1];
+			rel1.full = fn;
+			var version_4 = "ABCR";
+			var ft_len = ft.length;
+			if (ft_len < 5) {
+				var special_ver = fn.substr(0, dot_pos).match(/20\d\d\.\d\d/);
+				if ( special_ver && (ft_len == 4) ) {
+					rel1.ver = special_ver;
+					rel1.platform = ft[ft_len -1];
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+				return rel1;
+			}
+			if (version_4.indexOf(ft[ft_len-1]) >= 0) {
+				rel1.platform = "";
+			} else {
+				rel1.platform = ft[ft_len-1];
+				ft_len--;
+			}
+			if ((ft[ft_len-2].match(/20\d\d/)) && (ft[ft_len-1].match(/\d\d/))) {
+				if (ft_len == 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 4) {
+					rel1.ver = ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -=2;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			} else if ((ft[ft_len-4].match(/\d+/)) &&
+						(ft[ft_len-3].match(/\d+/)) &&
+						(ft[ft_len-2].match(/\d+/)) &&
+						(version_4.indexOf(ft[ft_len-1]))) {
+				if (ft_len == 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+				} else if (ft_len > 6) {
+					rel1.ver = ft[ft_len-4] + "-" + ft[ft_len-3] + "-" +
+								ft[ft_len-2] + "-" + ft[ft_len-1];
+					ft_len -= 4;
+					rel1.sub_prod = ft[2];
+					for (var j = 3; j < ft_len; j++) {
+						rel1.sub_prod += "-" + ft[j];
+					}
+				} else {
+					unformat.push(fn);
+					rel1 = null;
+				}
+			}
+		} else {
+			unformat.push(fn);
+			rel1 = null;
+		}
+		return rel1;
+	}
+
+			
+}
+	
+Parse.prototype.prodtable = function() {
+	if (this.prodtbl) {
+		return;
+	}
+
+	if ($("#prodsst")) {
+		$("#prodsst").remove();
+	}
+	var prodsst_top = document.createElement("Table");
+	prodsst_top.id = 'prodsst';
+	prodsst_top.className = 'sortable';
+
+	var header = prodsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Pack id','Packname'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "prodsst_body";
+	prodsst_top.appendChild(tbd);
+
+	var prods = {};
+	var year_array = this.checked_years();
+	for (var y = 0; y < year_array.length ; y++) {
+		var yrec = this.year_rec[year_array[y]];
+	  for (var i = 0 ; i < yrec.length ; i++) {
+		var r1 = yrec[i];
+		var pstr = r1['id'];
+		var vstr = r1['packname'];
+
+
+
+		if (prods[pstr]) {
+			prods[pstr]['Count']++;
+			prods[pstr]['ID'] += "|" + r1['id'];
+			if (prods[pstr][vstr]) {
+				prods[pstr][vstr]++;
+			} else {
+				prods[pstr][vstr] = 1;
+				prods[pstr]['Version']++;
+			}
+		} else {
+			prods[pstr] = { 'Packname' :vstr , 'ID' : r1['id']};
+			prods[pstr][vstr] = 1;
+		}
+	  }
+	}
+
+	var row_len = 0;
+	for (var pstr in prods) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		var td0 = tr1.insertCell();
+		td0.innerHTML = pstr;
+//		var td1 = tr1.insertCell();
+//		td1.innerHTML = prods[pstr]['Count'];
+		var td2 = tr1.insertCell();
+		td2.innerHTML = prods[pstr]['Packname'] + "<span class='ui-icon ui-icon-arrowthick-1-e'></span>";
+		td2.setAttribute("id_lst" , prods[pstr]['ID'])
+	}
+	this.prodtbl = prodsst_top;
+	var td_event = function() {
+        var tbd = document.getElementById('prodsst').tBodies[0];
+        for (var i = 0 ; i < tbd.rows.length ; i++) {
+			tbd.rows[i].cells[1].onclick = function() {
+				delete build_rec.table;
+				build_rec.listtable(this.getAttribute("id_lst"));
+            }
+
+		}
+	}
+
+
+	$('#prod').append(prodsst_top);
+
+	prod_tbl.init("prodsst",1);
+	prod_tbl.callback = td_event;
+	prod_tbl.wk(1);
+}
+function sortObjKeysAlphabetically(obj) {
+  var ordered = {};
+ Object.keys(obj).sort().forEach(function(key) {
+   ordered[key] = obj[key];
+ });
+return Object.keys(ordered).reverse();
+}
+Parse.prototype.listtable = function(lst = null) {
+	if (lst == null) {	return;}
+	if (this.table) {
+		return;
+	}
+
+	if ($("#sst")) {
+		$("#sst").remove();
+	}
+	//w
+	var year_array, lrec;
+	var i;
+	var baseline_idx;
+	var baseline_packname;
+	for (i = 0; i < this.baseline.length; i++) {
+		if (this.baseline[i]['id'] == lst) {
+				baseline_idx = i;
+				baseline_packname = this.baseline[i]['packname'];
+				break;
+		}
+	}
+	if (i == this.baseline.length) {
+		return;
+	}
+
+	lrec = this.baseline[baseline_idx]['libs'];
+//		for (i = 0 ; i < lrec.length ; i++) {
+//			var r1 = lrec[i];
+//			gen_row();
+//		}
+	this.current_of_libnv(lrec);
+	var sst_top = document.createElement("Table");
+	sst_top.id = 'sst';
+	sst_top.className = 'sortable';
+
+	var header = sst_top.createTHead();
+	var sort_f = [];
+
+	var tr0 = header.insertRow();
+	var hdr = ['libn','libv','date'];
+	for (var i = 0; i < this.ym_sorted.length; i++) {
+		hdr.push(this.ym_sorted[i]);
+	}
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+		if (hdr[i] == 'date') {
+			sort_f[i] = function (f,c){
+                var g,h; g=f.v.split("/"); h=c.v.split("/");
+                return (g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:((g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:0)))));
+        	}
+		}
+		if (hdr[i] == 'ver') {
+			sort_f[i] = function (f,c){
+                var g,h; g=f.v.split("-"); h=c.v.split("-");
+                return (g[0]-h[0])>0?1:((g[0]-h[0])<0?-1:((g[1]-h[1])>0?1:((g[1]-h[1])<0?-1:((g[2]-h[2])>0?1:((g[2]-h[2])<0?-1:(g[3]>h[3]?1:(g[3]<h[3]?-1:0)))))));
+        	}
+		}
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "sst_body";
+	sst_top.appendChild(tbd);
+		for (i = 0 ; i < lrec.length ; i++) {
+			var r1 = this.xtbl[i];
+			gen_row();
+		}
+
+	var row_len = 0;
+	this.table = sst_top;
+
+	$('#alllist').append(sst_top);
+    var newURL = window.location.protocol + "//" +
+                window.location.hostname +
+                window.location.pathname + "?pack_id=" + lst;
+
+    window.history.pushState('data to be passed','Title',newURL);
+
+
+	sorter.init("sst",0);
+	if (sort_f.length > 0) {
+		sorter.sort_f = sort_f;
+	}
+	if (lst ) {
+		$('#alllist_title').html(" " + baseline_packname + " and lib versions");
+		sorter.wk(2);
+		sorter.wk(2);
+	} else {
+		var t_str = "Released List";
+		if (year_array.length > 1) {
+			t_str += " from " + year_array[0] + " ... " + year_array[year_array.length-1];
+		} else if (year_array.length == 1) {
+			t_str += " of " + year_array[0];
+		}
+		$('#alllist_title').html(t_str);
+		sorter.wk(4);
+		sorter.wk(4);
+	}
+	function gen_row(xtbl) {
+		var tr1 = tbd.insertRow();
+		row_len++;
+		for (var j = 0 ; j < hdr.length ; j++) {
+			var td0 = tr1.insertCell();
+console.log("IN LISTTABLE " + r1[j]);
+				td0.innerHTML = r1[j];
+		}
+
+	}
+}
+
+Parse.prototype.yeartable = function() {
+	if (this.yeartbl) {
+		return;
+	}
+
+	if ($("#yearsst")) {
+		$("#yearsst").remove();
+	}
+	var yearsst_top = document.createElement("Table");
+	yearsst_top.id = 'yearsst';
+	yearsst_top.className = 'sortable';
+
+	var header = yearsst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	//var hdr = ['id','Packname','lib number'];
+	var hdr = ['Year','Count'];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var th = document.createElement('th');
+		tr0.appendChild(th);
+		th.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "yearsst_body";
+	yearsst_top.appendChild(tbd);
+
+	var row_len = 0;
+	var years = Object.keys(this.year_rec);
+	years.sort(function(a, b){return b-a});
+	for (var i = 0 ; i < years.length ; i++) {
+		var tr1 = tbd.insertRow();
+		var bl = this.baseline;
+		row_len++;
+
+		var td0 = tr1.insertCell();
+		td0.innerHTML = years[i];
+		var td1 = tr1.insertCell();
+		td1.innerHTML = this.year_rec[years[i]].length;
+	}
+	this.yeartbl = yearsst_top;
+
+//	$('#alllist_title').html("Released List total number <b>" + row_len + "</b>");
+	$('#yearlist').append(yearsst_top);
+
+	year_tbl.init("yearsst");
+}
+Parse.prototype.gen_years = function() {
+	if (this.year_btn_done) {
+		return;
+	}
+	var btn_str = "";
+	var all_years = Object.keys(this.year_rec);
+	all_years.sort(function(a, b){return a-b});
+
+	for (var j=0; j < all_years.length ; j++) {
+		var ystr = all_years[j];
+		btn_str += "<label for='cbox-" + ystr + "'>" + ystr + "</label>";
+		btn_str += "<input class='year_sel' type='checkbox' name='cbox-" + ystr +
+					"' id='cbox-" + ystr + "'>";
+	}
+	$("#year_btn").html(btn_str);
+	$( "[id^=cbox-").checkboxradio();
+//	$( "label[for='cbox-2010']").html("2010<br>999");
+	$( ".year_sel" ).on("change",handleYear);
+	this.year_btn_done = 1;
+	this.checked_years = function() {
+		var years = [];
+		var value = $( ".year_sel" )
+            .filter( ":checked" )
+			.each(function() {
+			years.push(this.name.substr("cbox-".length));
+		});
+		return years;
+	}
+	$("#cbox-" + all_years[all_years.length-1]).click();
+}
+Parse.prototype.years = function() {
+	var y0 = 9999;
+	var y1 = 1000;
+	var yy = [];
+	
+	for (var i =0; i< this.rec.length; i++) {
+		var dstr = this.rec[i]['date'];
+		var year = dstr.substr(1 + dstr.lastIndexOf('/'));
+		if (y0 > year) {
+			y0 = year;
+		}
+		if (y1 < year) {
+			y1 = year;
+		}
+	}
+
+	for (var i=y0; i <= y1; i++) {
+		yy.push(i);
+	}
+	return yy;
+}
+Parse.prototype.get_unique = function(which) {
+	var ext_set = [];
+	for (var i =0; i< this.rec.length; i++) {
+		if ( ext_set[this.rec[i][which]]) {
+			ext_set[this.rec[i][which]]++;
+		} else {
+			ext_set[this.rec[i][which]] = 1;
+		}
+	}
+	return ext_set;
+}
+
+// lrec is an array of [{libn:"nnn", libv: "vvv"}, ...]
+// this.current is an array of [{libn:, libv, date: "May 27, 2012":, year_month: "201205"}, ...]
+// this.lib_href is an hash of {libn: [idx of this.current], ...}
+Parse.prototype.current_of_libnv = function(lrec) {
+	var date_lst = [];
+	var xlst = [];
+	var libv_ym = [];
+	for (var i = 0; i< lrec.length; i++) {
+		var lst_libn = this.lib_href[lrec[i]['libn']];
+		var libv = lrec[i]['libv'];
+		if (lst_libn) {
+		for (var j = 0 ; j < lst_libn.length; j++) {
+			var ym = this.current[lst_libn[j]]['year_month'];
+			if (this.current[lst_libn[j]]['libv'] == libv) {
+				libv_ym[i] = ym;
+			}
+				
+			if (date_lst[ym]) {
+				date_lst[ym]++;
+			} else {
+				date_lst[ym] = 1;
+			}
+			var lv = this.current[lst_libn[j]]['libv'];
+			if (lv == libv) {
+				lv = "<font color='red'>" + lv + "</font>";
+			}
+
+			if (xlst[lrec[i]['libn']]) {
+				if (xlst[lrec[i]['libn']][ym]) {
+				xlst[lrec[i]['libn']][ym] = xlst[lrec[i]['libn']][ym] +
+					"<br>" + lv;
+				} else {
+				xlst[lrec[i]['libn']][ym] = lv;
+				}
+			} else {
+				xlst[lrec[i]['libn']] = { ym : lv};
+			}
+		}
+		}
+	}
+	var ym_sorted = sortObjKeysAlphabetically(date_lst);
+	var xtbl = [];
+	for (var i = 0; i< lrec.length; i++) {
+		var row1 = [lrec[i]['libn'],"<font color='red'>" + lrec[i]['libv'] + "</font>"];
+		row1.push(libv_ym[i]);
+		for (var j = 0 ; j < ym_sorted.length ; j++) {
+			console.log(lrec[i]['libn']);
+			if (xlst.hasOwnProperty(lrec[i]['libn']) &&
+				xlst[lrec[i]['libn']].hasOwnProperty(ym_sorted[j])) {
+				row1.push(xlst[lrec[i]['libn']][ym_sorted[j]]);
+			} else {
+				row1.push(" ");
+			}
+		}
+		xtbl.push(row1);
+	}
+	this.xtbl = xtbl;
+	this.ym_sorted = ym_sorted;
+}
+
+function table_it(set)
+{
+	var html_str = "<table id='prodsst' class='sortable'>";
+	html_str += "<thead><tr><th><h4>Product</h4></th><th><h4>Count</h4></th></tr></thead>";
+	html_str += "<tbody>";
+	for (var k in set) {
+		html_str += "<tr><td>" + k + "</td><td>" + set[k] + "</td></tr>";
+	}
+	html_str += "</tbody>";
+	html_str += "</table>";
+	return html_str;
+}
+
+	function data_adjust(pd)
+	{
+		if ('customFieldList' in pd) {
+			var cfl = pd['customFieldList']['item'];
+			cfl.forEach(function(citem){
+				switch (citem['name']) {
+					case 'Planned Version':
+						pd['plannedversion'] = citem['value'];
+						break;
+					case 'Expectation Date':
+						pd['expectationdate'] = citem['value'];
+						break;
+					case 'Customer Raised':
+						pd['customerraised'] = citem['value'];
+						break;
+					case 'Showstopper':
+						pd['showstopper'] = citem['value'];
+				}
+			});
+		}
+		return pd;
+	}
+	function fetch_elapse()
+	{
+		var ts = fetch_timestamp;
+		var dt = new Date(ts);
+		var cur = Date.now();
+		var tdiff = cur - dt;
+		var dt_str = "";
+		var dt_unit = "";
+		var highlight = 0;
+		if ((Math.round((tdiff/(60*60*1000)) * 10)/10) > defectexpire) {
+			highlight = 1;
+		}
+		if (tdiff > (24*60*60*1000)) {
+			dt_str = Math.round((tdiff/(24*60*60*1000)) * 10) / 10;
+			dt_unit = " days";
+		} else if (tdiff > (60*60*1000)) {
+            dt_str = Math.round((tdiff/(60*60*1000)) * 10) / 10;
+            dt_unit = " hours";
+        } else if (tdiff > (60*1000)) {
+            dt_str = Math.round((tdiff/(60*1000)) * 10) / 10;
+            dt_unit = " mins";
+        } else {
+            dt_str = Math.round((tdiff/(1000)) * 10) / 10;
+            dt_unit = " secs";
+		}
+		if (highlight) {
+            return "!!" + dt_str + dt_unit;
+		}
+            return dt_str + dt_unit;
+	}
+	function set_expire()
+	{
+			swal({
+				type: 'question' ,
+				text: 'How many hours to highlight Refresh?', 
+				input: 'text',
+			})
+			.then((result) => {
+				if (result.value) {
+				localStorage.setItem("onedefectexpire" , result.value);
+				defectexpire = result.value;
+				$("#tip").text(defectexpire);
+				update_elapse();
+				}
+			});
+	}
+	function update_elapse()
+	{
+		var elapse = fetch_elapse();
+		if (elapse.substr(0,1) == "!") {
+			$("#dtimestamp").css({'font-weight':'bold','background-color':'#ff0000'});
+		} else {
+			$("#dtimestamp").css({'font-weight':'','background-color':''});
+		}
+		$("#dtimestamp").html(elapse);
+	}
+	
+</script>
+
+<div id="mynorth" class="ui-layout-north">
+<table style="width:100%" class="HeaderBar">
+<tr>
+<td style="width:1%; white-space:nowrap;">
+<a href="http://svcwiki/index.php/Main_Page">Silvaco WiKi</a></td>
+<td style="white-space:nowrap;text-align: center;">
+&nbsp;Baseline and Components&nbsp;</td>
+<td style="width:1%; white-space:nowrap;"><div class='tooltip'><img id='clk' class='tooltip' style="vertical-align:middle" height='16' width='16' src='../clock.png' alt='Timestamp' ><span id='tip' class="tooltiptext"></span></div></td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td>
+<td style="width:1%;"><img id='person' style="vertical-align:middle" height='16' width='16' src='../person.png' alt='username' ></td>
+<td id=wikiusername style="font-weight: normal;width:1%">&nbsp;</td>
+<td style="width:1%;font-weight: normal;"> <b>HELP</b></td>
+</tr></table>
+
+<div id="basic_attr"></div>
+<ul id="sortable">
+  <li class="ui-state-default">
+	<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+	<span id='year_btn' ></span>
+	</li>
+</ul>
+</div>
+
+<div id="eventlist" class="ui-layout-west">
+	<div>Numbers by Year</div>
+	<p id="yearlist"></p>
+</div>
+
+<div class="ui-layout-center">
+	<div>Package List</div>
+	<div id="prod"></div>
+</div>
+
+<div id="ui_for_table" class="ui-layout-east">
+	<div id='alllist_title'></div>
+	<p id="alllist"></p>
+</div>
+
+<script>
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function datestr2local(dstr)
+{
+	var dt = new Date(dstr);
+	var dt_str = (dt.getMonth()+1) + "/" +
+				dt.getDate() +"/" +
+				dt.getFullYear() + " " +
+				dt.getHours() + ":" +
+				dt.getMinutes();
+	return dt_str;
+}
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+
+</script>
+</body>
+</html> 

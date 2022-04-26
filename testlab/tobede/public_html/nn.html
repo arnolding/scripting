@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Newly Entered to TTPro</title>
+    <meta name="author" content="Arnold Ho">
+	<link rel="stylesheet" href="../jquery.layout/layout-default-latest.css" />
+	<link rel="stylesheet" href="../jquery-ui.css">
+	<script src="../jquery-2.2.1.min.js"></script>
+	<script src="../jquery-ui.js"></script>
+    <script src="../jquery.layout/jquery.layout-latest.js"></script>
+    <script src="../json-serialization.js"></script>
+
+    <script src="../Pikaday-1.3.2/pikaday.js"></script>
+    <link rel="stylesheet" href="../Pikaday-1.3.2/css/pikaday.css">
+
+	<link rel="stylesheet" href="../js_sorter/style.css" /> 
+	<script src="../sweetalert.min.js"></script>
+	<script type="text/javascript" src="../js_sorter/script.js"></script>
+	<script src="header2.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script>
+	google.load("visualization", "1", {packages:["corechart"]});
+//	google.setOnLoadCallback(drawVisualization);
+	</script>
+<STYLE>
+	div.chart {
+		width: 1200px;
+		height: 500px;
+		margin: auto;
+		border: 1px solid #73AD21;
+	}
+    .HeaderBar
+    {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      background-color: #6E99D4;
+    }
+.HeaderBar a { color: #fff; }
+  .basic
+      {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #000000;
+      font-weight: normal;
+      text-align: left;
+      background-color: #fbceb1;
+	border:1px
+	border-collapse: collapse;
+      }
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted yellow; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #cfc;
+    color: #222;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -40px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+</STYLE>
+
+</head>
+<body>
+<script>
+// 2017/11/30
+// When X-sort is changed, the statistics table should change the sort column, too.
+
+// global variables
+	var legend_series = {
+		0: { color: '#f02020'},
+		1: { color: '#ffbf40'},
+		2: { color: '#00a040'},
+		3: { color: '#a53535'},
+		4: { color: '#0040f0'}
+	};
+	var States = {
+		'NotReviewed': '#f02020',
+		'Reviewed': '#ffbf40',
+		'Processing': '#00a040',
+		'ToBeVerified': '#a53535',
+		'Done': '#0040f0'
+	};
+	var state_array = [ 'NotReviewed','Reviewed', 'Processing','ToBeVerified','Done'];
+	var legend_color = {
+		'NotReviewed': '#f02020',
+		'Reviewed': '#ffbf40',
+		'Processing': '#00a040',
+		'ToBeVerified': '#a53535',
+		'Done': '#0040f0'
+	};
+
+
+
+	var product_stat;
+	var f_obj;
+	var g_col_pos;
+	var pivot_selected = "";
+	var chart;
+	var stat_data;
+	var g_progress;
+	var tchart;
+	var tstat_data;
+	var week_axis;
+	var sorter = new TINY.table.sorter("sorter");
+	var detail_sorter = new TINY.table.sorter("detail_sorter");
+	var period_array = ["Week","BiWeek","Month","HalfYr","Year","2Year"];
+	var priority_array = ["Urgent","High","Medium","Low","Not_Set"];
+	var init_priority_array = ["Urgent","High","Medium"];
+	var xaxis_array = ["Product","Entered by","Owner","AE Res"];
+	var nf_options_ext = {
+		"status_chart_x_axis":
+			{label: "Status Chart X-axis:", type: "radio",
+			 ilabel: ["Product","Entered by","Owner","AE Res"], init: "Product"}
+	};
+	var nf_options = {
+		'x_axis': 'Product',
+		'x_sort': 'FirstName',
+		'priority' : init_priority_array.join('|'),
+		't_axis': 'tweek',
+		't_span': 'tonext',
+		't_sel': 'single'
+	};
+	var url_priority = GetURLParameter('priority');
+	var last_period = GetURLParameter('last');
+	var top_no = GetURLParameter('top');
+	var lookat = GetURLParameter('lookat');
+	if (period_array.indexOf(last_period) < 0) {
+		last_period = "BiWeek";
+	}
+console.log("last_period=" + last_period);
+	var myLayout;
+	var newfoundexpire = 1;
+	var fetch_timestamp;
+	var pname_array = window.location.pathname.split("/");
+	var script_name = pname_array[pname_array.length-1];
+	$(document).ready(function() {
+		var d0 = new Date("12/29/2014");
+		var d0_str = d0.getYearWeekStr();
+		d0 = new Date("1/1/2012");
+		d0_str = d0.getYearWeekStr();
+		init_options();
+		var xnewfoundexpire = sessionStorage.getItem("newfoundexpire");
+		if (xnewfoundexpire) {
+			newfoundexpire = xnewfoundexpire;
+		}
+		$("#tip").text(newfoundexpire + " hours");
+		$("#forceajax").bind("click", function() {request2ttpro(last_period);});
+        $("#clk").bind("click", function() {set_expire();});
+
+		init_layout();
+		set_from_to(last_period);
+		chart = new google.visualization.ColumnChart(document.getElementById('chart_status'));
+		var local_arr = sessionStorage.getItem("newfound");
+
+		
+		if (local_arr ) {
+			$.post("getRecordListForTable.php" ,
+				{'last': last_period, 'logonly':1 } );
+            var arr = JSON.parse(local_arr);
+			var period_idx = period_array.indexOf(last_period);
+			var saved_idx = period_array.indexOf(arr['period']);
+			if (saved_idx >= period_idx) {
+				fetch_timestamp = arr['fetch_ts'];
+            	doit(arr);
+			} else {
+				local_arr = null;
+			}
+        } 
+		if (!local_arr) {
+            request2ttpro( last_period);
+		}
+	});
+
+	function request2ttpro (last_period) {
+		$.ajax({
+			method: "POST",
+			url: "getRecordListForTable.php",
+			data: { last: last_period },
+			dataType: "json",
+			beforeSend: function(){
+                swal({
+                    title: "Info " ,
+                    text: "Downloading defect data for " + last_period + ", please waiting ...", 
+                } );
+            },
+			error: function(xhr, status, error) {
+				$("#basic_attr").html(xhr.responseText);
+			}
+		})
+		.done(function(arr) {
+			$("#wikiusername").text(arr['_COOKIE']['db_mediawikiUserName']);
+			if (arr.hasOwnProperty("Error")) {
+				swal({
+					title: "Error",
+					text: arr['Error'],
+				});
+			} else {
+				swal.close();
+				arr['fetch_ts'] = Date.now();
+				arr['period'] = last_period;
+				local_save(last_period,JSON.stringify(arr) );
+				fetch_timestamp = arr['fetch_ts'];
+				doit(arr);
+			}
+		})
+		.fail(function(arr) {
+			swal({
+				title: "Error",
+				text: arr['Error'],
+			});
+		});
+	}
+	function local_save(period , v)
+    {
+        var save_key = "newfound";
+        var needed = (v.length/512);
+        console.log("save for " + save_key + " size= " + needed.toFixed(2) + "KB");
+        try {
+            sessionStorage.setItem(save_key, v);
+        } catch (e) {
+            console.log("sessionStorage error [" + e.name + "][" + e.message + "]");
+            var ls_array = count_ls();
+            console.log("Browser sessionStorage exceeded!" +
+                "Used " + ls_array["total"] +
+                "KB, Needs " + needed.toFixed(2) + "KB");
+            if (needed*1.2 < ls_array["total"]) {
+                if (clean_old(needed * 1.2)) {
+                    try {
+                    sessionStorage.setItem(save_key, v);
+                    } catch (e2) {
+                        console.log("sessionStorage error [" + e2.name + "][" + e2.message + "]");
+                    }
+                }
+            }
+        }
+    }
+	function clean_old(clean_size)
+    {
+        var ls_size = new Object();
+        var ls_ts = new Object();
+        for (x in sessionStorage) {
+            if (!isNaN(x)) {
+console.log("before getItem " + x);
+                var local_arr = sessionStorage.getItem(x);
+console.log("before parse " + x);
+                var arr = JSON.parse(local_arr);
+                if (arr.hasOwnProperty("fetch_ts")) {
+console.log("check length");
+                    xLen = sessionStorage[x].length /512;
+                    if (xLen) {
+                        ls_ts[x] = arr["fetch_ts"];
+                        ls_size[x] = xLen;
+                    } 
+                }
+            }
+        }
+		var tuples = [];
+        for (var key in ls_ts) tuples.push([key, ls_ts[key]]);
+        tuples.sort(function(a, b) {
+            a = a[1];
+            b = b[1];
+            return a < b ? -1 : (a > b ? 1 : 0);
+        });
+
+        var cut_total = 0;
+        for (var i = 0; i < tuples.length; i++) {
+            var key = tuples[i][0];
+            var value = tuples[i][1];
+        console.log(key , " " , value);
+            
+            if (cut_total < clean_size) {
+                sessionStorage.removeItem(key);
+                cut_total += ls_size[key];
+                console.log(" remove " + key + " restore size " + ls_size[key]);
+            }
+        }
+        if (cut_total < clean_size) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+	function count_ls()
+    {
+        var x, xLen, log="",total=0;
+        var ls_str = new Object();
+        for (x in sessionStorage) {
+            xLen =  ((sessionStorage[x].length * 2 + x.length * 2)/1024);
+            log += x.substr(0,30) + " = " +  xLen.toFixed(2) + " KB\n";
+            if (xLen){
+                total+= xLen;
+                ls_str[x] = xLen;
+            }
+        };
+        log = "Total = " + total.toFixed(2)+ " KB" + log;
+        console.log("count sessionStorage: " + log);
+        ls_str["total"] = total.toFixed(2);
+        return ls_str;
+    }
+
+	function set_expire()
+    {
+            swal({
+                title: 'Asking ' ,
+                text: 'How many hours to highlight Refresh?',
+                content: "input",
+            })
+            .then(name => {
+                if (name) {
+                sessionStorage.setItem("newfoundexpire" , name);
+                newfoundexpire = name;
+                $("#tip").text(newfoundexpire);
+                update_elapse();
+                }
+            });
+    }
+	function update_elapse()
+    {
+        var elapse = fetch_elapse();
+        if (elapse.substr(0,1) == "!") {
+            $("#dtimestamp").css({'font-weight':'bold','background-color':'#ff0000'});
+        } else {
+            $("#dtimestamp").css({'font-weight':'','background-color':''});
+        }
+        $("#dtimestamp").html(elapse);
+    }
+
+	function fetch_elapse()
+    {
+        var ts = fetch_timestamp;
+        var dt = new Date(ts);
+        var cur = Date.now();
+        var tdiff = cur - dt;
+        var dt_str = "";
+        var dt_unit = "";
+        var highlight = 0;
+        if ((Math.round((tdiff/(60*60*1000)) * 10)/10) > newfoundexpire) {
+            highlight = 1;
+        }
+        if (tdiff > (24*60*60*1000)) {
+            dt_str = Math.round((tdiff/(24*60*60*1000)) * 10) / 10;
+            dt_unit = " days";
+        } else if (tdiff > (60*60*1000)) {
+            dt_str = Math.round((tdiff/(60*60*1000)) * 10) / 10;
+            dt_unit = " hours";
+        } else if (tdiff > (60*1000)) {
+            dt_str = Math.round((tdiff/(60*1000)) * 10) / 10;
+            dt_unit = " mins";
+        } else {
+            dt_str = Math.round((tdiff/(1000)) * 10) / 10;
+            dt_unit = " secs";
+        }
+        if (highlight) {
+            return "!!" + dt_str + dt_unit;
+        }
+            return dt_str + dt_unit;
+    }
+
+	function init_option_duration()
+	{
+		var groupname = "sdur";
+		var html_str = "";
+		for (var i = 0 ; i < period_array.length ; i++) {
+			var checked = "";
+			if (last_period == period_array[i]) {
+				checked = "checked";
+			}
+			html_str += "<input type='radio' name='" + groupname + "'" +
+				" id='d" + period_array[i] + "' " +
+				" onclick='location.href=\"" + script_name + "?last=" +
+				period_array[i] + "\"'" + checked + "> ";
+			html_str += "<label for='d" + period_array[i] + "'" +
+				" style='font-size:12px' >" + period_array[i] + "</label>";
+		}
+		$( "#radioset00" ).append(html_str);
+		$( "#radioset00" ).controlgroup();
+	}
+	function init_option_priority()
+	{
+		var html_str = "";
+		var prs = nf_options.priority;
+		for (var i = 0 ; i < priority_array.length ; i++) {
+			var pr = priority_array[i];
+			var checked = "";
+			if (prs.indexOf(pr) >= 0) {
+				checked = "checked";
+			}
+			html_str += "<label for='cb-" + pr + "'" +
+				" style='font-size:12px'>" + pr + "</label>";
+			html_str += "<input type='checkbox' onClick='prio_change();'" +
+				" id='cb-" + pr + "' " + checked + ">";
+		}
+		$( "#checkset1" ).append(html_str);
+		$( "#checkset1" ).controlgroup();
+	}
+	function init_option_xaxis()
+	{
+		for (grp in nf_options_ext) {
+			var g1 = nf_options_ext[grp];
+			var gi = g1["ilabel"];
+			var html_str = "";
+			for (var i = 0 ; i < gi.length ; i++) {
+				var xa = gi[i];
+				var checked = "";
+				if (g1["init"] == xa) {
+					checked = "checked";
+				}
+				var sid = xa;
+				sid = sid.split(" ")[0];
+				html_str += "<input type='" + g1["type"] + "' name='" + grp + "'" +
+					" id='s" + sid + "' onclick=\"change_x('" + xa + "')\" " +
+					checked + ">";
+				html_str += "<label for='s" + sid + "'" +
+					" style='font-size:12px' >" + xa + "</label>";
+			}
+
+			$( "#" + grp + "_label" ).html(g1["label"]);
+			$( "#" + grp ).append(html_str);
+			$( "#" + grp ).controlgroup();
+		}
+	}
+	function init_options()
+	{
+		init_option_priority();
+		init_option_duration();
+		init_option_xaxis();
+		$( "#radioset02" ).controlgroup();
+		$( "#radioset1" ).controlgroup();
+		$( "#radioset2" ).controlgroup();
+		$( "#radioset3" ).controlgroup();
+//		$( "#radioset4" ).controlgroup();
+	$( ":radio" ).each(function(index){
+			var lab = $("label[for='" + this.id +"']").children();
+			lab.each(function() {
+			console.log("index " + this.className);
+			this.remove();
+			});
+	});
+
+		$( "#sFirstName" ).trigger( "click" );
+		$('#radioset3').on("change", function(event){
+			nf_options.t_sel = event.target.id;
+        });
+		$( "#single_sel" ).trigger( "click" );
+
+		$('#radioset1').on("change", function(event){
+			nf_options.t_span = event.target.id;
+			get_pivot();
+			drawTiming();
+        });
+		$( "#more" ).trigger( "click" );
+
+		$('#radioset2').on("change", function(event){
+			nf_options.t_axis = event.target.id;
+			get_pivot();
+			drawTiming();
+        });
+		$( "#tweek" ).trigger( "click" );
+
+        $("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+	}
+    function init_layout()
+    {
+        if (myLayout) { return;}
+        myLayout = $('body').layout({
+			name:			"newfound",
+            stateManagement__enabled:   true
+        //  West Sidebar options
+        ,   center__childOptions:   {
+                minSize:                50  // ALL panes
+            ,   south__size:            300
+            }
+        //  West Sidebar options
+        ,   west__childOptions: {
+                minSize:                50  // ALL panes
+            ,   south__size:            '50%'
+            }
+        });
+
+        /*
+         *  DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+         *  this functionality will be included in RC30.80
+         */
+        $.layout.disableTextSelection = function(){
+            var $d  = $(document)
+            ,   s   = 'textSelectionDisabled'
+            ,   x   = 'textSelectionInitialized'
+            ;
+            if ($.fn.disableSelection) {
+                if (!$d.data(x)) // document hasn't been initialized yet
+                    $d.on('mouseup', $.layout.enableTextSelection ).data(x, true);
+                if (!$d.data(s))
+                    $d.disableSelection().data(s, true);
+            }
+            //console.log('$.layout.disableTextSelection');
+        };
+        $.layout.enableTextSelection = function(){
+            var $d  = $(document)
+            ,   s   = 'textSelectionDisabled';
+            if ($.fn.enableSelection && $d.data(s))
+                $d.enableSelection().data(s, false);
+            //console.log('$.layout.enableTextSelection');
+        };
+        $(".ui-layout-resizer")
+            .on('mousedown', $.layout.disableTextSelection ); // affects entire document
+        $("#mynorth").bind("mouseover", function() {myLayout.allowOverflow('north');});
+        $("#mynorth").bind("mouseout", function() {myLayout.resetOverflow(this);});
+    }
+
+
+	function set_from_to(period)
+	{
+		var period_sel = period;
+		var dt = new Date();
+		var picker_e = new Pikaday({
+			showWeekNumber: true,
+			field: document.getElementById('date-e'),
+			firstDay: 1,
+			minDate: new Date('2000-01-01'),
+			maxDate: new Date('2020-12-31'),
+			defaultDate: new Date(),
+			setDefaultDate: true,
+			yearRange: [2000, 2020]
+		});
+
+		var pre_b = pre_count(dt , period_sel);
+		var picker_b = new Pikaday({
+			showWeekNumber: true,
+			field: document.getElementById('date-b'),
+			firstDay: 1,
+			minDate: new Date('2000-01-01'),
+			maxDate: new Date('2020-12-31'),
+			defaultDate: pre_b,
+			setDefaultDate: true,
+			yearRange: [2000, 2020]
+		});
+	}
+	function pre_count(dt , pe) {
+		var pre_b;
+		if (pe == 'Week') {pre_b = new Date(dt - 7*86400000);}
+		if (pe == 'BiWeek') {pre_b = new Date(dt - 14*86400000);}
+		if (pe == 'Month') {pre_b = new Date(dt.getFullYear(), dt.getMonth() -1, dt.getDate());}
+		if (pe == 'HalfYr') {pre_b = new Date(dt - 183*86400000);}
+		if (pe == 'Year') {
+			if (dt.getMonth() == 1 && dt.getDate() == 29) {
+				pre_b = new Date(dt.getFullYear() - 1 , dt.getMonth(), dt.getDate() - 1);
+			} else {
+				pre_b = new Date(dt.getFullYear() - 1 , dt.getMonth(), dt.getDate());
+			}
+		}
+		if (pe == '2Year') {
+			if (dt.getMonth() == 1 && dt.getDate() == 29) {
+				pre_b = new Date(dt.getFullYear() - 2 , dt.getMonth(), dt.getDate() - 1);
+			} else {
+				pre_b = new Date(dt.getFullYear() - 2 , dt.getMonth(), dt.getDate());
+			}
+		}
+		return pre_b;
+	}
+function month3c(n) {
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+					"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+	return monthNames[n];
+}
+Date.prototype.getYearMonthStr = function(){
+	var y = this.getFullYear();
+	var m = this.getMonth();
+	return y.toString() + "," + month3c(m);
+}
+Date.prototype.getYearWeekStr = function(){
+  var d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+  var dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  var weeknum = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+  if (weeknum < 10) {
+	return d.getUTCFullYear().toString() + ",W0" + weeknum.toString();
+  } else {
+	return d.getUTCFullYear().toString() + ",W" + weeknum.toString();
+  }
+};
+
+function display_groups()
+{
+	window.location.href='#grouping_tag';
+	var msg_txt = 'Group information is from email aliasing<br>';
+	msg_txt += 'Conversion: apps --> FAE, eng --> R&D<br>';
+	msg_txt += 'Precedence: SALES > FAE > R&D<br>';
+	msg_txt += 'Precedence: Region > Product<br>'
+	swal({
+		title: 'Grouping Rules',
+		text: msg_txt,
+		html:true
+	} );
+}
+
+function display_legend()
+{
+	var msg_txt = '<table><tr><td bgcolor="#f02020">&nbsp;&nbsp;</td><td align="left">NotReviewed</td>';
+	msg_txt += '<td align="left">Status Not Assigned and Disposition Not Reviewed</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#ffbf40">&nbsp;&nbsp;</td><td align="left">Reviewed</td>';
+	msg_txt += '<td align="left">Status Not Assigned but Disposition Set</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#00a040">&nbsp;&nbsp;</td><td align="left">Processing</td>';
+	msg_txt += '<td align="left">Status Assigned, not yet Fixed nor Verified</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#a53535">&nbsp;&nbsp;</td><td align="left">ToBeVerified</td>';
+	msg_txt += '<td align="left">Status Fixed, or Released to Testing</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#0040f0">&nbsp;&nbsp;</td><td align="left">Done</td>';
+	msg_txt += '<td align="left">Status Close(Verified)</td></tr>';
+
+	msg_txt += '</table>';
+	swal({
+		title: 'Status Legend',
+		text: msg_txt,
+		html:true,
+		timer: 5000
+	} );
+
+}
+
+function priority_check() {
+	var prio = [];
+	for (var i = 0 ; i < priority_array.length ; i++) {
+		var pr = priority_array[i];
+		if ($("#cb-" + pr).is(':checked')) {
+			prio.push(pr);
+		}
+	}
+	nf_options.priority = prio.join('|');
+	return nf_options.priority;
+}
+
+
+function doit(ttpro)
+{
+	update_elapse();
+	$("#wikiusername").text(ttpro['_COOKIE']['db_mediawikiUserName']);
+	var myVar = setInterval(update_elapse, 60000);
+	var s_obj = weeknum(ttpro);
+	g_col_pos = get_col_pos(s_obj);
+
+	data_derived(s_obj);
+//	data_checker(s_obj);
+
+	var date_b = new Date(document.getElementById('date-b').value);
+	var date_e = new Date(document.getElementById('date-e').value);
+	f_obj = filter_by_date(s_obj , date_b , date_e);
+
+    table_sorter_init();
+
+
+
+//	product_stat = collect_product(f_obj);
+//	show_statistics();
+	drawStatus();
+	get_pivot();
+	drawTiming();
+//	drawPriority();
+}
+function table_sorter_init()
+{
+	detail_sorter.head = "head";
+	detail_sorter.asc = "asc";
+	detail_sorter.desc = "desc";
+	detail_sorter.even = "evenrow";
+	detail_sorter.odd = "oddrow";
+	detail_sorter.evensel = "evenselected";
+	detail_sorter.oddsel = "oddselected";
+	detail_sorter.paginate = false;
+	detail_sorter.currentid = "currentpage";
+	detail_sorter.limitid = "pagelimit";
+
+	sorter.head = "head";
+	sorter.asc = "asc";
+	sorter.desc = "desc";
+	sorter.even = "evenrow";
+	sorter.odd = "oddrow";
+	sorter.evensel = "evenselected";
+	sorter.oddsel = "oddselected";
+	sorter.paginate = false;
+	sorter.currentid = "currentpage";
+	sorter.limitid = "pagelimit";
+}
+function show_statistics() {
+	var stat_node = document.getElementById('statistics');
+	if (stat_node.hasChildNodes()) {
+		stat_node.removeChild(stat_node.firstChild)
+	}
+	stat_node.appendChild(table_statistics());
+	sorter.init("sst",1);
+	sorter.wk(1);
+}
+
+function sorton( sort_c)
+{
+	var msg_txt = '';
+
+//	swal({
+//		title: 'Sort On ' + sort_c,
+//		text: msg_txt,
+//		html:false,
+//		timer: 1000
+//	} );
+
+	nf_options.x_sort = sort_c;
+	$("#x_sort").text("X-sort [" + nf_options.x_sort + "]");
+	stat_data = undefined;
+	drawStatus();
+}
+function change_x(which_x)
+{
+	nf_options.x_axis = which_x;
+//	$("#x_name").text("X-axis [" + which_x + "]");
+//	UpdateURLParameter("X-axis" , which_x);
+
+	stat_data = undefined;
+	drawStatus();
+}
+function prio_change()
+{
+	drawStatus();
+	get_pivot();
+	drawTiming();
+}
+function change_progress(which_x)
+{
+	x_progress = which_x;
+	$("#progress").text("Timing Chart [" + which_x + "]");
+	UpdateURLParameter("progress" , which_x);
+
+    if (get_pivot()) {
+
+//	stat_data = undefined;
+	    drawTiming();
+	} else {
+	    alert("Please select on the first column of " + nf_options.x_axis + ",\n to show Time Chart of the selected items");
+	}
+}
+function get_pivot()
+{
+    var sst_top_event = document.getElementById('sst');
+	if (!sst_top_event) {return;}
+	var tbd = sst_top_event.tBodies[0];
+	if (tbd.rows.length == 0) {
+		return;
+	}
+
+    pivot_selected = "";
+	for (var i = 0 ; i < tbd.rows.length ; i++) {
+		var pd = tbd.rows[i].cells[0];
+		if (pd.className == "main_sel") {
+		    if (pivot_selected == "") {
+		        pivot_selected = pd.innerHTML;
+		    } else {
+		        pivot_selected += "|" + pd.innerHTML;
+		    }
+		}
+	}
+	if (pivot_selected == "") {
+		pivot_selected = tbd.rows[0].cells[0].innerHTML;
+		tbd.rows[0].cells[0].className = "main_sel";
+	    return false;
+	} else {
+	    return true;
+	}
+}
+function period_chg()
+{
+	var period_element = document.getElementsByName('period');
+	for ( var i = 0 ; i < period_element.length ; i++) {
+		if (period_element[i].checked) {
+			period_sel = period_element[i].value;
+		}
+	}
+	return period_sel;
+}
+function debug(str)
+{
+console.log(str);
+}
+// generate chart_category
+// Following timestamps are in time sequence
+// 'Date Created' minus 3600,000 since there are zone time diff
+// 'In Development Date' or 'Assign Date' only if in Processing category
+// 'Fix Date'
+// 'Closed Date'
+function data_derived(sobj)
+{
+    var rows = sobj.rows;
+
+	for (rx in rows) {
+	    var ding = 0;
+
+	    var stat_name = rows[rx][g_col_pos["Status"]];
+	    var disposition = rows[rx][g_col_pos["Disposition"]];
+
+        var chart_category = 'Unknown';
+
+        if (stat_name.substr(0,4) == 'Open') {
+            if  ( stat_name.indexOf("not assigned") >= 0) {
+                if (disposition == 'Not Reviewed' || disposition == '') {
+                    chart_category = 'NotReviewed';
+                } else {
+                    chart_category = 'Reviewed';
+                }
+            } else {
+                chart_category = 'Processing';
+            }
+        } else if (stat_name.substr(0,6) == 'Closed') {
+            chart_category = 'Done';
+        } else if (stat_name.substr(0,5) == 'Fixed') {
+            chart_category = 'ToBeVerified';
+        } else if (stat_name.substr(0,8) == 'Released') {
+            chart_category = 'ToBeVerified';
+        } else if (stat_name.substr(0,14) == 'In Development') {
+            chart_category = 'Processing';
+        }
+
+        if (chart_category == 'Unknown') {
+            if (disposition == 'Not Reviewed' || disposition == '') {
+                chart_category = 'NotReviewed';
+            } else {
+                chart_category = 'Reviewed';
+            }
+        }
+
+	    rows[rx]['chart_category']=chart_category;
+
+        var assign_date = new Date(rows[rx][g_col_pos['Assign Date']]);
+        var created_date = new Date(rows[rx][g_col_pos['Date Created']]);
+        var in_dev_date = new Date(rows[rx][g_col_pos['In Development Date']]);
+        var fix_date = new Date(rows[rx][g_col_pos['Fix Date']]);
+        var closed_date = new Date(rows[rx][g_col_pos['Closed Date']]);
+        created_date.setTime(created_date.getTime()-3600000);
+
+        if (chart_category == 'Done') {
+            if (isNaN(fix_date)) { fix_date = closed_date;}
+            if (isNaN(in_dev_date)) { in_dev_date = fix_date;}
+            rows[rx]['date_notreviewed']= created_date;
+            rows[rx]['date_processing']= in_dev_date;
+            rows[rx]['date_tobeverified']= fix_date;
+            rows[rx]['date_done']= closed_date;
+        } else if (chart_category == 'ToBeVerified') {
+            if (isNaN(in_dev_date)) { in_dev_date = fix_date;}
+            rows[rx]['date_notreviewed']= created_date;
+            rows[rx]['date_processing']= in_dev_date;
+            rows[rx]['date_tobeverified']= fix_date;
+        } else if (chart_category == 'Processing') {
+            if (isNaN(in_dev_date)) { in_dev_date = assign_date;}
+            rows[rx]['date_notreviewed']= created_date;
+            rows[rx]['date_processing']= in_dev_date;
+        } else {
+            rows[rx]['date_notreviewed']= created_date;
+        }
+
+	}
+
+}
+
+//
+function data_checker0(sobj)
+{
+    var ding99 = 0;
+    var ding88 = 0;
+    var ding77 = 0;
+    var rows = sobj.rows;
+    for (rx in rows) {
+        var chart_category = rows[rx]['chart_category'];
+        var force_close_date = new Date(rows[rx][g_col_pos['Force Close Date']]);
+        var assign_date = new Date(rows[rx][g_col_pos['Assign Date']]);
+        var created_date = new Date(rows[rx][g_col_pos['Date Created']]);
+        var in_dev_date = new Date(rows[rx][g_col_pos['In Development Date']]);
+        var fix_date = new Date(rows[rx][g_col_pos['Fix Date']]);
+        var closed_date = new Date(rows[rx][g_col_pos['Closed Date']]);
+        created_date.setTime(created_date.getTime()-3600000);
+
+        if (chart_category == 'Done') {
+            if (isNaN(fix_date)) { fix_date = closed_date;}
+            if (isNaN(in_dev_date)) { in_dev_date = fix_date;}
+            if (!((created_date.getTime() <= in_dev_date.getTime()) &&
+                (in_dev_date.getTime() <= fix_date.getTime()) &&
+                (fix_date.getTime() <= closed_date.getTime()) )) {
+                rows[rx]['ding'] = 'I99';
+                ding99++;
+            }
+        }
+        if (chart_category == 'ToBeVerified') {
+            if (isNaN(in_dev_date)) { in_dev_date = fix_date;}
+            if (!((created_date.getTime() <= in_dev_date.getTime()) &&
+                (in_dev_date.getTime() <= fix_date.getTime())  )) {
+                rows[rx]['ding'] = 'I88';
+                ding88++;
+            }
+        }
+        if (chart_category == 'Processing') {
+            if (isNaN(in_dev_date)) { in_dev_date = assign_date;}
+            if (!((created_date.getTime() <= in_dev_date.getTime())  )) {
+                rows[rx]['ding'] = 'I77';
+                ding77++;
+            }
+        }
+    }
+    console.log(" ding77 " + ding77 + " ding88 " + ding88 + " ding99 " + ding99);
+}
+
+function filter_by_date(sobj , date_b , date_e)
+{
+	var filtered_tbl = new Object();
+	filtered_tbl.header = sobj.header;
+	var rows_arr = [];
+	var rows = sobj.rows;
+
+
+	for (rx in rows) {
+		date_m = new Date(rows[rx][g_col_pos["Date Created"]]);
+		if ( date_m > date_b && date_m < date_e) {
+			rows_arr[rows_arr.length] = rows[rx];
+		}
+	}
+	filtered_tbl.rows = rows_arr;
+
+	return filtered_tbl;
+}
+function get_col_pos(sobj)
+{
+    var col_list = sobj.header;
+    var col_pos = new Object();
+    for (hx in col_list) {
+		col_pos[col_list[hx]] = hx;
+	}
+
+    return col_pos;
+}
+function collect_product(sobj,cat)
+{
+	var pobj = new Object();
+	var col_list = sobj.header;
+
+	var prio_setting;
+	prio_setting = priority_check();
+	var rows = sobj.rows;
+	for (rx in rows) {
+		var prod_name = rows[rx][g_col_pos["Product"]];
+		var entered_by_name = rows[rx][g_col_pos["Entered by"]];
+		var prio_name = rows[rx][g_col_pos["Priority"]];
+		var stat_name = rows[rx][g_col_pos["Status"]];
+		var number = rows[rx][g_col_pos["Number"]];
+		var assigned_to_user = rows[rx][g_col_pos["Assigned To User"]];
+		var fixed_by_user = rows[rx][g_col_pos["Fixed By User"]];
+		var ae_responsible = rows[rx][g_col_pos["AE Responsible"]];
+
+		var assigned_to = "assigned to";
+		var assigned_idx = stat_name.indexOf("assigned to");
+		var eng_name;
+		eng_name = "Not_Assigned";
+
+		if (stat_name.substring(0,5) == 'Fixed' || stat_name.substring(0,8) == 'Released' || stat_name.substring(0,6) == 'Closed') {
+			if (fixed_by_user.length > 1) {
+				eng_name = fixed_by_user;
+			} else if (assigned_to_user.length > 1) {
+				eng_name = assigned_to_user;
+			}
+		} else if (assigned_idx >= 0) {
+			eng_name = stat_name.substring(assigned_idx + assigned_to.length + 1);
+		}
+
+
+		if (prio_name == '') {
+			prio_name = 'Not_set';
+		}
+
+		var x_name = prod_name;
+		if (cat == "Entered by") {
+			x_name = entered_by_name;
+		} else if (cat == "Owner") {
+			x_name = eng_name;
+		} else if (cat == "AE Responsible") {
+			x_name = ae_responsible;
+		}
+
+		if (!(pobj[x_name])) {
+			var arr = new Object();
+			arr['all_total'] = 0;
+			arr['Total'] = {count: 0, list:''};  // total for a product
+			arr['high'] = {count: 0, list:''};
+			arr['other'] = {count: 0, list:''};
+			arr['NotReviewed'] = {count: 0, list:''};  // open, not assigned, not reviewed
+			arr['Reviewed'] = {count: 0, list:''}; // open, not assigned, but reviewed
+			arr['Processing'] = {count: 0, list:''}; // open, assigned or In Development
+			arr['ToBeVerified'] = {count: 0, list:''}; // open, assigned or In Development
+			arr['Done'] = {count: 0, list:''}; // Fixed, Closed, Released to Testing
+			arr['Unknown'] = {count: 0, list:''}; // status unknown or not classified
+			pobj[x_name] = arr;
+		}
+		var arr = pobj[x_name];
+		arr['all_total'] += 1;
+
+		if (prio_name == 'Urgent' || prio_name == 'High') {
+				arr['high'].count += 1;
+				arr['high'].list += number + ',';
+		} else {
+				arr['other'].count +=1;
+				arr['other'].list += number + ',';
+		}
+
+	//	document.getElementById("debug").innerHTML = prio_setting;
+
+		if (prio_setting.indexOf(prio_name) >= 0) {
+			arr['Total'].count += 1;
+			arr['Total'].list += number + ',';
+			var chart_category = rows[rx]['chart_category'];
+			arr[chart_category].count +=1;
+			arr[chart_category].list += number + ',';
+		}
+	}
+
+
+	if (Number.isInteger(top_no) && (top_no < Object.keys(pobj).length) && (top_no > 0)) {
+		var top_nr = Object.keys(pobj).sort(function(a,b) {return pobj[a]['all_total'] - pobj[b]['all_total']});
+		for (var i = 0 ; i < top_nr.length - top_no ; i++) {
+			delete pobj[top_nr[i]];
+		}
+	}
+
+	pobj['subtotal'] = {'high':0, other:0, NotReviewed:0, Reviewed:0, Processing:0, ToBeVerified:0, Done:0, Unknown:0};
+	for (var pp in pobj) {
+		if (pp == 'subtotal') {continue;}
+		pobj['subtotal']['high'] += pobj[pp]['high'].count;
+		pobj['subtotal']['other'] += pobj[pp]['other'].count;
+		pobj['subtotal']['NotReviewed'] += pobj[pp]['NotReviewed'].count;
+		pobj['subtotal']['Reviewed'] += pobj[pp]['Reviewed'].count;
+		pobj['subtotal']['Processing'] += pobj[pp]['Processing'].count;
+		pobj['subtotal']['ToBeVerified'] += pobj[pp]['ToBeVerified'].count;
+		pobj['subtotal']['Done'] += pobj[pp]['Done'].count;
+		pobj['subtotal']['Unknown'] += pobj[pp]['Unknown'].count;
+	}
+//	console.log(pobj);
+	return pobj;
+}
+
+function count_month_axis(d0 , d1)
+{
+    var y0, m0, y1, m1;
+    var month_str = [];
+	y0 = d0.getFullYear();
+	y1 = d1.getFullYear();
+	m0 = d0.getMonth();
+	m1 = d1.getMonth();
+    for (var y = y0 ; y <= y1 ; y++) {
+		var m_start = 0;
+		if (y == y0) {
+			m_start = m0;
+		}
+		var m_end = 11;
+		if (y == y1) {
+			m_end = m1;
+		}
+		for (var m = m_start ; m <= m_end ; m++) {
+			var mstr = y.toString() + "," + month3c(m);
+            month_str.push(mstr);
+		}
+	}
+	return month_str;
+}
+function count_week_axis(d0 , d1)
+{
+    var y0, w0, y1, w1;
+    var str0 = d0.getYearWeekStr();
+    var str1 = d1.getYearWeekStr();
+    var week_str = [];
+
+	y0 = parseInt(str0.substring(0,4));
+	w0 = parseInt(str0.substring(6));
+	y1 = parseInt(str1.substring(0,4));
+	w1 = parseInt(str1.substring(6));
+
+    for (var y = y0 ; y <= y1 ; y++) {
+        var w_start = 1;
+        if (y == y0) {
+            w_start = w0;
+        }
+
+		var w_end = 0;
+		var end_date = 31;
+		while (w_end < 50) {
+			y_last = new Date('12/' + end_date + '/' + y);
+			w_end = parseInt(y_last.getYearWeekStr().substring(6));
+			end_date--;
+		}
+        if (y == y1) {
+            w_end = w1;
+        }
+        for (var w = w_start ; w <= w_end; w++) {
+            var wstr;
+            if (w < 10) {
+                wstr = y.toString() + ",W0" + w.toString();
+            } else {
+                wstr = y.toString() + ",W" + w.toString();
+            }
+            week_str.push(wstr);
+        }
+    }
+    return week_str;
+}
+function timing_data_init(week_array,sel_array,st_array)
+{
+    var nav = new Object();
+    for (var k = 0 ; k < st_array.length ; k++) {
+  //      var series_len = week_array.length * sel_array.length;
+        var series_len = week_array.length;
+        var ser_ws = new Array(series_len);
+        for (var i = 0 ; i < series_len ; i++) {
+            ser_ws[i] = {count: 0, list:''};
+        }
+        nav[st_array[k]] = ser_ws;
+    }
+    return nav;
+}
+function count_by_timing(sobj,cat,selected)
+{
+	var col_list = sobj.header;
+
+	var prio_setting;
+	prio_setting = priority_check();
+	var rows = sobj.rows;
+	var date_first = new Date();
+	var date_last = new Date("1/1/2000");
+	date_last = new Date();
+	for (rx in rows) {
+	    var date_entered = new Date(rows[rx][g_col_pos["Date Created"]]);
+//	    console.log("date=" + rows[rx][date_entered_id] + " weeknum=" + date_entered.getYearWeekStr());
+        if (date_first > date_entered) {
+            date_first = date_entered;
+        }
+        if (date_last < date_entered) {
+            date_last = date_entered;
+        }
+	}
+	console.log("date_first=" + date_first.toDateString() + " date_last=" + date_last.toDateString());
+	if (nf_options.t_axis == 'tweek') {
+		week_axis = count_week_axis(date_first , date_last);
+	} else if (nf_options.t_axis == 'tmonth') {
+		week_axis = count_month_axis(date_first , date_last);
+	} else {
+		week_axis = count_week_axis(date_first , date_last);
+	}
+	//	console.log(week_axis);
+
+    var tobj = timing_data_init(week_axis,selected,state_array);
+//    console.log(tobj);
+	for (rx in rows) {
+		var prod_name = rows[rx][ g_col_pos["Product"] ];
+		var entered_by_name = rows[rx][ g_col_pos["Entered by"]];
+		var prio_name = rows[rx][ g_col_pos["Priority"]];
+		if (prio_name == "") {
+			prio_name = "Not_set";
+		}
+		if (prio_setting.indexOf(prio_name) < 0) {
+			continue;
+		}
+		var stat_name = rows[rx][ g_col_pos["Status"]];
+		var number = rows[rx][ g_col_pos["Number"]];
+		var assigned_to_user = rows[rx][ g_col_pos["Assigned To User"]];
+		var fixed_by_user = rows[rx][ g_col_pos["Fixed By User"]];
+		var ae_responsible = rows[rx][ g_col_pos["AE Responsible"]];
+		var date_entered = rows[rx][ g_col_pos["Date Created"]];
+
+
+		var assigned_to = "assigned to";
+		var assigned_idx = stat_name.indexOf( "assigned to" );
+		var eng_name;
+		eng_name = "Not_Assigned";
+
+		if (stat_name.substring(0,5) == "Fixed" || stat_name.substring(0,8) == "Released" || stat_name.substring(0,6) == "Closed" ) {
+			if ( fixed_by_user.length > 1 ) {
+				eng_name = fixed_by_user;
+			} else if (assigned_to_user.length > 1) {
+				eng_name = assigned_to_user;
+			}
+		} else if (assigned_idx >= 0) {
+			eng_name = stat_name.substring(assigned_idx + assigned_to.length + 1);
+		}
+
+
+
+		var x_name = prod_name;
+		if (cat == "Entered by") {
+			x_name = entered_by_name;
+		} else if (cat == "Owner") {
+			x_name = eng_name;
+		} else if (cat == "AE Responsible") {
+			x_name = ae_responsible;
+		}
+
+		var in_selected = 0;
+		for (var i = 0 ; i < selected.length ; i++) {
+		    if (x_name == selected[i]) {
+		        in_selected = 1;
+		        break;
+		    }
+		}
+        if (in_selected == 0) {
+            continue;
+        }
+
+       //     rows[rx]["date_notreviewed"]= created_date;
+       //     rows[rx]["date_processing"]= in_dev_date;
+       //     rows[rx]["date_tobeverified"]= fix_date;
+       //     rows[rx]["date_done"]= closed_date;
+        var today = new Date();
+        var chart_category = rows[rx]["chart_category"];
+
+//        var pos_s = selected.indexOf(x_name);
+        var pos_s = 0;
+        var cat_array = ["NotReviewed" , "Reviewed" , "Processing" , "ToBeVerified" , "Done"];
+        var cat_date = ["date_notreviewed" , "date_processing" , "date_processing" , "date_tobeverified" , "date_done", "today"];
+
+        var d0 = rows[rx][cat_date[0]];
+        var today_reached = 0;
+        for (var i = 1 ; i <= cat_array.length ; i++) {
+            var d1;
+            if (rows[rx][cat_date[i]]) {
+                d1 = rows[rx][cat_date[i]];
+            } else {
+                d1 = today;
+                today_reached = 1;
+            }
+			if (nf_options.t_axis == 'tweek') {
+				var wstr0 = d0.getYearWeekStr();
+				var wstr1 = d1.getYearWeekStr();
+			} else if (nf_options.t_axis == 'tmonth') {
+				var wstr0 = d0.getYearMonthStr();
+				var wstr1 = d1.getYearMonthStr();
+			} else {
+				var wstr0 = d0.getYearWeekStr();
+				var wstr1 = d1.getYearWeekStr();
+			}
+            var pos_w0 = week_axis.indexOf(wstr0);
+            var pos_w1 = week_axis.indexOf(wstr1);
+			if (nf_options.t_span == "one") {
+                tobj[cat_array[i-1]][pos_w0 + pos_s].count += 1;
+                tobj[cat_array[i-1]][pos_w0 + pos_s].list += number +',';
+			} else {
+            	for (var w = pos_w0 ; w < pos_w1 ; w++) {
+					if ( tobj[cat_array[i-1]][w + pos_s]) {
+                		tobj[cat_array[i-1]][w + pos_s].count += 1;
+                		tobj[cat_array[i-1]][w + pos_s].list += number +',';
+					} else {
+		console.log("1 and 2 " + cat_array[i-1] + " " + ( w + pos_s));
+					}
+				}
+            }
+            if (today_reached) {break;}
+            d0 = d1;
+        }
+	}
+
+	return tobj;
+}
+
+function drawStatus() {
+
+  function chart_sort() {
+	var chart_seq = [];
+	var order = 'des'; // from bigger to smaller
+	var sort_x = nf_options.x_sort;
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		if ((sort_x == 'NotReviewed') ||
+			(sort_x == 'Reviewed') ||
+			(sort_x == 'Processing') ||
+			(sort_x == 'ToBeVerified') ||
+			(sort_x == 'Done') ||
+			(sort_x == 'Total')) {
+			chart_seq.push([pp, product_stat[pp][sort_x].count]);
+			order = 'des';
+		}
+
+		if (sort_x == 'FirstName') {
+			chart_seq.push([pp, pp]);
+			order = 'asc';
+		}
+		if (sort_x == 'LastName') {
+			var lastname = pp;
+			var pos = lastname.indexOf(', ');
+			if (pos > 0) {
+				lastname = lastname.substring(pos +2);
+			}
+			chart_seq.push([pp, lastname]);
+			order = 'asc';
+		}
+	}
+	chart_seq.sort(function(a,b) {
+		if (order == 'des') {
+			return b[1] - a[1];
+		}
+		if (a[1] > b[1]) return 1;
+		return -1;
+	});
+	return chart_seq;
+  }
+
+  function update_draw() {
+	product_stat = collect_product(f_obj,nf_options.x_axis);
+	show_statistics();
+	$("#detail").html(f2table(f_obj));
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var seq = chart_sort();
+	var chart_width = seq.length * 25 + 200;
+	if (chart_width <800 ) {
+		chart_width = 800;
+		console.log("chart_width=" + chart_width);
+	}
+	var chart_height = 400;
+	var pane_height = myLayout.children.west.layout1.state.center.innerHeight - 20;
+	if ( pane_height > chart_height ) {
+		chart_height = pane_height;
+	}
+	var width_p = Math.round((1-100.0/chart_width)*100);
+	width_p = width_p.toString() + '%';
+	console.log("width_p" + width_p);
+	var options = {
+		fontSize: 14,
+		title : 'Recent ' + last_period + ' <Status> by ' + nf_options.x_axis,
+		width : chart_width,
+		height : chart_height,
+		chartArea: {'width': width_p, 'height': '70%'},
+		animation: {
+			"startup": true,
+			duration: 1000,
+			easing: 'out',
+		},
+		vAxis: {title: "Ticket Entered"},
+		hAxis: {direction: '1',
+			slantedText: true,
+			slantedTextAngle: '60',
+			textStyle : {   fontSize: '13' }
+		},
+		legend: { position: 'top', maxLines: '4', textStyle: {fontSize: 12 } },
+		backgroundColor: '#d3f3d3',
+		series: legend_series,
+		isStacked: true
+	};
+
+    if (stat_data == undefined) {
+    console.log("new stat_data");
+        stat_data = new google.visualization.DataTable();
+        stat_data.addColumn('string' , nf_options.x_axis);
+        stat_data.addColumn('number' , 'NotReviewed (' + product_stat['subtotal'].NotReviewed + ')', 'NotReviewed');
+        stat_data.addColumn('number' , 'Reviewed (' + product_stat['subtotal'].Reviewed + ')', 'Reviewed');
+        stat_data.addColumn('number' , 'Processing (' + product_stat['subtotal'].Processing + ')', 'Processing');
+        stat_data.addColumn('number' , 'ToBeVerified (' + product_stat['subtotal'].ToBeVerified + ')', 'ToBeVerified');
+        stat_data.addColumn('number' , 'Done (' + product_stat['subtotal'].Done + ')', 'Done');
+
+        for (var i = 0 ; i < seq.length ; i++) {
+            var pp = seq[i][0];
+            rowIndex++;
+            stat_data.addRow([pp , product_stat[pp]['NotReviewed'].count , product_stat[pp]['Reviewed'].count ,product_stat[pp]['Processing'].count , product_stat[pp]['ToBeVerified'].count , product_stat[pp]['Done'].count]);
+        }
+	} else {
+	    console.log("updated stat_data");
+	    stat_data.setColumnLabel(1 , 'NotReviewed (' + product_stat['subtotal'].NotReviewed + ')');
+        stat_data.setColumnLabel(2 , 'Reviewed (' + product_stat['subtotal'].Reviewed + ')');
+        stat_data.setColumnLabel(3 , 'Processing (' + product_stat['subtotal'].Processing + ')');
+        stat_data.setColumnLabel(4 , 'ToBeVerified (' + product_stat['subtotal'].ToBeVerified + ')');
+        stat_data.setColumnLabel(5 , 'Done (' + product_stat['subtotal'].Done + ')');
+        var rowIndex = 0;
+        for (var i = 0 ; i < seq.length ; i++) {
+            var pp = seq[i][0];
+            stat_data.setValue( rowIndex , 1 , product_stat[pp]['NotReviewed'].count);
+            stat_data.setValue( rowIndex , 2 , product_stat[pp]['Reviewed'].count);
+            stat_data.setValue( rowIndex , 3 , product_stat[pp]['Processing'].count);
+            stat_data.setValue( rowIndex , 4 , product_stat[pp]['ToBeVerified'].count);
+            stat_data.setValue( rowIndex , 5 , product_stat[pp]['Done'].count);
+            rowIndex++;
+        }
+	}
+	google.visualization.events.addListener(chart, 'select', selectHandler);
+	chart.draw(stat_data,options);
+  };
+
+  function selectHandler() {
+    var selection = chart.getSelection();
+	if (selection.length == 0) {
+		return;
+	}
+
+	var lstr = "";
+	var pname = "";
+    var item = selection[0];
+    if (item.row != null && item.column != null) {
+		lstr = product_stat[stat_data.getValue(item.row,0)][stat_data.getColumnId(item.column)].list;
+		pname = nf_options.x_axis + " " + stat_data.getValue(item.row,0);
+    } else if (item.column != null) {
+			//alert("column is not null-" + stat_data.getColumnId(item.column) + "|" + stat_data.getColumnLabel(item.column) );
+		if (stat_data.getColumnId(item.column) == 'Legend') {
+			window.open('legend.html' , 'New Found Tickets Legend');
+		} else {
+			for (var pp in product_stat) {
+				if (pp == 'subtotal') {continue;}
+				lstr += product_stat[pp][stat_data.getColumnId(item.column)].list;
+			}
+			pname = "All " + nf_options.x_axis + "s";
+		}
+	} else {
+      return;
+    }
+
+ //           alert('The user selected ' + lstr);
+	$("#detail").html(f2table(f_obj ,lstr));
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var label = stat_data.getColumnLabel(item.column);
+	var label_h = label.split("(");
+	$("#detail_subject").html('Detail List of <u>' + pname + '</u> and <i>Status ' + label_h[0] + '</i>');
+  }
+
+ // button.onclick = xani();
+
+	if (f_obj) {
+		console.log("west size" + myLayout.children.west.layout1.state.center.innerHeight + " " + myLayout.children.west.layout1.state.center.innerWidth );
+		update_draw();
+	}
+}
+function drawTiming() {
+
+  function update_draw() {
+    var selected = pivot_selected.split("|");
+	g_progress = count_by_timing(f_obj,nf_options.x_axis,selected);
+
+
+//	var chart_width = week_axis.length * selected.length * 25 + 200;
+	var chart_width = week_axis.length * 25 + 200;
+	if (chart_width < 800 ) {
+		chart_width = 800;
+	}
+	var chart_height = 400;
+	var pane_height = myLayout.children.west.layout1.state.south.innerHeight - 20;
+	if ( pane_height > chart_height ) {
+		chart_height = pane_height;
+	}
+
+	var width_p = Math.round((1-100.0/chart_width)*100);
+	width_p = width_p.toString() + '%';
+	var options = {
+		fontSize: 13,
+		title : 'Time Chart of [' + pivot_selected + '] - ' + nf_options.x_axis,
+		chartArea: {'width': width_p, 'height': '75%'},
+		width : chart_width,
+		height : chart_height,
+		animation: {
+			"startup": true,
+			duration: 1000,
+			easing: 'out',
+		},
+		vAxis: {title: "Ticket Number"},
+		hAxis: {direction: '1',
+			slantedText: true,
+			slantedTextAngle: '60',
+			textStyle : {   fontSize: '13' }
+		},
+		legend: { position: 'top', maxLines: '4', textStyle: {fontSize: 13 } },
+		backgroundColor: '#ddd',
+		series: legend_series,
+		isStacked: true
+	};
+	tchart = new google.visualization.SteppedAreaChart(document.getElementById('chart_timing'));
+
+  //  if (tstat_data == undefined) {
+        tstat_data = new google.visualization.DataTable();
+        tstat_data.addColumn('string' , nf_options.x_axis);
+        tstat_data.addColumn('number' , 'NotReviewed', 'NotReviewed');
+        tstat_data.addColumn('number' , 'Reviewed', 'Reviewed');
+        tstat_data.addColumn('number' , 'Processing', 'Processing');
+        tstat_data.addColumn('number' , 'ToBeVerified', 'ToBeVerified');
+        tstat_data.addColumn('number' , 'Done', 'Done');
+
+        var cIndex = 0;
+        for (var i = 0 ; i < week_axis.length ; i++) {
+            var pp = week_axis[i];
+ //           for (var j = 0 ; j < selected.length ; j++)
+            for (var j = 0 ; j < 1 ; j++)
+			{
+                if (j == 0) {
+                    pp = pp.substring(5);
+                //    pp += " " + selected[j];
+                } else {
+                    pp = selected[j];
+                }
+                tstat_data.addRow([pp, g_progress['NotReviewed'][cIndex].count ,
+                                    g_progress['Reviewed'][cIndex].count ,
+                                    g_progress['Processing'][cIndex].count ,
+                                    g_progress['ToBeVerified'][cIndex].count,
+                                    g_progress['Done'][cIndex].count]);
+                cIndex++;
+            }
+        }
+
+//	}
+	google.visualization.events.addListener(tchart, 'select', selectHandler);
+	tchart.draw(tstat_data,options);
+  };
+
+  function selectHandler() {
+    var selection = tchart.getSelection();
+	if (selection.length == 0) {
+		return;
+	}
+
+	var lstr = "";
+	var pname = "";
+    var item = selection[0];
+    if (item.row != null && item.column != null) {
+		lstr = g_progress[tstat_data.getColumnId(item.column)][item.row].list;
+		pname = nf_options.x_axis + " " + tstat_data.getValue(item.row,0);
+    } else if (item.column != null) {
+			//alert("column is not null-" + tstat_data.getColumnId(item.column) + "|" + tstat_data.getColumnLabel(item.column) );
+		if (tstat_data.getColumnId(item.column) == 'Legend') {
+			window.open('legend.html' , 'New Found Tickets Legend');
+		} else {
+			for (var pp in g_progress) {
+				if (pp == 'subtotal') {continue;}
+				lstr += g_progres[pp][tstat_data.getColumnId(item.column)].list;
+			}
+			pname = "All " + nf_options.x_axis + "s";
+		}
+	} else {
+      return;
+    }
+
+ //           alert('The user selected ' + lstr);
+	$("#detail").html(f2table(f_obj ,lstr));
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var label = tstat_data.getColumnLabel(item.column);
+	var label_h = label.split("(");
+	$("#detail_subject").html('Detail List of <u>' + pname + '</u> and <i>Status ' + label_h[0] + '</i>');
+  }
+	if (f_obj) {
+	update_draw();
+	}
+}
+function drawPriority() {
+  // Some raw data (not necessarily accurate)
+	if ( product_stat == undefined) {
+		return;
+	}
+    var seq = [];
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+	}
+	seq.sort();
+	var data = new google.visualization.DataTable();
+	data.addColumn('string' , nf_options.x_axis);
+
+	data.addColumn('number' , 'Urgent and High (' + product_stat['subtotal'].high + ')','high');
+	data.addColumn('number' , 'Medium and Low (' + product_stat['subtotal'].other + ')','other');
+
+	var i;
+	for (i = 0 ; i < seq.length ; i++) {
+
+		var pp = seq[i];
+		data.addRow([pp , product_stat[pp]['high'].count , product_stat[pp]['other'].count]);
+	}
+
+
+
+  var options = {
+	title : 'Recent ' + last_period + ' <Priority> by ' + nf_options.x_axis,
+	width : 1200,
+	height : 500,
+	vAxis: {title: "Ticket Entered"},
+	hAxis: {direction: '1',
+		slantedText: true,
+		slantedTextAngle: '60',
+		textStyle : {   fontSize: '12' }
+	},
+	legend: { position: 'top', maxLines: '3' },
+	backgroundColor: '#eceddc',
+	series: {
+		0: { color: '#a04040'},
+		1: { color: '#0040a0'}
+	},
+	isStacked: true
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+  function selectHandler_p() {
+    var selection = chart.getSelection();
+	if (selection.length == 0) {
+		return;
+	}
+	var lstr = "";
+	var pname = "";
+
+    var item = selection[0];
+    if (item.row != null && item.column != null) {
+		lstr = product_stat[data.getValue(item.row,0)][data.getColumnId(item.column)].list;
+		pname = data.getValue(item.row,0);
+    } else if (item.column != null) {
+		for (var pp in product_stat) {
+			if (pp == 'subtotal') {continue;}
+			lstr += product_stat[pp][data.getColumnId(item.column)].list;
+		}
+		pname = "All Products";
+	} else {
+      return;
+    }
+
+   //                   alert('The user Priority ' + lstr);
+	$("#detail").html(f2table(f_obj ,lstr));
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var label = data.getColumnLabel(item.column);
+	var label_h = label.split("(");
+	$("#detail_subject").html('Detail List of <u>' + pname + '</u> and <i>Priority ' + label_h[0] + '</i>');
+  }
+	google.visualization.events.addListener(chart, 'select', selectHandler_p);
+  	chart.draw(data, options);
+}
+
+function weeknum(ttpro_obj) {
+	var simple_obj = new Object();
+	var header_arr = [];
+	var col_list = ttpro_obj['recordlist']['columnlist']['item'];
+	var tz_adj = ttpro_obj['timezone'];
+	var date_modified = -1;
+	for (hx in col_list) {
+		header_arr[hx] = col_list[hx].name;
+		if (col_list[hx].name == "Date Modified") {
+			date_modified = hx;
+		}
+	}
+
+	simple_obj.header = header_arr;
+
+
+	var rows = ttpro_obj['recordlist']['records']['item'];
+	var rows_arr = [];
+	for (rx in rows) {
+		var row_arr = [];
+		var row1 = rows[rx]['row']['item'];
+		for (cx in row1) {
+			if (cx == date_modified) {
+				row_arr[cx] = datestr2local(row1[cx].value , tz_adj["offset"]);
+			} else {
+				if (typeof(row1[cx].value) != "undefined") {
+					row_arr[cx] = row1[cx].value;
+				} else {
+					row_arr[cx] = "";
+				}
+			}
+		}
+
+		rows_arr[rows_arr.length] = row_arr;
+	}
+	simple_obj.rows = rows_arr;
+	return simple_obj;
+}
+function f2table(sobj,list_str) {
+	var text = "";
+	var field_ahead = [];
+	var field_pos = new Object();
+	var number_id = g_col_pos["Number"];
+	var status_id = g_col_pos["Status"];
+
+	for (var fx in field_ahead ) {
+	    field_pos[g_col_pos[field_ahead[fx]]] = "ahead";
+	}
+
+	text += "<table id='detail_tab' class='sortable'><thead><tr>"; // bgcolor='#6e99d4' >";
+	var col_list = sobj.header;
+
+	for (hx in col_list) {
+	    if (field_pos.hasOwnProperty(hx)) {
+		    text += "<td><h4>" + col_list[hx] + "</h4></td>";
+		}
+	}
+	for (hx in col_list) {
+	    if (!field_pos.hasOwnProperty(hx)) {
+		    text += "<td><h4>" + col_list[hx] + "</h4></td>";
+		}
+	}
+
+	text += "</tr></thead><tbody>";
+
+	var rows = sobj.rows;
+	var arnold_test = 50;
+	for (rx in rows) {
+		//console.log("rx = " + rx);
+		var row1 = rows[rx];
+		if (list_str && (list_str.indexOf(row1[number_id]) < 0 )) { continue;}
+
+		text += "<tr>";
+		var r_color = legend_color[row1['chart_category']];
+		for (cx in row1) {
+		    if (field_pos.hasOwnProperty(cx)) {
+			if (cx == number_id) {
+				text += "<td ><a href='onedefect.html?defectNumber=" + row1[cx] + "'>" + row1[cx] + "</a></td>";
+			} else {
+				text += "<td><font color='" + r_color + "'>" + row1[cx] + "</font></td>";
+			}
+			}
+		}
+		for (cx in row1) {
+		    if (!field_pos.hasOwnProperty(cx)) {
+			if (isNaN(cx )) {continue;}
+
+			if (cx == number_id) {
+				text += "<td ><a href='onedefect.html?defectNumber=" + row1[cx] + "'>" + row1[cx] + "</a></td>";
+			} else {
+				text += "<td><font color='" + r_color + "'>" + row1[cx] + "</font></td>";
+			}
+			}
+		}
+		text += "</tr>";
+		arnold_test--;
+		if (arnold_test == 0) {
+			break;
+		}
+	}
+
+	text += "</tbody></table>";
+	return text;
+}
+
+
+function table_statistics()
+{
+	var sst_top = document.createElement("Table");
+	sst_top.id = 'sst';
+	sst_top.className = 'sortable';
+
+	var header = sst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = [nf_options.x_axis ,  'NotReviewed' , '%' , 'Reviewed' , '%' , 'Processing', '%', 'ToBeVerified', '%' , 'Done' , '%' ,'Total' ];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var td0 = tr0.insertCell();
+		td0.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "sst_body";
+	sst_top.appendChild(tbd);
+
+	var seq = [];
+	var pstat = new Object();
+	var cell_s = ['NotReviewed' , 'Reviewed' , 'Processing' , 'ToBeVerified' , 'Done'];
+	var cellrank = ['top_nr', 'top_nrp'];
+	var color_s = ['#f02020','#ffbf40','#00a040' , '#a53535','#0040f0'];
+
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+		var arr = new Object();
+		var total = product_stat[pp]['Total'].count;
+		if (total == 0) {continue;}
+		for (var j = 0 ; j < cell_s.length ; j++) {
+			arr[cell_s[j]] = product_stat[pp][cell_s[j]].count;
+			arr[cell_s[j] + '_per'] = Math.floor(product_stat[pp][cell_s[j]].count / total * 100.0);
+		}
+
+		arr['Total'] = total;
+		pstat[pp] = arr;
+	}
+	seq.sort();
+	var top_nr = Object.keys(pstat).sort(function(a,b) {return pstat[a]['NotReviewed'] - pstat[b]['NotReviewed']});
+
+
+
+	for (var i = top_nr.length - 1 ; i >=0  ; i--) {
+		var tr1 = tbd.insertRow();
+		var pp = top_nr[i];
+		var td0 = tr1.insertCell();
+		td0.innerHTML = pp;
+		for ( var j = 0 ; j < cell_s.length; j++) {
+			var td1 = tr1.insertCell();
+			td1.innerHTML = "<font color=" + color_s[j] + ">" + pstat[pp][cell_s[j]] + "</font>";
+			td1.id = pp + '|' + cell_s[j];
+
+			var td2 = tr1.insertCell();
+			td2.innerHTML = "<font color=" + color_s[j] + ">" + pstat[pp][cell_s[j]+ '_per'] + "%</font>";
+			td2.style.textAlign = 'center';
+		}
+			var td3 = tr1.insertCell();
+			td3.innerHTML = pstat[pp]['Total'];
+			td3.id = pp +'|Total';
+	}
+
+	var td_event = function () {
+		var sst_top_event = document.getElementById('sst');
+		var tbd = sst_top_event.tBodies[0];
+
+		for (var i = 0 ; i < tbd.rows.length ; i++) {
+			var pd = tbd.rows[i].cells[0].innerHTML;
+			tbd.rows[i].cells[0].onclick = function() {
+			    if (this.className) {
+			        this.className = "";
+			    } else {
+					if (nf_options.t_sel == "single_sel") {
+						var pp = this.parentNode.parentNode.childNodes;
+							pp.forEach(function(ele) {
+							ele.cells[0].className = "";
+						});
+					}
+			        this.className = "main_sel";
+					get_pivot();
+					drawTiming();
+			    }
+			}
+			for (var j=1 ; j < tbd.rows[i].cells.length ; j+=2) {
+				tbd.rows[i].cells[j].onclick = function() {
+					var para = this.id;
+					var pararr = para.split('|');
+					var pd = pararr[0];
+					var st = pararr[1];
+					var lstr = 	product_stat[pd][st].list;
+					if (lstr.length > 1) {
+						document.getElementById("detail").innerHTML = f2table(f_obj ,lstr);
+						detail_sorter.init('detail_tab',2);
+						detail_sorter.wk(2);
+						if (st == 'Total') { st = 'All';}
+						document.getElementById("detail_subject").innerHTML = 'Detail List of <u>' + pd + '</u> and <i>Status ' + st + '</i>';
+					}
+				}
+			}
+		}
+	}
+	sorter.callback = td_event;
+
+	return sst_top;
+}
+function UpdateURLParameter(k , v)
+{
+	var sPageURL = window.location.search.substring(1);
+console.log("sPageURL=[" + sPageURL + "]  k=[" + k + "] v=[" + v + "]");
+    var sURLVariables = sPageURL.split('&');
+	var vv = "";
+	var para_already = 0;
+	for (var i = 0; i < sURLVariables.length; i++) {
+		if (sURLVariables[i] == "") { continue; }
+console.log("length=[" + sURLVariables.length + "]");
+console.log("i=" + i + " i0=[" + sURLVariables[i] + "]");
+
+        var sParameterName = sURLVariables[i].split('=');
+		var sParameterValues = sParameterName[1].split('+');
+console.log("sValues=[" + sParameterValues +"]");
+console.log("Name0=[" + sParameterName[0] + "][" + k +"]");
+        if (sParameterName[0] == k) {
+			para_already = 1;
+			for (var j = 0 ; j < sParameterValues.length ; j++) {
+				if (sParameterValues[j].indexOf(v) >= 0) {
+					para_already = 2;
+				}
+			}
+			if (para_already == 1) {
+				vv = sParameterName[1] + "+" + v;
+				sURLVariables[i] = k + "=" + vv;
+			}
+        }
+	}
+	if (para_already == 0) {
+		sURLVariables[sURLVariables.length] = k + "=" + v;
+	}
+
+console.log("p=[" + window.location.protocol + "]");
+console.log("h=[" + window.location.hostname + "]");
+console.log("p=[" + window.location.pathname + "]");
+	var newURL = window.location.protocol + "//" +
+				window.location.hostname +
+				window.location.pathname + "?" + sURLVariables.join('&');
+
+	window.history.pushState('data to be passed','Title',newURL);
+}
+
+</script>
+<div id="mynorth" class="ui-layout-north">
+<div id="basic_attr"></div>
+<table class="HeaderBar" width="100%" cellpadding="3" cellspacing="5px" >
+<tr>
+<td nowrap style="width:1%"><a href="http://svcwiki/index.php/Main_Page">Silvaco WiKi</a></td>
+<td nowrap style="text-align: center;">TTPro Chart based on Enter Date</td>
+<td nowrap style='width:30%' align='right'>
+    Duration:
+<div nowrap id="radioset00" >
+</div>
+</td>
+
+
+
+<td style="width:1%;"><div class='tooltip'><img id='clk' class='tooltip' style="vertical-align:middle" height='16' width='16' src='../clock.png' alt='Timestamp' ><span id='tip' class="tooltiptext"></span></div></td>
+<td nowrap style="width:1%;text-align: right;font-weight: normal;"><div id="dtimestamp" style="padding:1px"></div></td>
+<td style="width:1%;font-weight: normal;">
+<button style="padding:0" id=forceajax>&nbsp;Refresh&nbsp;</button></td>
+<td style="width:1%;"><img id='person' style="vertical-align:middle" height='16' width='16' src='../person.png' alt='username' ></td>
+<td id=wikiusername style="font-weight: normal;width:1%">&nbsp;</td>
+<td style="width:1%;font-weight: normal;"> <a href="https://drive.google.com/open?id=1Ut35V_iTUvTZgLF09EcR2KDqxa6eQQ1M"><b>HELP</b></a></td>
+</tr></table>
+
+<table width="100%" class="basic" > <tr>
+<td>
+<div id="status_chart_x_axis_label"></div>
+</td><td>
+<div id="status_chart_x_axis" ></div>
+</td>
+<td nowrap align='right'>
+    Status Chart X-sort:
+</td><td colspan='3'>
+<div id="radioset02" >
+    <input type="radio" name="ssort" id="sNotReviewed" onclick="sorton('NotReviewed')">
+    <label for="sNotReviewed" style="font-size:12px" >NotReviewed</label>
+    <input type="radio" name="ssort" id="sReviewed" onclick="sorton('Reviewed')">
+    <label for="sReviewed" style="font-size:12px">Reviewed</label>
+    <input type="radio" name="ssort" id="sProcessing" onclick="sorton('Processing')">
+    <label for="sProcessing" style="font-size:12px" >Processing</label>
+    <input type="radio" name="ssort" id="sToBeVerified" onclick="sorton('ToBeVerified')">
+    <label for="sToBeVerified" style="font-size:12px">ToBeVerified</label>
+    <input type="radio" name="ssort" id="sDone" onclick="sorton('Done')">
+    <label for="sDone" style="font-size:12px" >Done</label>
+    <input type="radio" name="ssort" id="sTotal" onclick="sorton('Total')">
+    <label for="sTotal" style="font-size:12px">Total</label>
+    <input type="radio" name="ssort" id="sFirstName" onclick="sorton('FirstName')">
+    <label for="sFirstName" style="font-size:12px" >FirstName</label>
+    <input type="radio" name="ssort" id="sLastName" onclick="sorton('LastName')">
+    <label for="sLastName" style="font-size:12px">LastName</label>
+</div>
+</td>
+
+<td align='right'><b>Priority:</b>
+<div id="checkset1">
+</div>
+</td>
+
+</tr>
+<tr>
+<td nowrap align='right'>
+    Time Chart X-axis:
+</td><td>
+<div id="radioset2" >
+    <input type="radio" name="taxis" id="tweek">
+    <label for="tweek" style="font-size:12px" >Weekly</label>
+    <input type="radio" name="taxis" id="tmonth">
+    <label for="tmonth" style="font-size:12px">Monthly</label>
+</div>
+</td>
+<td nowrap align='right'>
+    Time Chart:
+</td><td>
+<div id="radioset1" >
+    <input type="radio" name="one_more" id="one">
+    <label for="one" style="font-size:12px" >One Shot</label>
+    <input type="radio" name="one_more" id="more">
+    <label for="more" style="font-size:12px">Span to Next</label>
+</div>
+</td>
+<td nowrap align='right'>
+    Statistics selection:
+</td><td>
+<div id="radioset3" >
+    <input type="radio" name="timing_sel" id="single">
+    <label for="single" style="font-size:12px" >Single Select</label>
+    <input type="radio" name="timing_sel" id="multiple">
+    <label for="multiple" style="font-size:12px">Multiple Select</label>
+</div>
+</td>
+<td align='right'>
+<label for="datepicker"  style="font-size:13px" >Date Entered From:</label>
+    <input type="button" id="date-b" >
+<label for="datepicker"  style="font-size:13px" >To:</label>
+    <input type="button" id="date-e" >
+</td>
+</tr>
+</table>
+</div>
+
+
+
+<div class="ui-layout-west">
+    <div class="ui-layout-center">
+		<div>Status Chart </div>
+		<div id="chart_status" width="1200" height="500" ></div>
+	</div>
+    <div class="ui-layout-south">
+		<div>Time Chart</div>
+		<div id="chart_timing" ></div>
+	</div>
+</div>
+<div class="ui-layout-center">
+    <div class="ui-layout-center">
+		<div>Statistics and Selection for Time Chart</div>
+		<p id="statistics"></p><br>
+	</div>
+    <div class="ui-layout-south">
+		<div id='detail_subject'>Detail List in Duration</div>
+		<p id="detail"></p><br>
+		<div id="chart_div" ></div>
+	</div>
+</div>
+</body>
+</html>

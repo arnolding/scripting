@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Newly Entered to TTPro</title>
+    <meta name="author" content="Arnold Ho">
+    <link rel="stylesheet" href="../Pikaday-1.3.2/css/pikaday.css">
+    <link rel="stylesheet" href="../Pikaday-1.3.2/css/site.css">
+
+	<STYLE>  
+		 		.ColumnHeaderClass	{
+					font-family: Arial, sans-serif;
+					font-weight: bold;
+					font-size: 16px;
+					COLOR: #ffffff;
+				}
+	      </STYLE>
+
+	<STYLE>  
+		 		.DataCellClass	{
+					font-family: Arial, sans-serif;
+					font-size: 14px;
+					COLOR: #000000;
+				}
+	      </STYLE>
+<link rel="stylesheet" href="../js_sorter/style.css" />
+<link rel="stylesheet" href="header.css" />
+<script src="header.js"></script>
+</head>
+<body onload="show_header('')">
+<table width="100%"  ><tr><td rowspan="2" valigh="bottom"><h1>Newly Entered to TTPro</h1></td>
+<td valign=bottom align=right>
+<b>Duration: </b><input type=radio name=period style='color:green' onClick="location.href='newfound.php?last=Week'" value="Week"  >Week
+<input type=radio name=period style='color:green' onClick="location.href='newfound.php?last=BiWeek'" value="BiWeek" checked >BiWeek
+<input type=radio name=period style='color:blue' onClick="location.href='newfound.php?last=Month'" value="Month" >Month
+<input type=radio name=period style='color:black' onClick="location.href='newfound.php?last=Year'" value="Year" >Year
+<!---<input type=radio name=period style='color:black' onClick="period_chg();location.href='newfound_t.php?last=W'" value="N">None --->
+</td></tr>
+<tr><td valign=bottom align=right>
+<label for="datepicker">Date Entered From:</label>
+    <input type="button" id="date-b" >
+<label for="datepicker">To:</label>
+    <input type="button" id="date-e" >
+</td></tr></table>
+<div id='debug'></div>
+<table><tr><td valign=bottom align=right bgcolor='#d3f3d3'><b>Priority:</b>&nbsp;
+<input type=checkbox name=Urgent id="Urgent" checked>Urgent
+<input type=checkbox name=High id="High" checked >High
+<input type=checkbox name=Medium id="Medium" >Medium
+<input type=checkbox name=Low id="Low" >Low
+<input type=checkbox name=not_set id="not_set" >Not Set
+</td>
+<td bgcolor='#d3f3d3'><button bgcolor='#d3f3d3' id="change_prio" onClick="priority_redraw()" >Redraw</button></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td ><button bgcolor='#d3f3d3' onClick="display_legend()">Legend</button></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td ><button bgcolor='#d3f3d3' onClick="window.location.href='#st_list';">Table</button></td>
+</tr></table>
+<div id="chart_status" ></div><br>
+<br><div><a name='st_list'></a></div>
+<h4 align='center'>[&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;[&nbsp;Click on the head row to sort, click on cell to show detail list&nbsp;]&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;]</h4><br>
+<p id="statistics"></p><br>
+<hr>
+<div id='detail_list'><a name='detail_list'></a></div> 
+<h3 id='detail_subject'>Detail List in Duration</h3>
+<p id="detail"></p><br>
+<div id="chart_div" ></div>
+
+	<script src="../sweetalert-master/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../sweetalert-master/dist/sweetalert.css">
+    <script src="../Pikaday-1.3.2/pikaday.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="../js_sorter/script.js"></script>
+
+    <script>
+var legend_series = {
+		0: { color: '#f02020'},
+		1: { color: '#ffbf40'},
+		2: { color: '#00a040'},
+		3: { color: '#a53535'},
+		4: { color: '#0040f0'}
+	};
+var legend_color = {
+		'NotReviewed': '#f02020',
+		'Reviewed': '#ffbf40',
+		'Processing': '#00a040',
+		'ToBeVerified': '#a53535',
+		'Done': '#0040f0'
+	};
+function display_legend()
+{
+	var msg_txt = '<table><tr><td bgcolor="#f02020">&nbsp;&nbsp;</td><td align="left">NotReviewed</td>';
+	msg_txt += '<td align="left">Status Not Assigned and Disposition Not Reviewed</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#ffbf40">&nbsp;&nbsp;</td><td align="left">Reviewed</td>';
+	msg_txt += '<td align="left">Status Not Assigned but Disposition Set</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#00a040">&nbsp;&nbsp;</td><td align="left">Processing</td>';
+	msg_txt += '<td align="left">Status Assigned, not yet Fixed nor Verified</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#a53535">&nbsp;&nbsp;</td><td align="left">ToBeVerified</td>';
+	msg_txt += '<td align="left">Status Fixed, or Released to Testing</td></tr>';
+
+	msg_txt += '<tr><td bgcolor="#0040f0">&nbsp;&nbsp;</td><td align="left">Done</td>';	
+	msg_txt += '<td align="left">Status Close(Verified)</td></tr>';
+
+	msg_txt += '</table>';
+	swal({
+		title: 'Status Legend',
+		text: msg_txt,
+		html:true,
+		timer: 5000
+	} );
+
+}
+
+function priority_check() {
+	var priority_setting = '';
+	if (document.getElementById("Urgent").checked) {
+		priority_setting += 'Urgent' + ',';
+	}
+	if (document.getElementById("High").checked) {
+		priority_setting += 'High' + ',';
+	}
+	if (document.getElementById("Medium").checked) {
+		priority_setting += 'Medium' + ',';
+	}
+	if (document.getElementById("Low").checked) {
+		priority_setting += 'Low' + ',';
+	}
+	if (document.getElementById("not_set").checked) {
+		priority_setting += 'Not_set' + ',';
+	}
+	return priority_setting;
+}
+function pre_count(dt , pe) {
+	var pre_week = new Date(dt - 7*86400000);
+	var pre_2week = new Date(dt - 14*86400000);
+	var pre_month = new Date(dt.getFullYear(), dt.getMonth() -1, dt.getDate());
+	var pre_halfyr = new Date(dt - 183*86400000);
+	var pre_year;
+	if (dt.getMonth() == 1 && dt.getDate() == 29) {
+		pre_year = new Date(dt.getFullYear() - 1 , dt.getMonth(), dt.getDate() - 1);
+	} else {
+		pre_year = new Date(dt.getFullYear() - 1 , dt.getMonth(), dt.getDate());
+	}
+	var pre_b;
+	if (pe == 'Week') {pre_b = pre_week;}
+	if (pe == 'BiWeek') {pre_b = pre_2week;}
+	if (pe == 'Month') {pre_b = pre_month;}
+	if (pe == 'HalfYr') {pre_b = pre_halfyr;}
+	if (pe == 'Year') {pre_b = pre_year;}
+	return pre_b;
+}
+
+	
+	var period_sel = 'BiWeek';
+	var dt = new Date();
+	var picker_e = new Pikaday({
+        showWeekNumber: true,
+        field: document.getElementById('date-e'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+		defaultDate: new Date(),
+		setDefaultDate: true,
+        yearRange: [2000, 2020]
+    });
+	
+	var pre_b = pre_count(dt , period_sel);
+    
+	var picker_b = new Pikaday({
+        showWeekNumber: true,
+        field: document.getElementById('date-b'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+		defaultDate: pre_b,
+		setDefaultDate: true,
+        yearRange: [2000, 2020]
+    });
+
+	Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(), 0, 1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    }
+
+	var ttpro = {"recordlist":{"columnlist":{"item":[{"name":"Number"},{"name":"Summary"},{"name":"Product"},{"name":"Type"},{"name":"Status"},{"name":"Entered by"},{"name":"Priority"},{"name":"Date Entered"},{"name":"Disposition"},{"name":"Date Modified"},{"name":"Reference"},{"name":"Currently Assigned To"},{"name":"Assigned To User"},{"name":"Closed By"},{"name":"Fixed By User"}],"@attributes":{"arrayType":"ttns:CTableColumn[15]","type":"SOAP-ENC:Array"}},"records":{"item":[{"row":{"item":[{"value":"34670"},{"value":"Tonyplot: window margins (of Legend, etc) should be adjusted automatically"},{"value":"Tonyplot"},{"value":"Feature Request"},{"value":"In Development, assigned to Smith, Matthew"},{"value":"Turowski, Marek"},{"value":""},{"value":"2\/17\/2017"},{"value":"Not Reviewed"},{"value":"2\/17\/2017 7:32:48 PM"},{"value":"Marek Turowski"},{"value":"Smith, Matthew"},{"value":"Smith, Matthew"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34669"},{"value":"Add layer map for OA import"},{"value":"Expert"},{"value":"Feature Request"},{"value":"Open, assigned to Lobach, Siarhei"},{"value":"Lobach, Siarhei"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Fix In Future Release"},{"value":"2\/17\/2017 4:55:04 PM"},{"value":"OpenAccess"},{"value":"Lobach, Siarhei"},{"value":"Lobach, Siarhei"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34668"},{"value":"LPP support"},{"value":"Expert"},{"value":"Feature Request"},{"value":"Open, assigned to Lobach, Siarhei"},{"value":"Lobach, Siarhei"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Fix In Future Release"},{"value":"2\/17\/2017 4:52:16 PM"},{"value":"OpenAccess"},{"value":"Lobach, Siarhei"},{"value":"Lobach, Siarhei"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34667"},{"value":"Rochester: Add ability to set\/get DRC settings (including progress bar) via JavaScript"},{"value":"Expert"},{"value":"Feature Request"},{"value":"Open, assigned to Chumakou, Aleh"},{"value":"Chumakou, Aleh"},{"value":""},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 2:15:14 PM"},{"value":"Rochester"},{"value":"Chumakou, Aleh"},{"value":"Chumakou, Aleh"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34666"},{"value":"Rochester: Run  DRC script with  individual DRC run settings"},{"value":"Expert"},{"value":"Feature Request"},{"value":"Open, assigned to Chumakou, Aleh"},{"value":"Chumakou, Aleh"},{"value":""},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 1:37:35 PM"},{"value":"Rochester"},{"value":"Chumakou, Aleh"},{"value":"Chumakou, Aleh"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34665"},{"value":"Invar - bram_wldec_rep analysis failure when 2 sessions run on same machine"},{"value":"Invar"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Smith, John"},{"value":"Nguyen, Kim"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 5:10:17 PM"},{"value":"internal testing"},{"value":"Smith, John"},{"value":"Smith, John"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34664"},{"value":"Measured noise in simulation wrong"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Shaw, Colin"},{"value":"Shaw, Colin"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 3:01:34 PM"},{"value":"email from Peter"},{"value":"Shaw, Colin"},{"value":"Shaw, Colin"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34663"},{"value":"Implement communications interface to new TP5D"},{"value":"Deckbuild 2"},{"value":"Feature Request"},{"value":"In Development, assigned to Binder, Thomas"},{"value":"Binder, Thomas"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 2:24:41 AM"},{"value":"silvaco - thomasb"},{"value":"Binder, Thomas"},{"value":"Binder, Thomas"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34662"},{"value":"different plotting options for right-click and double-click"},{"value":"Deckbuild 2"},{"value":"Cosmetic"},{"value":"Closed (Verified)"},{"value":"Binder, Thomas"},{"value":"High"},{"value":"2\/17\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 6:04:49 AM"},{"value":"silvaco - thomasb"},{"value":""},{"value":"Jet, Thierry"},{"value":"Jet, Thierry"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34661"},{"value":"V-D: TSAVE in MixedMode works incorrectly."},{"value":"Victory Device"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Ota, Kazuki"},{"value":"Urgent"},{"value":"2\/17\/2017"},{"value":"Not Reviewed"},{"value":"2\/17\/2017 1:11:10 AM"},{"value":"TCAD RC17"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34660"},{"value":"[Spectre mode] svccs(s-Domain Linear Voltage Controlled Current Source) is not translated properly"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Hitomi, Kunio"},{"value":"Urgent"},{"value":"2\/17\/2017"},{"value":"Not Reviewed"},{"value":"2\/17\/2017 12:21:25 AM"},{"value":"MegaChips-Hitomi"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34659"},{"value":"[Manual] Verilog-A option table"},{"value":"SmartSpice"},{"value":"Manual Update"},{"value":"Open, not assigned"},{"value":"Hitomi, Kunio"},{"value":""},{"value":"2\/16\/2017"},{"value":"Not Reviewed"},{"value":"2\/16\/2017 7:00:02 PM"},{"value":"Silvaco-Hitomi"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34658"},{"value":"Stress simulation blows up when zero-volume elements exist"},{"value":"Victory Stress"},{"value":"Incorrect Functionality"},{"value":"In Development, assigned to Lim, Heetaek"},{"value":"Lim, Heetaek"},{"value":"Urgent"},{"value":"2\/16\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 11:29:56 PM"},{"value":"Silvaco-Heetaek"},{"value":"Lim, Heetaek"},{"value":"Lim, Heetaek"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34657"},{"value":"Pole Zero + Laplace element Reporting issue"},{"value":"SmartSpice"},{"value":"Other"},{"value":"Open, assigned to Shaw, Colin"},{"value":"Shaw, Colin"},{"value":"High"},{"value":"2\/16\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 9:12:57 AM"},{"value":"email"},{"value":"Shaw, Colin"},{"value":"Shaw, Colin"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34656"},{"value":"Expert: After \"Cut by Line\" resulting objects lose their original custom properties"},{"value":"Expert"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Karabelnikau, Andrei"},{"value":"Akkapeddi, Naga"},{"value":"Urgent"},{"value":"2\/16\/2017"},{"value":"Not Reviewed"},{"value":"2\/16\/2017 12:53:14 PM"},{"value":"Finisar"},{"value":"Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34655"},{"value":"Athena issue running on virtual machine with virtual licesneserver"},{"value":"Athena"},{"value":"Incorrect Functionality"},{"value":"Closed (Verified)"},{"value":"Shaw, Colin"},{"value":"High"},{"value":"2\/16\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 3:12:29 PM"},{"value":"email"},{"value":""},{"value":"Shaw, Colin"},{"value":"Shaw, Colin"},{"value":"Shaw, Colin"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34654"},{"value":"Support of extra pins in extraction of generic-like resistors (feasibility analysis)"},{"value":"Hipex"},{"value":"Feature Request"},{"value":"Open, assigned to Azarenok, Alex; Martynchik, Viktar"},{"value":"Azarenok, Alex"},{"value":"High"},{"value":"2\/16\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 10:02:43 AM"},{"value":"Hatano-san (Japan office)"},{"value":"Azarenok, Alex; Martynchik, Viktar"},{"value":"Azarenok, Alex; Martynchik, Viktar"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34653"},{"value":"Analytical oxidation cell mode -- incorrect oxide growth when part of the exposed silicon is covered with oxide."},{"value":"Victory Process"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Eastlick, Mark"},{"value":"Babayan, Artem"},{"value":"High"},{"value":"2\/16\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 11:30:31 PM"},{"value":"Silvaco - David"},{"value":"Eastlick, Mark"},{"value":"Eastlick, Mark"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34652"},{"value":"Empirical oxidation cell mode -- target oxide thickness is calculated incorrectly when surface is covered with existing oxide."},{"value":"Victory Process"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Babayan, Artem"},{"value":""},{"value":"2\/16\/2017"},{"value":"Not Reviewed"},{"value":"2\/16\/2017 6:06:31 AM"},{"value":"Silvaco - David"},{"value":""},{"value":"Babayan, Artem"},{"value":""},{"value":"Babayan, Artem"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34651"},{"value":"Platinum can not be deposited on the \"Cobalt\" substrate with VP 7.13.4.C"},{"value":"Victory Process"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Fujinaga, Masato"},{"value":"Urgent"},{"value":"2\/15\/2017"},{"value":"Authorized"},{"value":"2\/17\/2017 7:30:28 AM"},{"value":"Tohoku University"},{"value":""},{"value":""},{"value":""},{"value":"Hoessinger, Andreas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34650"},{"value":"Don't save history structure file after STRUCTURE statement in Athena."},{"value":"Deckbuild 2"},{"value":"Incorrect Functionality"},{"value":"Released to Testing, assigned to Temkin, Misha"},{"value":"Temkin, Misha"},{"value":"High"},{"value":"2\/15\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 2:33:54 AM"},{"value":"internal testing"},{"value":"Temkin, Misha"},{"value":"Temkin, Misha"},{"value":""},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34649"},{"value":"GW : Documentation for 3.6.3.R"},{"value":"Gateway"},{"value":"Manual Update"},{"value":"Open, assigned to Zeng, Lily"},{"value":"Hughes, Robert"},{"value":"Urgent"},{"value":"2\/15\/2017"},{"value":"Authorized"},{"value":"2\/15\/2017 4:54:14 PM"},{"value":"Silvaco"},{"value":"Zeng, Lily"},{"value":"Zeng, Lily"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34648"},{"value":"Schottky contact current incorrectly scaled with cylindrical mesh"},{"value":"Victory Device"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Wilson, Stephen"},{"value":"Wilson, Stephen"},{"value":"High"},{"value":"2\/15\/2017"},{"value":"Authorized"},{"value":"2\/15\/2017 9:27:25 AM"},{"value":"swilson-silvaco"},{"value":"Wilson, Stephen"},{"value":"Wilson, Stephen"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34647"},{"value":"Seg fault on unified delaunay remesh"},{"value":"Victory Mesh"},{"value":"Crash - Data Loss"},{"value":"Open, not assigned"},{"value":"Green, David"},{"value":""},{"value":"2\/15\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 9:18:02 AM"},{"value":"E2V"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34646"},{"value":"Can't run devedit and athena in sequence"},{"value":"Deckbuild 2"},{"value":"Crash - No Data Loss"},{"value":"Closed (Verified)"},{"value":"Li, Debin"},{"value":"Urgent"},{"value":"2\/15\/2017"},{"value":"Not Reviewed"},{"value":"2\/16\/2017 12:29:32 AM"},{"value":"PETRA"},{"value":""},{"value":"Li, Debin"},{"value":"Li, Debin"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34645"},{"value":"Guardian 4.14.6.C crashes on existence of non-Orthogonal geometry (Most-likely operation Contours: ... width >)"},{"value":"Guardian DRC"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Rudenko, Anatoli"},{"value":"Vedavyasan, Arunkumar"},{"value":"Urgent"},{"value":"2\/14\/2017"},{"value":"Fix In Future Release"},{"value":"2\/14\/2017 5:37:59 PM"},{"value":"PDK Team"},{"value":"Rudenko, Anatoli"},{"value":"Rudenko, Anatoli"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34644"},{"value":"GW: OA: Import: not kept uppercase for attribute value"},{"value":"Gateway"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Hasegawa, Atsushi"},{"value":"Urgent"},{"value":"2\/14\/2017"},{"value":"Not Reviewed"},{"value":"2\/14\/2017 5:19:52 PM"},{"value":"NJRC-hasegawa"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34643"},{"value":"Invar - Crash when pvt::report_voltage_at_point view does not correspond to layout"},{"value":"Invar"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Kondratyev, Vasily"},{"value":"Nguyen, Kim"},{"value":"High"},{"value":"2\/14\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 1:02:45 PM"},{"value":"internal testing"},{"value":"Kondratyev, Vasily"},{"value":"Kondratyev, Vasily"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34642"},{"value":"Invar - Multiple IR drop values outputted for single layer\/point"},{"value":"Invar"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Davydov, Vitaly"},{"value":"Nguyen, Kim"},{"value":"Medium"},{"value":"2\/14\/2017"},{"value":"Authorized"},{"value":"2\/14\/2017 4:43:57 PM"},{"value":"internal testing"},{"value":"Davydov, Vitaly"},{"value":"Davydov, Vitaly"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34641"},{"value":"Harmony Test Case Fails with -hpp"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Nalobau, Dzmitry"},{"value":"Smith, David"},{"value":""},{"value":"2\/14\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 10:17:19 AM"},{"value":"Dave Smith"},{"value":"Nalobau, Dzmitry"},{"value":"Nalobau, Dzmitry"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34640"},{"value":"[American Semi] Support HPP mode for BSIMSOI4 model"},{"value":"SmartSpice"},{"value":"Feature Request"},{"value":"Open, assigned to Usmani, Adam"},{"value":"Zharkou, Raman"},{"value":"Urgent"},{"value":"2\/14\/2017"},{"value":"Not Reviewed"},{"value":"2\/14\/2017 2:29:19 PM"},{"value":"American Semi - Peter Linden"},{"value":"Usmani, Adam"},{"value":"Usmani, Adam"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34639"},{"value":"Simulated Annealing Optimizer use issues"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Shulga, Andrey"},{"value":"Shaw, Colin"},{"value":"High"},{"value":"2\/14\/2017"},{"value":"Authorized"},{"value":"2\/14\/2017 11:31:43 AM"},{"value":"Japan office help"},{"value":"Shulga, Andrey"},{"value":"Shulga, Andrey"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34638"},{"value":"Hang on remesh - Unified Delaunay"},{"value":"Victory Mesh"},{"value":"Crash - Data Loss"},{"value":"Open, not assigned"},{"value":"Green, David"},{"value":""},{"value":"2\/14\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 9:19:17 AM"},{"value":"E2V"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34637"},{"value":"Support for dots and relative paths when loading data"},{"value":"Victory Mesh"},{"value":"Feature Request"},{"value":"Open, assigned to Eastlick, Mark"},{"value":"Eastlick, Mark"},{"value":""},{"value":"2\/14\/2017"},{"value":"Not Reviewed"},{"value":"2\/14\/2017 4:02:05 AM"},{"value":"silvaco-thomasb"},{"value":"Eastlick, Mark"},{"value":"Eastlick, Mark"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34636"},{"value":"Invar - Default thermal parameters for dielectrics should be those of SiO2."},{"value":"Invar"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Smith, John"},{"value":"Ito, Yusuke"},{"value":"Medium"},{"value":"2\/13\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 4:30:29 PM"},{"value":"Silvaco Ito"},{"value":"Smith, John"},{"value":"Smith, John"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34635"},{"value":"Model VBIC and Switch is not supported in HPP mode"},{"value":"SmartSpice"},{"value":"Refactoring"},{"value":"Open, assigned to Zharkou, Raman"},{"value":"Smith, David"},{"value":""},{"value":"2\/13\/2017"},{"value":"Not Reviewed"},{"value":"2\/14\/2017 9:10:07 AM"},{"value":"Dave Smith (Silvaco)"},{"value":"Zharkou, Raman"},{"value":"Zharkou, Raman"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34634"},{"value":"Invar - geometry_merger.cpp crash during \"Pre-processing of geometry data\""},{"value":"Invar"},{"value":"Crash - Data Loss"},{"value":"In Development, assigned to Kozhevnikov, Evgeny"},{"value":"Nguyen, Kim"},{"value":"High"},{"value":"2\/13\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 9:43:58 PM"},{"value":"internal testing"},{"value":"Kozhevnikov, Evgeny"},{"value":"Kozhevnikov, Evgeny"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34633"},{"value":"convergence issue REI"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Closed (Verified)"},{"value":"Jaswal, Tejinder"},{"value":""},{"value":"2\/13\/2017"},{"value":"Not Reviewed"},{"value":"2\/14\/2017 5:47:15 AM"},{"value":"Rochester Elec"},{"value":""},{"value":"Jaswal, Tejinder"},{"value":"Jaswal, Tejinder"},{"value":"Zharkou, Raman"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34632"},{"value":"[RochElectronics] wrong ic values in .tbl"},{"value":"AccuCell"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Lee, Hung-Li"},{"value":"Lee, Hung-Li"},{"value":"High"},{"value":"2\/13\/2017"},{"value":"Fix In Future Release"},{"value":"2\/13\/2017 11:28:50 AM"},{"value":"rochelect_ic"},{"value":"Lee, Hung-Li"},{"value":"Lee, Hung-Li"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34631"},{"value":"Unified Delaunay refinement finalisation hangs: mos2ex21"},{"value":"Victory Mesh"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Bedregal, Carlos"},{"value":"Eastlick, Mark"},{"value":""},{"value":"2\/13\/2017"},{"value":"Not Reviewed"},{"value":"2\/13\/2017 5:32:41 PM"},{"value":"silvaco-marke"},{"value":"Bedregal, Carlos"},{"value":"Bedregal, Carlos"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34630"},{"value":"When exporting 'plot to data' picture white area are added around the structure."},{"value":"Tonyplot"},{"value":"Cosmetic"},{"value":"Open, not assigned"},{"value":"Babayan, Artem"},{"value":""},{"value":"2\/13\/2017"},{"value":"Not Reviewed"},{"value":"2\/13\/2017 4:41:27 AM"},{"value":"Silvaco - Babayan"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34629"},{"value":"Solve prev does not converge with surf.rec and con.resist on the contact statement"},{"value":"Atlas"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Nejim, Ahmed"},{"value":"High"},{"value":"2\/13\/2017"},{"value":"Authorized"},{"value":"2\/15\/2017 8:52:45 AM"},{"value":"METU"},{"value":""},{"value":"Wilson, Stephen"},{"value":""},{"value":"Wilson, Stephen"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34628"},{"value":"Difference between shown structure and saved .png picture"},{"value":"Tonyplot"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Babayan, Artem"},{"value":""},{"value":"2\/13\/2017"},{"value":"Not Reviewed"},{"value":"2\/13\/2017 3:11:25 AM"},{"value":"Silvaco - Babayan"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34627"},{"value":"[Expert-Clever I\/F] Expert crashes while adding node info by node probing."},{"value":"Expert"},{"value":"Crash - No Data Loss"},{"value":"Open, assigned to Karabelnikau, Andrei"},{"value":"Hatano, Yasuharu"},{"value":"Urgent"},{"value":"2\/12\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 11:42:31 AM"},{"value":"JDI"},{"value":"Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34626"},{"value":"Due changes to Hipex Vol. 2 (RC part)"},{"value":"Hipex"},{"value":"Manual Update"},{"value":"Closed"},{"value":"Azarenok, Alex"},{"value":"Medium"},{"value":"2\/10\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 4:33:50 PM"},{"value":"Recent updates of reg.tests"},{"value":""},{"value":"Zeng, Lily"},{"value":"Azarenok, Alex"},{"value":"Zeng, Lily"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34625"},{"value":"Hipex-C layer mapping doesn't work with CPX LAYER command"},{"value":"Hipex"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Azarenok, Alex"},{"value":"High"},{"value":"2\/10\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 10:22:18 AM"},{"value":"Update of reg.tests"},{"value":""},{"value":"Azarenok, Alex"},{"value":""},{"value":"Azarenok, Alex"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34624"},{"value":"[Brookman] Strange errors are detected for Brookman design when I use .eqn for SUBCKT_KEEP cell MUX"},{"value":"AccuCore"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Zharikov, Alexey; Lejmi, Samir"},{"value":"Kashimura, Kaoru"},{"value":"Urgent"},{"value":"2\/10\/2017"},{"value":"Not Reviewed"},{"value":"2\/10\/2017 1:13:58 AM"},{"value":"Brookman - Silvaco Japan Kashimura"},{"value":"Zharikov, Alexey; Lejmi, Samir"},{"value":"Zharikov, Alexey; Lejmi, Samir"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34623"},{"value":"Invar - Regression in IR-Drop."},{"value":"Invar"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Davydov, Vitaly"},{"value":"Ito, Yusuke"},{"value":"High"},{"value":"2\/10\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 4:42:36 PM"},{"value":"Silvaco Ito"},{"value":"Davydov, Vitaly"},{"value":"Davydov, Vitaly"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34622"},{"value":"Invar - Request for automatic fit of the gauge range according to selected nets in IR-Drop tab."},{"value":"Invar"},{"value":"Feature Request"},{"value":"Open, assigned to Kondratyev, Vasily"},{"value":"Ito, Yusuke"},{"value":"Low"},{"value":"2\/9\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 11:36:09 AM"},{"value":"Silvaco Ito"},{"value":"Kondratyev, Vasily"},{"value":"Kondratyev, Vasily"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34621"},{"value":"Implement non-uniform (esp. GAUSSIAN) TRAP profiles in Victory Device"},{"value":"Victory Device"},{"value":"Feature Request"},{"value":"Open, assigned to Hylin, Carl"},{"value":"Turowski, Marek"},{"value":"High"},{"value":"2\/9\/2017"},{"value":"Authorized"},{"value":"2\/10\/2017 10:33:51 AM"},{"value":"Marek Turowski"},{"value":"Hylin, Carl"},{"value":"Hylin, Carl"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34620"},{"value":"Invar - Temperature digits reported by \"report_temperature -map\" differ from those of GUI gauge."},{"value":"Invar"},{"value":"Feature Request"},{"value":"Open, assigned to Smith, John"},{"value":"Ito, Yusuke"},{"value":"Medium"},{"value":"2\/9\/2017"},{"value":"Rejected"},{"value":"2\/13\/2017 4:42:06 PM"},{"value":"Silvaco Ito"},{"value":"Smith, John"},{"value":"Smith, John"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34619"},{"value":"Invar - Request for reporting feature to show the highest temperature location in 3D analysis"},{"value":"Invar"},{"value":"Feature Request"},{"value":"Open, assigned to Smith, John"},{"value":"Ito, Yusuke"},{"value":"Low"},{"value":"2\/9\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 6:06:30 PM"},{"value":"Silvaco Ito"},{"value":"Smith, John"},{"value":"Smith, John"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34618"},{"value":"Variablize the Maximum Limit used in CHECK operations - Guardian DRC"},{"value":"Guardian DRC"},{"value":"Feature Request"},{"value":"Closed (Verified)"},{"value":"Nahvi, Yawar"},{"value":"Urgent"},{"value":"2\/9\/2017"},{"value":"Not Reviewed"},{"value":"2\/10\/2017 1:27:14 PM"},{"value":"PDK group"},{"value":""},{"value":"Nahvi, Yawar; Vedavyasan, Arunkumar"},{"value":"Nahvi, Yawar"},{"value":"Rudenko, Anatoli"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34617"},{"value":"Strange characters in the output(lower) window"},{"value":"Athena"},{"value":"Cosmetic"},{"value":"Closed (Verified)"},{"value":"Temkin, Misha"},{"value":"High"},{"value":"2\/9\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 2:18:03 PM"},{"value":"internal testin"},{"value":""},{"value":"Jet, Thierry"},{"value":"Temkin, Misha"},{"value":"Temkin, Misha"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34616"},{"value":"Process mode, analytical oxidation: strange artefacts (bumps) at oxide-nitride boundaries."},{"value":"Victory Process"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Babayan, Artem"},{"value":"High"},{"value":"2\/9\/2017"},{"value":"Authorized"},{"value":"2\/16\/2017 11:31:13 PM"},{"value":"Silvaco - Babayan"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34615"},{"value":"Example mos2ex23 crashes"},{"value":"Atlas"},{"value":"Crash - No Data Loss"},{"value":"Open, assigned to Goes, Wolfgang"},{"value":"Goes, Wolfgang"},{"value":"Urgent"},{"value":"2\/9\/2017"},{"value":"Authorized"},{"value":"2\/9\/2017 9:45:06 AM"},{"value":"goes-silvaco"},{"value":"Goes, Wolfgang"},{"value":"Goes, Wolfgang"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34614"},{"value":"[Brookman] Need timing verilog without \"`ifdef timing\"  identifiers"},{"value":"AccuCell"},{"value":"Feature Request"},{"value":"Open, assigned to Lejmi, Samir"},{"value":"Kashimura, Kaoru"},{"value":"Urgent"},{"value":"2\/9\/2017"},{"value":"Not Reviewed"},{"value":"2\/9\/2017 1:15:35 AM"},{"value":"Brookman - Silvaco Japan Kashimura"},{"value":"Lejmi, Samir"},{"value":"Lejmi, Samir"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34613"},{"value":"Full-wave simulation coupled with other physical equations"},{"value":"Atlas"},{"value":"Feature Request"},{"value":"Open, not assigned"},{"value":"Li, Debin"},{"value":"Medium"},{"value":"2\/8\/2017"},{"value":"Not Reviewed"},{"value":"2\/8\/2017 11:27:46 PM"},{"value":"AIST"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34612"},{"value":"[SVJ] .eqn unaccepted when use SUBCKT_KEEP command for sequential cells"},{"value":"AccuCore"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Lejmi, Samir"},{"value":"Kashimura, Kaoru"},{"value":"Urgent"},{"value":"2\/8\/2017"},{"value":"Not Reviewed"},{"value":"2\/8\/2017 8:45:50 PM"},{"value":"Silvaco Japan - Kashimura"},{"value":"Lejmi, Samir"},{"value":"Lejmi, Samir"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34611"},{"value":"[Oracle] SmartSpice does not support TMI Self-Heating Effect simulation under option hsimspeed=3"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"In Development, assigned to Mijalkovic, Slobodan"},{"value":"Zharkou, Raman"},{"value":"Urgent"},{"value":"2\/8\/2017"},{"value":"Not Reviewed"},{"value":"2\/16\/2017 6:54:51 AM"},{"value":"Oracle - RamanZ"},{"value":"Mijalkovic, Slobodan"},{"value":"Mijalkovic, Slobodan"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34610"},{"value":"Enable species.name in TRAP statement as like interface s.i species.name=\"STRING\" concentration=VALUE"},{"value":"Victory Device"},{"value":"Feature Request"},{"value":"Closed"},{"value":"Kong, Sung Won"},{"value":"High"},{"value":"2\/8\/2017"},{"value":"Authorized"},{"value":"2\/8\/2017 4:37:56 PM"},{"value":"Apple"},{"value":""},{"value":"Hylin, Carl"},{"value":"Kong, Sung Won"},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34609"},{"value":"Invar - Request for Mark Coordinates feature"},{"value":"Invar"},{"value":"Feature Request"},{"value":"Open, assigned to Davydov, Vitaly"},{"value":"Nguyen, Kim"},{"value":"Low"},{"value":"2\/8\/2017"},{"value":"Authorized"},{"value":"2\/8\/2017 11:47:25 AM"},{"value":"internal testing"},{"value":"Davydov, Vitaly"},{"value":"Davydov, Vitaly"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34608"},{"value":"surf.rec returns different currents in rectangular and cylindrical meshing"},{"value":"Atlas"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Nejim, Ahmed"},{"value":"High"},{"value":"2\/8\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 7:45:49 AM"},{"value":"supelec"},{"value":""},{"value":"Wilson, Stephen"},{"value":""},{"value":"Wilson, Stephen"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34607"},{"value":"[SmartSpiceSolver] Clean the code for unneeded solvers, precision in SS"},{"value":"SmartSpice"},{"value":"Feature Request"},{"value":"Closed (Verified)"},{"value":"Klimovich, Konstantin"},{"value":""},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/10\/2017 2:16:54 PM"},{"value":"KK - Silvaco"},{"value":""},{"value":"Klimovich, Konstantin"},{"value":"Klimovich, Konstantin"},{"value":"Klimovich, Konstantin"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34606"},{"value":"Hipex UM (volume 1) update to reflect  new developments"},{"value":"Hipex"},{"value":"Manual Update"},{"value":"Closed"},{"value":"Azarenok, Alex"},{"value":"High"},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 4:33:07 PM"},{"value":"Brookman (by Yusuke Ito)"},{"value":""},{"value":"Zeng, Lily"},{"value":"Azarenok, Alex"},{"value":"Zeng, Lily"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34605"},{"value":"Add a new parameter to indicate the units of the PL data"},{"value":"Atlas"},{"value":"Feature Request"},{"value":"Open, assigned to Chorou, Slim"},{"value":"Shirai, Katsuya"},{"value":"High"},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/9\/2017 9:46:22 AM"},{"value":"Japan Display"},{"value":"Chorou, Slim"},{"value":"Chorou, Slim"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34604"},{"value":"Incorrect optical results with non-ideal polarizers in CleverLCD"},{"value":"Clever"},{"value":"Incorrect Functionality"},{"value":"Open, not assigned"},{"value":"Li, Debin"},{"value":"Urgent"},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/7\/2017 4:05:43 PM"},{"value":"JDI"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34603"},{"value":"Revision of symbol validity for various extraction separators; related documentation update"},{"value":"Hipex"},{"value":"Refactoring"},{"value":"Closed"},{"value":"Azarenok, Alex"},{"value":"High"},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/10\/2017 4:28:30 PM"},{"value":"Brookman by Ysuke Ito (Japan office)"},{"value":""},{"value":"Azarenok, Alex; Martynchik, Viktar"},{"value":"Azarenok, Alex"},{"value":"Azarenok, Alex"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34602"},{"value":"Update translations"},{"value":"Tonyplot3d"},{"value":"Manual Update"},{"value":"Open, assigned to Fujinaga, Masato"},{"value":"French, Andy"},{"value":""},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/9\/2017 4:02:08 PM"},{"value":"silvaco-andyf"},{"value":"Fujinaga, Masato"},{"value":"Fujinaga, Masato"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34601"},{"value":"Using -hpp option causes \"Time Step Too Small\" Error"},{"value":"SmartSpice"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Kuznetsov, Sergey"},{"value":"Smith, David"},{"value":""},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/13\/2017 2:43:06 PM"},{"value":"Dave Smith (Silvaco)"},{"value":"Kuznetsov, Sergey"},{"value":"Kuznetsov, Sergey"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34600"},{"value":"Volume LINE visualization doesn't remove red line when \"line remove\" is used"},{"value":"Deckbuild 2"},{"value":"Incorrect Functionality"},{"value":"Closed (Verified)"},{"value":"Temkin, Misha"},{"value":"High"},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/15\/2017 4:13:56 PM"},{"value":"internal testing"},{"value":""},{"value":"Temkin, Misha"},{"value":"Temkin, Misha"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34599"},{"value":"A2VP - add \"conformal\" to deposit"},{"value":"Deckbuild 2"},{"value":"Refactoring"},{"value":"Closed (Verified)"},{"value":"Temkin, Misha"},{"value":"High"},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/8\/2017 6:08:42 PM"},{"value":"internal testing"},{"value":""},{"value":"Temkin, Misha"},{"value":"Temkin, Misha"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34598"},{"value":"Invar - Request for IR graph display to be over DC Path Distance to Voltage Source"},{"value":"Invar"},{"value":"Feature Request"},{"value":"Open, assigned to Davydov, Vitaly"},{"value":"Nguyen, Kim"},{"value":"Low"},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/7\/2017 10:57:06 AM"},{"value":"internal testing"},{"value":"Davydov, Vitaly"},{"value":"Davydov, Vitaly"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34597"},{"value":"MIT LL - feature request - polygon-defined probe boxes w\/ integration"},{"value":"Victory Device"},{"value":"Feature Request"},{"value":"Closed (Verified)"},{"value":"Schlenvogt, Garrett"},{"value":"Urgent"},{"value":"2\/7\/2017"},{"value":"Authorized"},{"value":"2\/15\/2017 5:24:30 AM"},{"value":"MIT LL - Garrett"},{"value":""},{"value":"Schlenvogt, Garrett"},{"value":"Schlenvogt, Garrett"},{"value":"Hylin, Carl"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34596"},{"value":"Electrode material names do not match simplex material names"},{"value":"Victory Mesh"},{"value":"Incorrect Functionality"},{"value":"Fixed, not assigned"},{"value":"Scott, Ian"},{"value":""},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/7\/2017 9:45:15 AM"},{"value":"silvaco-ians"},{"value":""},{"value":"Eastlick, Mark"},{"value":""},{"value":"Eastlick, Mark"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34595"},{"value":"Using -hpp option causes core dump"},{"value":"SmartSpice"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Nalobau, Dzmitry"},{"value":"Smith, David"},{"value":""},{"value":"2\/7\/2017"},{"value":"Not Reviewed"},{"value":"2\/13\/2017 2:55:08 PM"},{"value":"Dave Smith (Silvaco)"},{"value":"Nalobau, Dzmitry"},{"value":"Nalobau, Dzmitry"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34594"},{"value":"Loading some structures (mostly cell mode) stops the application with error message \"Invalid number of volume mesh nodes.\""},{"value":"Victory Mesh"},{"value":"Crash - Data Loss"},{"value":"Open, assigned to Eastlick, Mark"},{"value":"Bedregal, Carlos"},{"value":""},{"value":"2\/6\/2017"},{"value":"Not Reviewed"},{"value":"2\/6\/2017 11:20:12 PM"},{"value":"silvaco-carlos"},{"value":"Eastlick, Mark"},{"value":"Eastlick, Mark"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34593"},{"value":"[RochElectronics] can't specify \"!\" in .eqn file"},{"value":"AccuCell"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Lee, Hung-Li"},{"value":"Lee, Hung-Li"},{"value":"Medium"},{"value":"2\/6\/2017"},{"value":"Fix In Future Release"},{"value":"2\/9\/2017 5:56:57 PM"},{"value":"RochElectronics"},{"value":"Lee, Hung-Li"},{"value":"Lee, Hung-Li"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34592"},{"value":"Can't use Expert setup dialogs on screen resolution 1024x768"},{"value":"Expert"},{"value":"Incorrect Functionality"},{"value":"Released to Testing, assigned to Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/14\/2017 11:46:20 AM"},{"value":"Rochester Electronics"},{"value":"Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":""},{"value":"Karabelnikau, Andrei"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34591"},{"value":"Expert views changes settings of Expert"},{"value":"Expert"},{"value":"Incorrect Functionality"},{"value":"Released to Testing, assigned to Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/14\/2017 11:45:54 AM"},{"value":"Rochester Electronics"},{"value":"Karabelnikau, Andrei"},{"value":"Karabelnikau, Andrei"},{"value":""},{"value":"Karabelnikau, Andrei"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34590"},{"value":"zb.two model corrupts InGaAsP band diagram"},{"value":"Atlas"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Jannaty, Pooya"},{"value":"Jannaty, Pooya"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/7\/2017 4:39:03 PM"},{"value":"Pooya, Silvaco"},{"value":"Jannaty, Pooya"},{"value":"Jannaty, Pooya"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34589"},{"value":"Invar - Crash with static and transient layout views opened"},{"value":"Invar"},{"value":"Crash - Data Loss"},{"value":"Closed (Verified)"},{"value":"Nguyen, Kim"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/13\/2017 2:56:41 PM"},{"value":"internal testing"},{"value":""},{"value":"Nguyen, Kim"},{"value":"Nguyen, Kim"},{"value":"Kondratyev, Vasily"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34588"},{"value":"deckbuild manual does not open when clicking on help"},{"value":"Deckbuild 2"},{"value":"Incorrect Functionality"},{"value":"Closed"},{"value":"Binder, Thomas"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/7\/2017 11:05:02 AM"},{"value":"silvaco-artemb"},{"value":""},{"value":"Babayan, Artem"},{"value":"Babayan, Artem"},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34587"},{"value":"error messages from underlying simulator not always displayed if a monitor string is detected"},{"value":"Deckbuild 2"},{"value":"Incorrect Functionality"},{"value":"Closed"},{"value":"Binder, Thomas"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/14\/2017 5:50:46 AM"},{"value":"silvaco-artemb"},{"value":""},{"value":"Binder, Thomas"},{"value":"Binder, Thomas"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34586"},{"value":"deckbuild ascii mode shows error message if a monitor string is detected"},{"value":"Deckbuild 2"},{"value":"Cosmetic"},{"value":"Closed (Verified)"},{"value":"Binder, Thomas"},{"value":"Medium"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/7\/2017 11:07:27 AM"},{"value":"silvaco - artemb"},{"value":""},{"value":"Babayan, Artem"},{"value":"Babayan, Artem"},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34585"},{"value":"Region material names should be based on SDB, not SMDB"},{"value":"Victory Mesh"},{"value":"Feature Request"},{"value":"Fixed, not assigned"},{"value":"Eastlick, Mark"},{"value":""},{"value":"2\/6\/2017"},{"value":"Not Reviewed"},{"value":"2\/6\/2017 9:35:53 AM"},{"value":"silvaco-marke"},{"value":""},{"value":""},{"value":""},{"value":"Eastlick, Mark"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34584"},{"value":"problem editing files with leading byte order mark (BOM) and windows line endings"},{"value":"Deckbuild 2"},{"value":"Incorrect Functionality"},{"value":"Released to Testing, assigned to Broadbent, Steve"},{"value":"Binder, Thomas"},{"value":"Medium"},{"value":"2\/6\/2017"},{"value":"Authorized"},{"value":"2\/9\/2017 2:09:15 AM"},{"value":"silvaco - davidg"},{"value":"Broadbent, Steve"},{"value":"Broadbent, Steve"},{"value":""},{"value":"Binder, Thomas"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34583"},{"value":"Implement lte2step in 3D."},{"value":"Atlas"},{"value":"Feature Request"},{"value":"Open, assigned to Wilson, Stephen"},{"value":"Nejim, Ahmed"},{"value":"High"},{"value":"2\/6\/2017"},{"value":"Need Customer Input"},{"value":"2\/13\/2017 9:50:17 AM"},{"value":"ST - Rousset"},{"value":"Wilson, Stephen"},{"value":"Wilson, Stephen"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34582"},{"value":"TechModeler User's Manual"},{"value":"TechModeler"},{"value":"Manual Update"},{"value":"Open, not assigned"},{"value":"Duluc, Jean-Batiste"},{"value":""},{"value":"2\/6\/2017"},{"value":"Not Reviewed"},{"value":"2\/6\/2017 3:57:36 AM"},{"value":"Fujitsu-Lab Iino-san"},{"value":""},{"value":""},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34581"},{"value":"GW: CDL netlisting slow with one schematic"},{"value":"Gateway"},{"value":"Incorrect Functionality"},{"value":"Closed (Verified)"},{"value":"Hasegawa, Atsushi"},{"value":"Urgent"},{"value":"2\/6\/2017"},{"value":"Not Reviewed"},{"value":"2\/8\/2017 4:49:22 PM"},{"value":"AAT-hasegawa"},{"value":""},{"value":"Hasegawa, Atsushi"},{"value":"Hasegawa, Atsushi"},{"value":"Hughes, Robert"}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34580"},{"value":"Convergence issues of steady-state simulation"},{"value":"Victory Device"},{"value":"Incorrect Functionality"},{"value":"Open, assigned to Townsend, Mark"},{"value":"Tak, Nam-Kyun"},{"value":"Urgent"},{"value":"2\/5\/2017"},{"value":"Authorized"},{"value":"2\/6\/2017 9:37:53 AM"},{"value":"LG Display"},{"value":"Townsend, Mark"},{"value":"Townsend, Mark"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}},{"row":{"item":[{"value":"34579"},{"value":"GW: OA: Export: warning for duplicated iterated instance names"},{"value":"Gateway"},{"value":"Cosmetic"},{"value":"Open, assigned to West, Andrew"},{"value":"Hasegawa, Atsushi"},{"value":"Medium"},{"value":"2\/5\/2017"},{"value":"Not Reviewed"},{"value":"2\/17\/2017 1:51:52 PM"},{"value":"RDJ-hasegawa"},{"value":"West, Andrew"},{"value":"West, Andrew"},{"value":""},{"value":""}],"@attributes":{"arrayType":"ttns:CRecordData[15]","type":"SOAP-ENC:Array"}}}],"@attributes":{"arrayType":"ttns:CRecordRowSoap[92]","type":"SOAP-ENC:Array"}}}};
+
+	var s_obj = weeknum(ttpro);
+	var date_b = new Date(document.getElementById('date-b').value);
+	var date_e = new Date(document.getElementById('date-e').value);
+	var f_obj = filter_by_date(s_obj , date_b , date_e);
+	
+
+
+	var detail_sorter = new TINY.table.sorter("detail_sorter");
+	detail_sorter.head = "head";
+	detail_sorter.asc = "asc";
+	detail_sorter.desc = "desc";
+	detail_sorter.even = "evenrow";
+	detail_sorter.odd = "oddrow";
+	detail_sorter.evensel = "evenselected";
+	detail_sorter.oddsel = "oddselected";
+	detail_sorter.paginate = false;
+	detail_sorter.currentid = "currentpage";
+	detail_sorter.limitid = "pagelimit";
+
+	var sorter = new TINY.table.sorter("sorter");
+	sorter.head = "head";
+	sorter.asc = "asc";
+	sorter.desc = "desc";
+	sorter.even = "evenrow";
+	sorter.odd = "oddrow";
+	sorter.evensel = "evenselected";
+	sorter.oddsel = "oddselected";
+	sorter.paginate = false;
+	sorter.currentid = "currentpage";
+	sorter.limitid = "pagelimit";
+
+	var product_stat = collect_product(f_obj);
+	show_statistics();
+	document.getElementById("detail").innerHTML = f2table(f_obj );
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+
+	if (typeof google !== 'undefined' ) {
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawVisualization);
+	}
+function priority_redraw() {
+	console.log("INTO priority_redraw");
+	if (typeof google === 'undefined' ) {
+		product_stat = collect_product(f_obj);
+		show_statistics();
+	}
+}
+function show_statistics() {
+	var stat_node = document.getElementById('statistics');
+	if (stat_node.hasChildNodes()) {
+		stat_node.removeChild(stat_node.firstChild)
+	}
+	stat_node.appendChild(table_statistics());
+	sorter.init("sst",1);
+	sorter.wk(1);
+}
+
+function period_chg()
+{
+	var period_element = document.getElementsByName('period');
+	for ( var i = 0 ; i < period_element.length ; i++) {
+		if (period_element[i].checked) {
+			period_sel = period_element[i].value;		
+		}
+	}
+	return period_sel;
+}
+function filter_by_date(sobj , date_b , date_e)
+{
+	var filtered_tbl = new Object();
+	filtered_tbl.header = sobj.header;
+	var rows_arr = [];
+	var rows = sobj.rows;
+	
+	for (rx in rows) {
+		date_m = new Date(rows[rx][7]);
+		if ( date_m > date_b && date_m < date_e) {
+			rows_arr[rows_arr.length] = rows[rx];
+		}
+	}
+	filtered_tbl.rows = rows_arr;
+
+	return filtered_tbl;
+}
+function collect_product(sobj)
+{
+	var pobj = new Object();
+	var col_list = sobj.header;
+	var product_id = -1;
+	var priority_id = -1;
+	var status_id = -1;
+	var number_id = -1;
+	var disposition_id = -1;
+	var top_no = parseInt('');
+
+
+	for (hx in col_list) {
+		if (col_list[hx] == "Product") {
+			product_id = hx;
+		}
+		if (col_list[hx] == "Priority") {
+			priority_id = hx;
+		}
+		if (col_list[hx] == "Status") {
+			status_id = hx;
+		}
+		if (col_list[hx] == "Number") {
+			number_id = hx;
+		}
+		if (col_list[hx] == "Disposition") {
+			disposition_id = hx;
+		}
+	}
+
+	var rows = sobj.rows;
+	for (rx in rows) {
+		var prod_name = rows[rx][product_id];
+		var prio_name = rows[rx][priority_id];
+		var stat_name = rows[rx][status_id];
+		var number = rows[rx][number_id];
+		var disposition = rows[rx][disposition_id];
+
+		if (prio_name == '') {
+			prio_name = 'Not_set';
+		}
+		
+		if (!(pobj[prod_name])) {
+			var arr = new Object();
+			arr['all_total'] = 0;
+			arr['Total'] = {count: 0, list:''};  // total for a product 
+			arr['high'] = {count: 0, list:''};
+			arr['other'] = {count: 0, list:''};
+			arr['NotReviewed'] = {count: 0, list:''};  // open, not assigned, not reviewed
+			arr['Reviewed'] = {count: 0, list:''}; // open, not assigned, but reviewed
+			arr['Processing'] = {count: 0, list:''}; // open, assigned or In Development
+			arr['ToBeVerified'] = {count: 0, list:''}; // open, assigned or In Development
+			arr['Done'] = {count: 0, list:''}; // Fixed, Closed, Released to Testing
+			arr['Unknown'] = {count: 0, list:''}; // status unknown or not classified
+			pobj[prod_name] = arr;
+		}
+		var arr = pobj[prod_name];
+		arr['all_total'] += 1;
+
+		if (prio_name == 'Urgent' || prio_name == 'High') {
+				arr['high'].count += 1;
+				arr['high'].list += number + ',';
+		} else {
+				arr['other'].count +=1;
+				arr['other'].list += number + ',';
+		}
+
+		var prio_setting;
+		prio_setting = priority_check();
+	//	document.getElementById("debug").innerHTML = prio_setting;
+		var chart_category;
+		if (prio_setting.indexOf(prio_name) >= 0) {
+			arr['Total'].count += 1;
+			arr['Total'].list += number + ',';
+			if (stat_name.substr(0,4) == 'Open') {
+				if  ( stat_name.indexOf("not assigned") >= 0) {
+					if (disposition == 'Not Reviewed' || disposition == '') {
+						arr['NotReviewed'].count +=1;
+						arr['NotReviewed'].list += number + ',';
+						chart_category = 'NotReviewed';
+					} else {
+						arr['Reviewed'].count += 1;
+						arr['Reviewed'].list += number + ',';
+						chart_category = 'Reviewed';
+					}
+				} else {
+					arr['Processing'].count += 1;
+					arr['Processing'].list += number + ',';
+					chart_category = 'Processing';
+				}
+			} else if (stat_name.substr(0,6) == 'Closed') {
+				arr['Done'].count += 1;
+				arr['Done'].list += number + ',';
+				chart_category = 'Done';
+			} else if (stat_name.substr(0,5) == 'Fixed') {
+				arr['ToBeVerified'].count += 1;
+				arr['ToBeVerified'].list += number + ',';
+				chart_category = 'ToBeVerified';
+			} else if (stat_name.substr(0,8) == 'Released') {
+				arr['ToBeVerified'].count += 1;
+				arr['ToBeVerified'].list += number + ',';
+				chart_category = 'ToBeVerified';
+			} else if (stat_name.substr(0,14) == 'In Development') {
+				arr['Processing'].count += 1;
+				arr['Processing'].list += number + ',';
+				chart_category = 'Processing';
+			} else {
+				arr['Unknown'].count += 1;
+				arr['Unknown'].list += number + ',';
+				chart_category = 'Unknown';
+			}
+		}
+		rows[rx]['chart_category']=chart_category;
+	}
+
+
+	if (Number.isInteger(top_no) && (top_no < Object.keys(pobj).length) && (top_no > 0)) {
+		var top_nr = Object.keys(pobj).sort(function(a,b) {return pobj[a]['all_total'] - pobj[b]['all_total']});
+		for (var i = 0 ; i < top_nr.length - top_no ; i++) {
+			delete pobj[top_nr[i]];
+		}
+	}
+
+	pobj['subtotal'] = {'high':0, other:0, NotReviewed:0, Reviewed:0, Processing:0, ToBeVerified:0, Done:0, Unknown:0};
+	for (var pp in pobj) {
+		if (pp == 'subtotal') {continue;}
+		pobj['subtotal']['high'] += pobj[pp]['high'].count;
+		pobj['subtotal']['other'] += pobj[pp]['other'].count;
+		pobj['subtotal']['NotReviewed'] += pobj[pp]['NotReviewed'].count;
+		pobj['subtotal']['Reviewed'] += pobj[pp]['Reviewed'].count;
+		pobj['subtotal']['Processing'] += pobj[pp]['Processing'].count;
+		pobj['subtotal']['ToBeVerified'] += pobj[pp]['ToBeVerified'].count;
+		pobj['subtotal']['Done'] += pobj[pp]['Done'].count;
+		pobj['subtotal']['Unknown'] += pobj[pp]['Unknown'].count;
+	}
+	return pobj;
+}
+
+function drawStatus() {
+  // Some raw data (not necessarily accurate)
+	var lookat = '';
+  	var seq = [];
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+	}
+	seq.sort();
+console.log('a',seq);
+	var data = new google.visualization.DataTable();
+	data.addColumn('string' , 'Product');
+	data.addColumn('number' , 'NotReviewed (' + product_stat['subtotal'].NotReviewed + ')', 'NotReviewed');
+	data.addColumn('number' , 'Reviewed (' + product_stat['subtotal'].Reviewed + ')', 'Reviewed');
+	data.addColumn('number' , 'Processing (' + product_stat['subtotal'].Processing + ')', 'Processing');
+//	if (lookat != 'rd') {
+	data.addColumn('number' , 'ToBeVerified (' + product_stat['subtotal'].ToBeVerified + ')', 'ToBeVerified');
+	data.addColumn('number' , 'Done (' + product_stat['subtotal'].Done + ')', 'Done');
+//	}
+//	data.addColumn('number' , 'Legend' , 'Legend');
+//	data.addColumn('number' , 'Unknown (' + product_stat['subtotal'].Unknown + ')', 'Unknown');
+	var i;
+	for (i = 0 ; i < seq.length ; i++) {
+//	for (var pp in product_stat) {
+		var pp = seq[i];
+//		if (lookat != 'rd') {
+		data.addRow([pp , product_stat[pp]['NotReviewed'].count , product_stat[pp]['Reviewed'].count , product_stat[pp]['Processing'].count , product_stat[pp]['ToBeVerified'].count ,product_stat[pp]['Done'].count ]); // /*, product_stat[pp]['Unknown'].count]*/);
+//		} else {
+//		data.addRow([pp , product_stat[pp]['NotReviewed'].count , product_stat[pp]['Reviewed'].count , product_stat[pp]['Processing'].count ]); // /*, product_stat[pp]['Unknown'].count]*/);
+//		}
+	}
+	var mview = new google.visualization.DataView(data);
+	//mview.hideColumns([4]);
+
+	var chart_width = seq.length * 50 + 300;
+	if (chart_width < 1200 ) {
+		chart_width = 1200;
+	}
+	
+  var options = {
+	fontSize: 20,
+	title : 'Recent ' + period_sel + ' <Status> by Product',
+	width : chart_width,
+	height : 500,
+	animation: {
+		duration: 1000,
+		easing: 'out',
+	},
+	vAxis: {title: "Ticket Entered"},
+	hAxis: {direction: '1',
+		slantedText: true,
+		slantedTextAngle: '60',
+		textStyle : {   fontSize: '14' }
+	},
+	legend: { position: 'top', maxLines: '4', textStyle: {fontSize: 16 } },
+	backgroundColor: '#d3f3d3',
+	series: legend_series,
+	isStacked: true
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_status'));
+  var button = document.getElementById('change_prio');
+
+  function selectHandler() {
+    var selection = chart.getSelection();
+	if (selection.length == 0) {
+		return;
+	}
+
+	var lstr = "";
+	var pname = "";
+    var item = selection[0];
+    if (item.row != null && item.column != null) {
+		lstr = product_stat[data.getValue(item.row,0)][data.getColumnId(item.column)].list;
+		pname = data.getValue(item.row,0);
+    } else if (item.column != null) {
+			//alert("column is not null-" + data.getColumnId(item.column) + "|" + data.getColumnLabel(item.column) );
+		if (data.getColumnId(item.column) == 'Legend') {
+			window.open('legend.html' , 'New Found Tickets Legend');
+		} else {
+			for (var pp in product_stat) {
+				if (pp == 'subtotal') {continue;}
+				lstr += product_stat[pp][data.getColumnId(item.column)].list;
+			}
+			pname = "All Products";
+		}
+	} else { 
+      return;
+    }
+         
+ //           alert('The user selected ' + lstr);
+	document.getElementById("detail").innerHTML = l2table(f_obj ,lstr);
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var label = data.getColumnLabel(item.column);
+	var label_h = label.split("(");
+	document.getElementById("detail_subject").innerHTML = 'Detail List of <u>' + pname + '</u> and <i>Status ' + label_h[0] + '</i>';
+
+	window.location.href="#detail_list";
+          
+  }
+  function drawChart() {
+  	button.disabled = true;
+	google.visualization.events.addListener(chart, 'select', selectHandler);  
+	google.visualization.events.addListener(chart , 'ready' , function() {
+		button.disabled = false;
+		});
+	chart.draw(data,options);
+  }
+  button.onclick = function() {
+	product_stat = collect_product(f_obj);
+	show_statistics();
+	var seq = [];
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+	}
+	seq.sort();
+console.log('b',seq);
+	data.setColumnLabel(1 , 'NotReviewed (' + product_stat['subtotal'].NotReviewed + ')');
+	data.setColumnLabel(2 , 'Reviewed (' + product_stat['subtotal'].Reviewed + ')');
+	data.setColumnLabel(3 , 'Processing (' + product_stat['subtotal'].Processing + ')');
+//	if (lookat != 'rd') {
+	data.setColumnLabel(4 , 'ToBeVerified (' + product_stat['subtotal'].ToBeVerified + ')');
+	data.setColumnLabel(5 , 'Done (' + product_stat['subtotal'].Done + ')');
+//	}
+//	data.addColumnLabel(5 , 'Legend');
+//	data.setColumnLabel(4 , 'Unknown (' + product_stat['subtotal'].Unknown + ')');
+	var rowIndex;
+	rowIndex = 0;
+	var i;
+	for (i = 0 ; i < seq.length ; i++) {
+		var pp = seq[i];
+
+		data.setValue( rowIndex , 1 , product_stat[pp]['NotReviewed'].count);
+		data.setValue( rowIndex , 2 , product_stat[pp]['Reviewed'].count);
+		data.setValue( rowIndex , 3 , product_stat[pp]['Processing'].count);
+//		if (lookat != 'rd') {
+		data.setValue( rowIndex , 4 , product_stat[pp]['ToBeVerified'].count);
+		data.setValue( rowIndex , 5 , product_stat[pp]['Done'].count);
+//		}
+//		data.setValue( rowIndex , 4 , product_stat[pp]['Unknown'].count);
+		rowIndex++;
+//		data.addRow([pp , product_stat[pp]['NotReviewed'].count , product_stat[pp]['Reviewed'].count ,product_stat[pp]['Processing'].count , product_stat[pp]['Done'].count , product_stat[pp]['Unknown'].count]);
+	}
+	drawChart();
+  }
+	drawChart();
+}
+function drawVisualization() {
+	drawPriority();
+	drawPriority();
+	drawStatus();
+}
+function drawPriority() {
+  // Some raw data (not necessarily accurate)
+    var seq = [];
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+	}
+	seq.sort();
+	var data = new google.visualization.DataTable();
+	data.addColumn('string' , 'Product');
+
+	data.addColumn('number' , 'Urgent and High (' + product_stat['subtotal'].high + ')','high');
+	data.addColumn('number' , 'Medium and Low (' + product_stat['subtotal'].other + ')','other');
+
+	var i;
+	for (i = 0 ; i < seq.length ; i++) {
+
+		var pp = seq[i];
+		data.addRow([pp , product_stat[pp]['high'].count , product_stat[pp]['other'].count]);
+	}
+
+
+	
+  var options = {
+	title : 'Recent ' + period_sel + ' <Priority> by Product',
+	width : 1200,
+	height : 500,
+	vAxis: {title: "Ticket Entered"},
+	hAxis: {direction: '1',
+		slantedText: true,
+		slantedTextAngle: '60',
+		textStyle : {   fontSize: '12' }
+	},
+	legend: { position: 'top', maxLines: '3' },
+	backgroundColor: '#eceddc',
+	series: {
+		0: { color: '#a04040'},
+		1: { color: '#0040a0'}
+	},
+	isStacked: true
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+  function selectHandler_p() {
+    var selection = chart.getSelection();
+	if (selection.length == 0) {
+		return;
+	}
+	var lstr = "";
+	var pname = "";
+
+    var item = selection[0];
+    if (item.row != null && item.column != null) {
+		lstr = product_stat[data.getValue(item.row,0)][data.getColumnId(item.column)].list;
+		pname = data.getValue(item.row,0);
+    } else if (item.column != null) {
+		for (var pp in product_stat) {
+			if (pp == 'subtotal') {continue;}
+			lstr += product_stat[pp][data.getColumnId(item.column)].list;
+		}
+		pname = "All Products";
+	} else {
+      return;
+    }
+  
+   //                   alert('The user Priority ' + lstr);
+	document.getElementById("detail").innerHTML = l2table(f_obj ,lstr);
+	detail_sorter.init('detail_tab',2);
+	detail_sorter.wk(2);
+	var label = data.getColumnLabel(item.column);
+	var label_h = label.split("(");
+	document.getElementById("detail_subject").innerHTML = 'Detail List of <u>' + pname + '</u> and <i>Priority ' + label_h[0] + '</i>';
+
+	window.location.href="#detail_list";
+          
+  }
+	google.visualization.events.addListener(chart, 'select', selectHandler_p);  
+  	chart.draw(data, options);
+}
+
+function weeknum(ttpro_obj) {
+	var simple_obj = new Object();
+	var header_arr = [];
+	var col_list = ttpro_obj['recordlist']['columnlist']['item'];
+	for (hx in col_list) {
+		header_arr[hx] = col_list[hx].name;
+	}
+
+	simple_obj.header = header_arr;
+	
+
+	var rows = ttpro_obj['recordlist']['records']['item'];
+	var rows_arr = [];
+	for (rx in rows) {
+		var row_arr = [];
+		var row1 = rows[rx]['row']['item'];
+		for (cx in row1) {
+			if (typeof(row1[cx].value) != "undefined") {
+				row_arr[cx] = row1[cx].value;
+			} else {
+				row_arr[cx] = "";
+			}
+		}
+
+		rows_arr[rows_arr.length] = row_arr;
+	}
+	simple_obj.rows = rows_arr;
+	return simple_obj;
+}
+function f2table(sobj) {
+	var text = "";
+	var number_id = -1;
+	text += "<table id='detail_tab' class='sortable'><thead><tr>"; // bgcolor='#6e99d4' >";
+	var col_list = sobj.header;
+
+	for (hx in col_list) {
+		text += "<td><h4>" + col_list[hx] + "</h4></td>";
+		if (col_list[hx] == "Number") {
+			number_id = hx;
+		}
+	}
+	text += "</tr></thead><tbody>";
+
+	var rows = sobj.rows;
+	for (rx in rows) {
+		text += "<tr>";
+		var row1 = rows[rx];
+		var r_color = legend_color[row1['chart_category']];
+		for (cx in row1) {
+			if (cx == 'chart_category') {continue;}
+			if (cx == number_id) {
+				text += "<td ><a href='onedefect.php?defectNumber=" + row1[cx] + "'>" + row1[cx] + "</a></td>";
+			} else {
+				text += "<td><font color='" + r_color + "'>" + row1[cx] + "</font></td>";
+			}
+		}
+		text += "</tr>";
+	}
+
+	text += "</tbody></table>";
+	return text;
+}
+
+function l2table(sobj,list_str) {
+	var text = "";
+	var number_id = -1;
+	text += "<table id='detail_tab' class='sortable'><thead><tr>"; // bgcolor='#6e99d4' >";
+	var col_list = sobj.header;
+
+	for (hx in col_list) {
+		text += "<td><h4>" + col_list[hx] + "</h4></td>";
+		if (col_list[hx] == "Number") {
+			number_id = hx;
+		}
+	}
+	text += "</tr></thead><tbody>";
+	
+	var rows = sobj.rows;
+	for (rx in rows) {
+		var row1 = rows[rx];
+		if (list_str.indexOf(row1[number_id]) >=0 ) {
+			text += "<tr>";
+			var r_color = legend_color[row1['chart_category']];
+			for (cx in row1) {
+				if (cx == 'chart_category') {continue;}
+				if (cx == number_id) {
+					text += "<td><a href='onedefect.php?defectNumber=" + row1[cx] + "'>" + row1[cx] + "</a></td>";
+				} else {
+					text += "<td><font color='" + r_color + "'>" + row1[cx] + "</font></td>";
+				}
+			}
+			text += "</tr>";
+		}
+	}
+
+	text += "</tbody></table>";
+	return text;
+}
+
+function table_statistics()
+{
+	var sst_top = document.createElement("Table");
+	sst_top.id = 'sst';
+	sst_top.className = 'sortable';
+
+	var header = sst_top.createTHead();
+
+	var tr0 = header.insertRow();
+	var hdr = ['Product' ,  'NotReviewed' , '%' , 'Reviewed' , '%' , 'Processing', '%', 'ToBeVerified', '%' , 'Done' , '%' ,'Total' ];
+	for ( var i = 0 ; i < hdr.length ; i++) {
+		var td0 = tr0.insertCell();
+		td0.innerHTML = "<h4>" + hdr[i] + "</h4>";
+	}
+
+	var tbd = document.createElement("TBody");
+	tbd.id = "sst_body";
+	sst_top.appendChild(tbd);
+
+	var seq = [];
+	var pstat = new Object();
+	var cell_s = ['NotReviewed' , 'Reviewed' , 'Processing' , 'ToBeVerified' , 'Done']; 
+	var cellrank = ['top_nr', 'top_nrp'];
+	var color_s = ['#f02020','#ffbf40','#00a040' , '#a53535','#0040f0'];
+
+	for (var pp in product_stat) {
+		if (pp == 'subtotal') {continue;}
+		seq.push(pp);
+		var arr = new Object();
+		var total = product_stat[pp]['Total'].count;
+		if (total == 0) {continue;}
+		for (var j = 0 ; j < cell_s.length ; j++) {
+			arr[cell_s[j]] = product_stat[pp][cell_s[j]].count;
+			arr[cell_s[j] + '_per'] = Math.floor(product_stat[pp][cell_s[j]].count / total * 100.0);
+		}
+
+		arr['Total'] = total;
+		pstat[pp] = arr;
+	}
+	seq.sort();
+	var top_nr = Object.keys(pstat).sort(function(a,b) {return pstat[a]['NotReviewed'] - pstat[b]['NotReviewed']});
+	
+	
+
+	for (var i = top_nr.length - 1 ; i >=0  ; i--) {
+		var tr1 = tbd.insertRow();
+		var pp = top_nr[i];
+		var td0 = tr1.insertCell();
+		td0.innerHTML = pp;
+
+		for ( var j = 0 ; j < cell_s.length; j++) {
+			var td1 = tr1.insertCell();
+			td1.innerHTML = "<font color=" + color_s[j] + ">" + pstat[pp][cell_s[j]] + "</font>";
+			td1.id = pp + '|' + cell_s[j];
+
+			var td2 = tr1.insertCell();
+			td2.innerHTML = "<font color=" + color_s[j] + ">" + pstat[pp][cell_s[j]+ '_per'] + "%</font>";
+			td2.style.textAlign = 'center';
+		}
+			var td3 = tr1.insertCell();
+			td3.innerHTML = pstat[pp]['Total'];
+			td3.id = pp +'|Total';
+	}
+
+	var td_event = function () {
+		var sst_top_event = document.getElementById('sst');
+		var tbd = sst_top_event.tBodies[0];
+
+		for (var i = 0 ; i < tbd.rows.length ; i++) {
+			var pd = tbd.rows[i].cells[0].innerHTML;
+			for (var j=1 ; j < tbd.rows[i].cells.length ; j+=2) {
+				tbd.rows[i].cells[j].onclick = function() {
+					var para = this.id;
+console.log(para);
+					var pararr = para.split('|');
+					var pd = pararr[0];
+					var st = pararr[1];
+					var lstr = 	product_stat[pd][st].list;
+					if (lstr.length > 1) {
+						document.getElementById("detail").innerHTML = l2table(f_obj ,lstr);
+						detail_sorter.init('detail_tab',2);
+						detail_sorter.wk(2);
+						if (st == 'Total') { st = 'All';}
+						document.getElementById("detail_subject").innerHTML = 'Detail List of <u>' + pd + '</u> and <i>Status ' + st + '</i>';
+						window.location.href="#detail_list";
+					}
+				}
+			}
+		}
+	}
+	sorter.callback = td_event;
+
+	return sst_top;
+}
+
+</script>
+
+</body>
+</html> 
