@@ -114,7 +114,12 @@ my $case_path_to_ver = get_case_path('', $CasePath);
 ###
 print "$case_path_to_ver $WorkPath $log_name\n";
 
+
 logname($log_name);
+
+
+print "ARGC $#ARGV\n";
+die;
 DeckInfo->init($case_path_to_ver, $OutputPath, "deckbuild", $keep_config);
 
 # Get start time

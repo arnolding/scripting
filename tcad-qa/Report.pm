@@ -177,6 +177,9 @@ sub convert2jsvar_result
 
 	return $str;
 }
+
+# write the data to data.js
+# and will be loaded by jsreport.html
 sub output_allresult
 {
 	my $all_data = shift;
