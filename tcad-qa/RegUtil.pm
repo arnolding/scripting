@@ -120,7 +120,7 @@ sub g_cpu
 			$arch = $1;
 		} elsif (/^CPU\(s\):\s+(\S+)\s*/) {
 			$num_cpu = $1;
-		} elsif (/^CPU max MHz:\s+(\S+)\s*/) {
+		} elsif (/^CPU.+MHz:\s+(\S+)\s*/) {
 			$CPU_MHz = $1;
 		}
 	}

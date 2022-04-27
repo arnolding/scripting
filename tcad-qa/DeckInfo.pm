@@ -1648,6 +1648,8 @@ sub run
 		my $deck = new DeckInfo($case) || next;
 		
 		my $start_time = strftime "%a %b %e %H:%M:%S %Z %Y", localtime;
+		my ($platform, $hostname, $arch , $num_cpu, $CPU_MHz, $memTotal , $swapTotal ) =
+			g_machine();
 		sleep(1);
 		logx("before " . $case);
 		my $proc_status = -1;
@@ -1672,7 +1674,10 @@ print "\n\n             END OF a CASE, waiting ....\n";
 		#my $all_windows = "allWIN:" . $deck->all_windows_str();
 
 		my $end_time = strftime "%a %b %e %H:%M:%S %Z %Y", localtime;
-		system("echo '# $start_time runmode $runmode' >> $result_log2") if ($runcount_now ==0);
+		if ($runcount_now ==0) {
+			system("echo '# $start_time runmode $runmode' >> $result_log2");
+			system("echo '# hostname=$hostname, $arch , num_cpu=$num_cpu, CPU_MHz=$CPU_MHz, memTotal=$memTotal , swapTotal=$swapTotal' >> $result_log2");
+		}
 		system("echo '$deck->{result}, $case_tag, $start_time, $end_time, $proc_status' >> $result_log2");
 		
 		system("date");
