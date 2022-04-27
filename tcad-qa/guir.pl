@@ -56,6 +56,11 @@ if ($help or !$get_opt) {
 	help();
 	exit 0;
 }
+if ($#ARGV >=0) {
+	print "Unrecognized option(s) ", join(", " , @ARGV) , "\n";
+	help();
+	exit 1;
+}
 
 if ($report ne 'tbd') {
 	$OutputPath = decide_outputpath("$reg_home/tests", $WorkPathLabel , 'recent');
@@ -117,9 +122,6 @@ print "$case_path_to_ver $WorkPath $log_name\n";
 
 logname($log_name);
 
-
-print "ARGC $#ARGV\n";
-die;
 DeckInfo->init($case_path_to_ver, $OutputPath, "deckbuild", $keep_config);
 
 # Get start time
