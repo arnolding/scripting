@@ -227,9 +227,10 @@ sub init
 sub complete
 {
 	shift;
+	my $deck_num = shift;
 
 	ProcWin::win_message($class_var{dbWin} , '{pause 500}^(q)');
-	$loop_notify->notify_flush();
+	$loop_notify->notify("$deck_num decks done",1,1);
 }
 
 sub class_var
@@ -1689,7 +1690,7 @@ print "\n\n             END OF a CASE, waiting ....\n";
 	}
 	
 	system("echo 'END of $runcount_now decks' >> $result_log2");
-	DeckInfo->complete();
+	DeckInfo->complete($runcount_now);
 }
 
 sub parse_casetorun
