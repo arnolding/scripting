@@ -36,9 +36,9 @@ sub help
 {
 	my $b = basename($0);
 	print "$b --report \n    or\n";
-	print "$b --runmode [killed|sort|common|resume] --tag bjt,power --keep\n\n";
+	print "$b --[killed|sort|common|resume] --tag bjt,power --keep\n\n";
 	print "example:\n";
-	print "$b --runmode --tag bjt,power -keep $keep_config\n";
+	print "$b --[killed|sort|common|resume] --tag bjt,power -keep $keep_config\n";
 }
 my $get_opt = GetOptions(
 		'report:s' => \$report,
