@@ -1793,9 +1793,24 @@ print "parse result log [$result_f]\n";
 			$run1_aref->[5] += 24*60*60 if ($run1_aref->[5] < 0);
 		}
 	}
+	my %uniq = ();
+	for my $run1_aref (@$run_aref) {
+		if (exists($uniq{$run1_aref->[1]})) {
+			if ( $uniq{$run1_aref->[1]}->[0] eq "KILL") {
+				$uniq{$run1_aref->[1]} = $run1_aref;
+			}
+		} else {
+			$uniq{$run1_aref->[1]} = $run1_aref;
+		}
+	}
 
+	my @uniq = ();
+	for my $k (keys %uniq) {
+		push @uniq , $uniq{$k};
+	}
 	#print Data::Dumper->Dump($allrun_aref);
-	return $run_aref;
+	#return $run_aref;
+	return \@uniq;
 }
 sub monitor
 {
