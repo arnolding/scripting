@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 
 // Refer http://stackoverflow.com/questions/2858263/how-do-i-bring-a-processes-window-to-the-foreground-on-x-windows-c
    Display *dsp = XOpenDisplay(NULL);
-   long id = strtol(argv[1], NULL, 10);
+   long id = strtol(argv[1], NULL, 0);
    XSetWindowAttributes xswa;
    xswa.override_redirect=True;
    XChangeWindowAttributes (dsp,id,CWOverrideRedirect, &xswa);

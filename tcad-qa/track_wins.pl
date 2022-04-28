@@ -40,11 +40,12 @@ sub GetWindows_ext {
 
 	my @all_wins = GetChildWindows(GetRootWindow(0));
 	my $arnold=0;
+	#print "all_wins count " , scalar @all_wins , "\n";
 	foreach my $aw (@all_wins) {
 #print "check 3 $aw , $arnold\n";
 		my $aw_pid = 0;
 		
-		if (IsWindowViewable($aw)) {
+		#if (IsWindowViewable($aw)) {
 			$aw_pid = GetWindowPid($aw);
 #print "check 4 $aw_pid\n";
 			my $wname = GetWindowName($aw) || "XX";
@@ -60,7 +61,7 @@ sub GetWindows_ext {
 				
 				push @wins, \%win_info;
 			
-		}
+				#}
 		$arnold++;
 	}
 	my @sort = sort {$a->{pid} <=> $b->{pid} or $a->{wid} <=> $b->{wid}} @wins;
